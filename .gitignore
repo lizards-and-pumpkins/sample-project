@@ -1,0 +1,11 @@
+/composer.lock
+/vendor/
+
+/src/magento/
+
+/pub/errors
+/pub/js
+/pub/media
+/pub/skin
+
+/share/

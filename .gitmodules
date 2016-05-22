@@ -1,0 +1,6 @@
+[submodule "src/magento-extensions/magento-connector"]
+	path = src/magento-extensions/magento-connector
+	url = git@github.com:lizards-and-pumpkins/magento-connector.git
+[submodule "src/magento-themes/magento-sample-theme"]
+	path = src/magento-themes/magento-sample-theme
+	url = git@github.com:lizards-and-pumpkins/magento-sample-theme.git
