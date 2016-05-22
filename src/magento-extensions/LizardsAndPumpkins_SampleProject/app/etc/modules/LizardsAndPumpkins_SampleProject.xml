@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <LizardsAndPumpkins_SampleProject>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <LizardsAndPumpkins_MagentoConnector/>
+            </depends>
+        </LizardsAndPumpkins_SampleProject>
+    </modules>
+</config>
