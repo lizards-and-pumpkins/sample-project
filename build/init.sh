@@ -25,7 +25,7 @@ cd ${releaseDir}/src/magento/.modman/magento-connector/ && composer install --no
 ln -fsT ${shareDir}/local.xml ${releaseDir}/src/magento/app/etc/local.xml
 
 ln -fsT ${releaseDir}/src/magento/errors ${releaseDir}/pub/errors
-ln -fsT ${releaseDir}/src/magento/js ${releaseDir}/pub/js # TODO: Resolve conflict with L&P js/
+ln -fsT ${releaseDir}/src/magento/js ${releaseDir}/pub/mage-js
 ln -fsT ${shareDir}/media ${releaseDir}/pub/media
 ln -fsT ${releaseDir}/src/magento/skin ${releaseDir}/pub/skin
 
