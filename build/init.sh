@@ -34,7 +34,7 @@ ln -fsT ${releaseDir}/src/magento/skin ${releaseDir}/pub/skin
 #ln -fsT ${releaseDir}/vendor/lizards-and-pumpkins/catalog/pub/images ${releaseDir}/pub/images
 #ln -fsT ${releaseDir}/vendor/lizards-and-pumpkins/catalog/pub/fonts ${releaseDir}/pub/fonts
 
-rm -fr ${releaseDir}/src/magento/media; ln -fsT ${shareDir}/media ${releaseDir}/src/magento/media # TODO: Check if required
+rm -fr ${releaseDir}/src/magento/media; ln -fsT ${shareDir}/media ${releaseDir}/src/magento/media
 #rm -rf ${releaseDir}/src/var && ln -fsT ${varDir} ${releaseDir}/src/var
 
 echo Symlinks created
