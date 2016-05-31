@@ -1,0 +1,25 @@
+<?php
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+?>
+<?php if($this->canShowBlock()): ?>
+<div class="block block-layered-nav">
+    <?php echo $this->getStateHtml() ?>
+
+    <?php if($this->canShowOptions()): ?>
+        <dl id="filters">
+            <?php $_filters = $this->getFilters() ?>
+
+            <?php foreach ($_filters as $_filter): ?>
+                <?php if($_filter->getItemsCount()): ?>
+                    <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                    <dd><?php echo $_filter->getHtml() ?></dd>
+                <?php endif ?>
+            <?php endforeach ?>
+        </dl>
+    <?php endif ?>
+</div>
+<?php endif ?>

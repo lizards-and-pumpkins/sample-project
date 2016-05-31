@@ -1,0 +1,122 @@
+<?php
+/**
+ * Shopping cart template
+ *
+ * @see Mage_Checkout_Block_Cart
+ */
+?>
+<div class="cart">
+
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('form_before') ?>
+    <div class="row clearfix">
+
+        <div class="col span_8">
+            <div class="button-set continue">
+                <?php if(Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl())): ?>
+                    <button type="button"
+                            title="<?php echo $this->__('Continue Shopping') ?>"
+                            class="button normal"
+                            onclick="setLocation('<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>')">
+                        <i class="icon-left"></i> <?php echo $this->__('Continue Shopping') ?>
+                    </button>
+                <?php endif ?>
+            </div>
+
+            <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
+                <?php echo $this->getBlockHtml('formkey'); ?>
+                <fieldset>
+                    <table id="shopping-cart-table" class="data-table cart-table">
+                        <col width="1" />
+                        <col />
+                        <col width="1" />
+                        <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+                            <col width="1" />
+                        <?php endif ?>
+                        <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                            <col width="1" />
+                        <?php endif ?>
+                        <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                            <col width="1" />
+                        <?php endif ?>
+                        <col width="1" />
+                        <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                            <col width="1" />
+                        <?php endif ?>
+                        <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                            <col width="1" />
+                        <?php endif ?>
+                        <col width="1" />
+
+                        <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1) ?>
+                        <thead>
+                            <tr>
+                                <th rowspan="<?php echo $mergedCells ?>">
+                                    <?php echo $this->__('Product') ?>
+                                </th>
+                                <th class="text-center" colspan="<?php echo $mergedCells ?>">
+                                    <span class="nobr"><?php echo $this->__('Price') ?></span>
+                                </th>
+                                <th rowspan="<?php echo $mergedCells ?>" class="text-center">
+                                    <?php echo $this->__('Qty') ?>
+                                </th>
+                                <th class="text-right" colspan="<?php echo $mergedCells ?>">
+                                    <?php echo $this->__('Total') ?>
+                                </th>
+                            </tr>
+                        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                            <tr>
+                                <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                                <th><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                                <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                                <th><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                            </tr>
+                        <?php endif ?>
+                        </thead>
+
+                        <tbody>
+                        <?php foreach($this->getItems() as $_item): ?>
+                            <?php echo $this->getItemHtml($_item) ?>
+                        <?php endforeach ?>
+                        </tbody>
+
+                    </table>
+                </fieldset>
+            </form>
+
+            <div class="cart-table-collaterals">
+                <?php echo $this->getChildHtml('checkout.cart.extra') ?>
+                <?php echo $this->getChildHtml('coupon') ?>
+                <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif ?>
+            </div>
+
+        </div>
+
+        <div class="col span_4">
+            <h1><?php echo $this->__('Your Cart') ?></h1>
+
+            <div class="totals">
+                <?php echo $this->getChildHtml('totals') ?>
+
+                <?php if(!$this->hasError()): ?>
+                    <ul class="button-set">
+                        <?php foreach ($this->getMethods('methods') as $method): ?>
+                            <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                                <li><?php echo $methodHtml ?></li>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif ?>
+            </div>
+
+            <?php echo $this->getlayout()->createblock('cms/block')->setBlockId('checkout_trust_block')->toHtml() ?>
+
+        </div>
+
+    </div>
+
+    <div class="cart-collaterals">
+        <?php echo $this->getChildHtml('crosssell') ?>
+    </div>
+
+</div>

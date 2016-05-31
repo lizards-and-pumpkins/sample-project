@@ -1,0 +1,29 @@
+<?php
+$cart   = Mage::helper('checkout/cart');
+$items  = $cart->getItemsCount();
+$total  = $cart->getQuote()->getGrandTotal();
+?>
+
+<?php if (null != $items): ?>
+    <a href="<?php echo $this->getUrl('checkout/cart') ?>">
+        <svg class="icon shopping-bag" viewBox="0 0 1024 1024">
+            <use xlink:href="<?php echo $this->getSkinUrl('images/assets.svg')?>#shopping-bag"></use>
+        </svg>
+        <span>
+            <?php echo $items . ' | '?>
+        </span>
+        <span class="cart-price">
+            <?php echo $this->helper('core')->currency($total, true, false) ?>
+        </span>
+
+        <?php echo $this->getChildHtml('minicart_content') ?>
+
+    </a>
+
+<?php else: ?>
+
+    <svg class="icon shopping-bag" viewBox="0 0 1024 1024">
+        <use xlink:href="<?php echo $this->getSkinUrl('images/assets.svg')?>#shopping-bag"></use>
+    </svg>
+    <span><?php echo $this->__('Your cart is empty') ?></span>
+<?php endif ?>

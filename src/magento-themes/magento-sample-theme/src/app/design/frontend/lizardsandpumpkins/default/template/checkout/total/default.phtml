@@ -1,0 +1,12 @@
+<div class="line">
+    <div class="title">
+        <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?><strong><?php endif ?>
+            <?php echo $this->escapeHtml($this->getTotal()->getTitle()) ?> &mdash;
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?></strong><?php endif ?>
+    </div>
+    <div class="price">
+        <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?><strong><?php endif ?>
+            <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?></strong><?php endif ?>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var $this Mage_Tax_Block_Checkout_Subtotal
+ * @see Mage_Tax_Block_Checkout_Subtotal
+ */
+?>
+<?php if ($this->displayBoth()): ?>
+<div class="line">
+    <div class="title">
+        <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?> &mdash;
+    </div>
+    <div class="price">
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueExclTax()) ?>
+    </div>
+</div>
+
+<div class="line">
+    <div class="title">
+        <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?> &mdash;
+    </div>
+    <div class="price">
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueInclTax()) ?>
+    </div>
+</div>
+<?php else: ?>
+<div class="line">
+    <div class="title">
+        <?php echo $this->getTotal()->getTitle() ?> &mdash;
+    </div>
+    <div class="price">
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
+    </div>
+</div>
+<?php endif ?>

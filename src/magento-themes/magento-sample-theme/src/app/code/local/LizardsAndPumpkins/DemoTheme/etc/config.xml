@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <LizardsAndPumpkins_DemoTheme>
+            <version>0.11.0</version>
+        </LizardsAndPumpkins_DemoTheme>
+    </modules>
+
+    <global>
+        <blocks>
+            <lizardsandpumpkins_demotheme>
+                <class>LizardsAndPumpkins_DemoTheme_Block</class>
+            </lizardsandpumpkins_demotheme>
+        </blocks>
+
+        <helpers>
+            <lizardsandpumpkins_demotheme>
+                <class>LizardsAndPumpkins_DemoTheme_Helper</class>
+            </lizardsandpumpkins_demotheme>
+        </helpers>
+
+        <resources>
+            <lizardsandpumpkins_demotheme_setup>
+                <setup>
+                    <module>LizardsAndPumpkins_DemoTheme</module>
+                </setup>
+            </lizardsandpumpkins_demotheme_setup>
+        </resources>
+    </global>
+</config>

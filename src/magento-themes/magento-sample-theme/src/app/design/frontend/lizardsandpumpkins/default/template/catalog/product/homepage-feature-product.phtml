@@ -1,0 +1,54 @@
+<?php
+$productCollection = $this->getLoadedProductCollection();
+$product = $productCollection->getFirstItem();
+$_helper = $this->helper('catalog/output');
+?>
+
+<div class="feature-product row clearfix">
+
+    <div class="image col span_6">
+        <img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image') ?>"
+             alt="<?php echo $product->getName() ?>" />
+    </div>
+
+    <div class="description col span_6">
+        <h2 class="product-name">
+            <a href="<?php echo $product->getProductUrl() ?>" title="">
+                <?php echo $product->getName() ?>
+            </a>
+        </h2>
+        <p>
+            <?php echo $product->getShortDescription() ?>
+        </p>
+
+        <?php if($product->isSaleable()): ?>
+            <div class="add-to-cart">
+                <button type="button"
+                        title="<?php echo $this->__('Add to Cart') ?>"
+                        class="button strong cart"
+                        onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')">
+                    <?php echo $this->__('Add to Cart') ?>
+                    <span>
+                        <?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false) ?> *
+                    </span>
+                </button>
+
+                <span class="tax-info">* <?php echo $this->__('plus tax and shipping') ?></span>
+            </div>
+        <?php else: ?>
+            <a href="<?php echo $product->getProductUrl() ?>" class="button">
+                <span><?php echo $this->__('Show details') ?></span>
+            </a>
+
+            <?php echo $this->getPriceHtml($product, true) ?>
+
+        <?php endif ?>
+
+        <div class="trunk">
+            <?php echo nl2br($product->getDescription()) ?>
+        </div>
+
+    </div>
+
+</div>
+

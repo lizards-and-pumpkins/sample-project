@@ -1,0 +1,35 @@
+<?php
+$_product = $this->getProduct();
+$buttonTitle = $this->__('Add to Cart');
+?>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-box">
+        <?php if(!$_product->isGrouped()): ?>
+            <input type="hidden"
+                   name="qty"
+                   id="qty"
+                   maxlength="12"
+                   value="<?php echo $this->getProductDefaultQty() * 1 ?>"
+                   title="<?php echo $this->__('Qty') ?>"
+                   class="input-text qty" />
+
+            <label for="simple-qty" class="dropdown">
+                <select id="simple-qty">
+                    <?php
+                    for ($i = 1; $i < 51; $i ++) {
+                        echo '<option value="' . $i . '">' . $i . '</option>';
+                    }
+                    ?>
+                </select>
+            </label>
+        <?php endif ?>
+        <button type="button"
+                title="<?php echo $buttonTitle ?>"
+                id="product-addtocart-button"
+                class="button strong cart"
+                onclick="productAddToCartForm.submit(this)">
+            <?php echo $buttonTitle ?>
+        </button>
+        <?php echo $this->getChildHtml('', true, true) ?>
+    </div>
+<?php endif ?>

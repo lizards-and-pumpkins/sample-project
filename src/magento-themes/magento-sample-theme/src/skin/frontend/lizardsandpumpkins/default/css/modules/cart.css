@@ -1,0 +1,237 @@
+#breadcrumbs {
+  margin: 20px 10px;
+  font-size: 12px;
+}
+#breadcrumbs li {
+  display: inline-block;
+  vertical-align: top;
+}
+
+table {
+  width: 100%;
+}
+table .nobr {
+  white-space: nowrap;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+table thead {
+  border-bottom: 1px solid #cccccc;
+}
+table thead th {
+  padding: 15px 0 5px 0;
+  width: 25%;
+}
+table tbody {
+  border-bottom: 1px solid #cccccc;
+}
+table tbody td {
+  padding: 10px 0;
+}
+table tbody td .product-name {
+  font-size: 16px;
+}
+table tbody td a {
+  color: #333333;
+}
+table tbody td a:hover {
+  color: #87BBA2;
+  text-decoration: none;
+}
+table tbody td img {
+  float: left;
+}
+table tbody td .product-info {
+  padding-left: 150px;
+}
+table tbody td .button {
+  display: inline-block;
+  margin-top: 10px;
+}
+table tbody td .button i {
+  top: 1px;
+}
+table tbody td .small-text {
+  margin: 10px 0;
+}
+table tbody td .remove {
+  position: relative;
+  font-size: 12px;
+}
+table tbody td .remove i {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  height: 18px;
+  width: 18px;
+  margin-right: 5px;
+  font-size: 18px;
+  line-height: 21px;
+  color: #ffffff;
+  text-align: center;
+  background: #cccccc;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+}
+table tbody td .remove:hover {
+  color: #87BBA2;
+}
+table tbody td .remove:hover i {
+  color: #ffffff;
+  background: #87BBA2;
+}
+table tbody tr:first-child td {
+  padding-top: 30px;
+}
+table tbody tr:last-child td {
+  padding-bottom: 30px;
+}
+
+@media (max-width: 767px) {
+  table tbody td {
+    padding: 10px 3px;
+    font-size: 12px;
+  }
+  table tbody td img {
+    float: none;
+    width: 100px;
+  }
+  table tbody td .product-info {
+    padding: 0;
+  }
+  table tbody td .product-name {
+    font-size: 12px;
+  }
+}
+.cart {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 50px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 1024px) {
+  .cart {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .cart {
+    padding: 0 5px;
+  }
+}
+.cart .row {
+  margin-top: 50px;
+}
+.cart .button-set.continue {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.cart .button-set.continue i {
+  position: absolute;
+  top: 15px;
+  margin-left: -20px;
+}
+.cart .button-set.continue i:after {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  border: solid #87BBA2;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+.cart .button-set.continue:hover i:after {
+  border-color: #ffffff;
+}
+.cart #shopping-cart-table .qty {
+  position: relative;
+  display: inline-block;
+}
+.cart #shopping-cart-table .qty input {
+  padding: 10px 5px;
+  text-align: center;
+}
+.cart #discount-coupon-form {
+  margin-bottom: 20px;
+  padding: 40px 0;
+  text-align: center;
+  border-bottom: 1px solid #cccccc;
+}
+.cart #discount-coupon-form label {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.cart #discount-coupon-form input {
+  width: 50%;
+}
+.cart h1 {
+  margin: 65px 0 30px 0;
+  font-size: 25px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.cart .button.cart {
+  font-size: 25px;
+}
+.cart .totals {
+  text-align: center;
+}
+.cart .totals div.title, .cart .totals div.price, .cart .totals div.summary-collapse {
+  display: inline-block;
+}
+.cart .totals div.grand-total {
+  margin: 30px 0 20px 0;
+}
+.cart .totals div.grand-total strong {
+  font-size: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .cart .span_4 {
+    float: none;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 767px) {
+  .cart .span_4,
+  .cart .span_8 {
+    float: none;
+    width: 100%;
+  }
+}
+.cart-empty {
+  text-align: center;
+}
+.cart-empty h1 {
+  margin: 40px 0;
+  font-size: 40px;
+}
+.cart-empty p {
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.cart-empty .button-set {
+  margin-top: 40px;
+}

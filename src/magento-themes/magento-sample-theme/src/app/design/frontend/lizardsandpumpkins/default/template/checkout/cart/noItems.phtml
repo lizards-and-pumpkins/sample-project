@@ -1,0 +1,12 @@
+<div class="cart-empty">
+    <h1><?php echo $this->__('Oh, unfortunately your shopping Cart is Empty') ?></h1>
+
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+    <p><?php echo $this->__('Please click the button to get back to the front page or use the navigation.') ?></p>
+    <div class="button-set">
+        <a href="<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>" class="button normal">
+            <?php echo $this->__('Front page') ?>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<?php
+/**
+ * Category layered navigation state
+ *
+ * @see Mage_Catalog_Block_Layer_State
+ */
+?>
+<?php $_filters = $this->getActiveFilters() ?>
+<?php if(!empty($_filters)): ?>
+<div id="filters-selected">
+    <p><?php echo $this->__('Selected filters') ?></p>
+
+    <ol>
+        <li>
+            <?php echo $this->__('Clear All') ?>
+            <a class="btn-remove" href="<?php echo $this->getClearUrl() ?>">
+                <i class="remove-icon"></i>
+            </a>
+        </li>
+    <?php foreach ($_filters as $_filter): ?>
+        <li>
+            <span class="label"><?php echo $this->__($_filter->getName()) ?>:</span>
+            <span class="value"><?php echo $this->stripTags($_filter->getLabel()) ?></span>
+
+            <?php $clearLinkUrl = $_filter->getClearLinkUrl() ?>
+            <?php if ($clearLinkUrl): ?>
+                <a  class="btn-previous"
+                    href="<?php echo $_filter->getRemoveUrl() ?>"
+                    title="<?php echo $this->__('Previous') ?>">
+                    <?php echo $this->__('Previous') ?>
+                </a>
+                <a  class="btn-remove"
+                    title="<?php echo $this->escapeHtml($_filter->getFilter()->getClearLinkText()) ?>"
+                    href="<?php echo $clearLinkUrl ?>">
+                    <?php echo $this->escapeHtml($_filter->getFilter()->getClearLinkText()) ?>
+                </a>
+
+            <?php else: ?>
+                <a  class="btn-remove"
+                    href="<?php echo $_filter->getRemoveUrl() ?>"
+                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>">
+                    <i class="remove-icon"></i>
+                </a>
+            <?php endif ?>
+        </li>
+    <?php endforeach ?>
+    </ol>
+</div>
+<?php endif ?>

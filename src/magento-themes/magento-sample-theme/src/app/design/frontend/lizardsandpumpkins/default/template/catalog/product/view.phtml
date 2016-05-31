@@ -1,0 +1,193 @@
+<?php
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php
+$_helper     = $this->helper('catalog/output');
+$_product    = $this->getProduct();
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+
+<div id="sticky-buy-box">
+    <div class="wrapper clearfix">
+        <img id="sticky-image" src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(55) ?>"
+             alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+             title="<?php echo $this->escapeHtml($this->getImageLabel()) ?>" />
+
+        <div class="inline">
+            <div class="block">
+                <h2><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h2>
+            </div>
+            <div class="block">
+                <?php echo $this->getPriceHtml($_product) ?>
+
+                <?php // Show price html with data from first element of grouped products array ?>
+                <?php if($_product->isGrouped()) {
+
+                    $associatedProducts = $_product->getTypeInstance(true)->getAssociatedProducts($_product);
+
+                    $first_element = array_shift($associatedProducts);
+
+                    echo $this->getPriceHtml($first_element, true);
+                } ?>
+            </div>
+        </div>
+
+        <?php if($_product->isSaleable()): ?>
+            <div class="add-to-cart">
+                <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button strong cart "
+                        onclick="productAddToCartForm.submit(this)">
+                    <?php echo $this->__('Add to Cart') ?>
+                </button>
+            </div>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="product-view">
+    <div class="product-essential">
+
+        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"
+            <?php if($_product->getOptions()): ?> enctype="multipart/form-data" <?php endif ?>>
+
+            <?php echo $this->getBlockHtml('formkey') ?>
+
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+
+            <div class="product">
+                <div class="row clearfix">
+                    <div class="product-image col span_5">
+                        <?php echo $this->getChildHtml('media') ?>
+                    </div>
+
+                    <div class="product-shop col span_7">
+                        <div class="product-name">
+                            <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                        </div>
+
+                        <?php if ($_product->getShortDescription()): ?>
+                            <div class="short-description">
+                                <?php echo $_helper->productAttribute(
+                                                                      $_product,
+                                                                      nl2br($_product->getShortDescription()),
+                                                                      'short_description') ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php echo $this->getTierPriceHtml() ?>
+                        <?php echo $this->getChildHtml('extrahint') ?>
+
+                        <?php if (!$this->hasOptions()): ?>
+                            <div class="add-to-box">
+                                <div class="price-wrapper">
+                                    <?php echo $this->getPriceHtml($_product) ?>
+                                </div>
+
+                                <?php if($_product->isSaleable()): ?>
+                                    <?php echo $this->getChildHtml('addtocart') ?>
+                                <?php endif ?>
+                            </div>
+
+                        <?php elseif (!$_product->isAvailable()): ?>
+                            <div class="add-to-box">
+                                <div class="price-wrapper">
+                                    <?php echo $this->getPriceHtml($_product) ?>
+                                </div>
+
+                                <p class="button cart sold-out"><?php echo $this->__('Sorry, sold out at the Moment') ?></p>
+                            </div>
+                        <?php endif ?>
+
+                        <?php echo $this->getChildHtml('other') ?>
+
+                        <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                            <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                        <?php endif ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+            <?php endif ?>
+        </form>
+
+        <script type="text/javascript">
+        //<![CDATA[
+            var productAddToCartForm = new VarienForm('product_addtocart_form');
+            productAddToCartForm.submit = function(button, url) {
+                if (this.validator.validate()) {
+                    var form = this.form;
+                    var oldUrl = form.action;
+
+                    if (url) {
+                       form.action = url;
+                    }
+                    var e = null;
+                    try {
+                        this.form.submit();
+                    } catch (e) {
+                    }
+                    this.form.action = oldUrl;
+                    if (e) {
+                        throw e;
+                    }
+
+                    if (button && button != 'undefined') {
+                        button.disabled = true;
+                    }
+                }
+            }.bind(productAddToCartForm);
+
+            productAddToCartForm.submitLight = function(button, url){
+                if(this.validator) {
+                    var nv = Validation.methods;
+                    delete Validation.methods['required-entry'];
+                    delete Validation.methods['validate-one-required'];
+                    delete Validation.methods['validate-one-required-by-name'];
+                    // Remove custom datetime validators
+                    for (var methodName in Validation.methods) {
+                        if (methodName.match(/^validate-datetime-.*/i)) {
+                            delete Validation.methods[methodName];
+                        }
+                    }
+
+                    if (this.validator.validate()) {
+                        if (url) {
+                            this.form.action = url;
+                        }
+                        this.form.submit();
+                    }
+                    Object.extend(Validation.methods, nv);
+                }
+            }.bind(productAddToCartForm);
+        //]]>
+        </script>
+
+    </div>
+
+    <div class="product-collateral">
+    <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
+        <div class="box-collateral <?php echo "box-{$alias}"?>">
+            <?php if ($title = $this->getChildData($alias, 'title')):?>
+            <h2><?php echo $this->escapeHtml($title) ?></h2>
+            <?php endif ?>
+            <?php echo $html ?>
+        </div>
+    <?php endforeach ?>
+    <?php echo $this->getChildHtml('upsell_products') ?>
+    <?php echo $this->getChildHtml('product_additional_data') ?>
+    </div>
+</div>

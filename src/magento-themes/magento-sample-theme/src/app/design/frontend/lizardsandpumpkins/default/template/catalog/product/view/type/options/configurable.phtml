@@ -1,0 +1,22 @@
+<?php
+$_product    = $this->getProduct();
+$_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+?>
+<?php if ($_product->isSaleable() && count($_attributes)):?>
+
+        <?php foreach($_attributes as $_attribute): ?>
+        <div class="option">
+            <p><?php echo $_attribute->getLabel() ?></p>
+            <label for="attribute<?php echo $_attribute->getAttributeId() ?>" class="dropdown">
+                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]"
+                        id="attribute<?php echo $_attribute->getAttributeId() ?>"
+                        class="required-entry super-attribute-select">
+                    <option><?php echo $this->__('Choose an Option...') ?></option>
+                </select>
+            </label>
+        </div>
+        <?php endforeach ?>
+    <script type="text/javascript">
+        var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+    </script>
+<?php endif ?>

@@ -1,0 +1,46 @@
+<?php $_order = $this->getOrder() ?>
+
+<p class="order-links">
+    <a href="<?php echo $this->getPrintAllInvoicesUrl($_order) ?>" onclick="this.target='_blank'">
+        <?php echo $this->__('Print All Invoices') ?>
+    </a>
+</p>
+
+<?php foreach ($_order->getInvoiceCollection() as $_invoice): ?>
+<h2 class="sub-title">
+    <?php echo $this->__('Invoice number ') ?><?php echo $_invoice->getIncrementId() ?>
+    <span class="separator">|</span>
+    <a href="<?php echo $this->getPrintInvoiceUrl($_invoice) ?>" onclick="this.target='_blank'">
+        <?php echo $this->__('Print Invoice') ?>
+    </a>
+</h2>
+
+<table class="data-table" id="my-invoice-table-<?php echo $_invoice->getId() ?>">
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Product') ?></th>
+            <th class="text-center"><?php echo $this->__('Price') ?></th>
+            <th class="text-center"><span class="nobr"><?php echo $this->__('Qty') ?></span></th>
+            <th class="text-right"><?php echo $this->__('Total') ?></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <?php echo $this->getInvoiceTotalsHtml($_invoice) ?>
+    </tfoot>
+    <?php $_items = $_invoice->getAllItems() ?>
+    <?php $_count = count($_items) ?>
+    <?php foreach ($_items as $_item): ?>
+    <?php if ($_item->getOrderItem()->getParentItem()) continue ?>
+    <tbody>
+        <?php echo $this->getItemHtml($_item) ?>
+    </tbody>
+    <?php endforeach ?>
+</table>
+<script type="text/javascript">decorateTable('my-invoice-table-<?php echo $_invoice->getId() ?>', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script>
+<?php echo $this->getInvoiceCommentsHtml($_invoice) ?>
+<?php endforeach ?>

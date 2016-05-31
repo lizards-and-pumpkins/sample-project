@@ -1,0 +1,44 @@
+.checkout-onestep-success {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 50px;
+  padding-top: 138px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 50px;
+  text-align: center;
+}
+@media screen and (max-width: 1024px) {
+  .checkout-onestep-success {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .checkout-onestep-success {
+    padding: 0 5px;
+  }
+}
+@media (max-width: 767px) {
+  .checkout-onestep-success {
+    padding-top: 20px;
+  }
+}
+.checkout-onestep-success h1 {
+  margin: 50px 0 20px 0;
+  font-size: 40px;
+}
+.checkout-onestep-success .description {
+  margin-bottom: 50px;
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.checkout-onestep-success .button-set {
+  margin-top: 50px;
+}
+.checkout-onestep-success .fb-page {
+  margin: 50px 0;
+}

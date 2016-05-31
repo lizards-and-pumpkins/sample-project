@@ -1,0 +1,27 @@
+<?php if($crumbs && is_array($crumbs)): ?>
+    <div id="breadcrumbs">
+        <ul>
+        <?php foreach($crumbs as $_crumbName => $_crumbInfo): ?>
+
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+
+                <a <?php if($_crumbInfo['link']): ?>
+                        href="<?php echo $_crumbInfo['link'] ?>"
+                    <?php else: ?>
+                        href="<?php echo Mage::helper('core/url')->getCurrentUrl() ?>"
+                    <?php endif ?>
+                    title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>"
+                    itemprop="url">
+                    <span itemprop="title"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></span>
+                </a>
+
+                <?php if(!$_crumbInfo['last']): ?>
+                    <span>/ </span>
+                <?php endif ?>
+
+            </li>
+
+        <?php endforeach ?>
+        </ul>
+    </div>
+<?php endif ?>

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="<?php echo $this->getLang() ?>"
+    lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+
+<body<?php echo $this->getBodyClass()?' class="white-shadow white' . $this->getBodyClass() . '"' : '' ?>>
+
+    <?php echo $this->getChildHtml('mobile.menu') ?>
+
+    <div id="page">
+        <?php echo $this->getChildHtml('after_body_start') ?>
+        <?php echo $this->getChildHtml('global_messages') ?>
+        <?php echo $this->getChildHtml('global_notices') ?>
+
+        <?php echo $this->getChildHtml('header') ?>
+
+        <div id="content" class="two-cols clearfix">
+            <?php echo $this->getChildHtml('breadcrumbs') ?>
+
+            <div class="side-bar col span_2">
+                <?php echo $this->getChildHtml('left') ?>
+            </div>
+
+            <div class="page-content col span_10">
+                <?php echo $this->getChildHtml('content') ?>
+            </div>
+        </div>
+
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+        <?php echo $this->getAbsoluteFooter() ?>
+    </div>
+
+</body>
+</html>

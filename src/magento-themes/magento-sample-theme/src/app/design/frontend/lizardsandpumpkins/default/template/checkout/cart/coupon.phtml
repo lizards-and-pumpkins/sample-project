@@ -1,0 +1,40 @@
+<form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost') ?>" method="post">
+
+    <label for="coupon_code"><?php echo $this->__('If you have a coupon code, please enter it here.') ?></label>
+    <input type="hidden" name="remove" id="remove-coupone" value="0" />
+
+    <div class="input-box clearfix">
+        <input class="input-text" id="coupon_code" name="coupon_code"
+               value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" />
+
+        <?php if(!strlen($this->getCouponCode())): ?>
+            <button type="button" title="<?php echo $this->__('Apply') ?>" class="button normal"
+                    onclick="discountForm.submit(false)" value="<?php echo $this->__('Apply') ?>">
+                <span><?php echo $this->__('Apply') ?></span>
+            </button>
+        <?php endif ?>
+
+        <?php if(strlen($this->getCouponCode())): ?>
+            <button type="button" title="<?php echo $this->__('Cancel') ?>" class="button normal"
+                    onclick="discountForm.submit(true)" value="<?php echo $this->__('Cancel') ?>">
+                <span><?php echo $this->__('Cancel') ?></span>
+            </button>
+        <?php endif ?>
+    </div>
+
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var discountForm = new VarienForm('discount-coupon-form');
+discountForm.submit = function (isRemove) {
+    if (isRemove) {
+        $('coupon_code').removeClassName('required-entry');
+        $('remove-coupone').value = "1";
+    } else {
+        $('coupon_code').addClassName('required-entry');
+        $('remove-coupone').value = "0";
+    }
+    return VarienForm.prototype.submit.bind(discountForm)();
+};
+//]]>
+</script>
