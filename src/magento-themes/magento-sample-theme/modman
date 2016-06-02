@@ -1,4 +1,2 @@
-src/app/etc/modules/LizardsAndPumpkins_DemoTheme.xml    app/etc/modules/LizardsAndPumpkins_DemoTheme.xml
-src/app/code/local/LizardsAndPumpkins/DemoTheme         app/code/local/LizardsAndPumpkins/DemoTheme
-src/app/design/frontend/lizardsandpumpkins/default      app/design/frontend/lizardsandpumpkins/default
-src/skin/frontend/lizardsandpumpkins/default            skin/frontend/lizardsandpumpkins/default
+app/design/frontend/lizardsandpumpkins/default      app/design/frontend/lizardsandpumpkins/default
+skin/frontend/lizardsandpumpkins/default            skin/frontend/lizardsandpumpkins/default
