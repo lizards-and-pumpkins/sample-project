@@ -23,10 +23,10 @@ ln -fsT ${releaseDir}/src/magento/js ${releaseDir}/pub/mage-js
 ln -fsT ${shareDir}/media ${releaseDir}/pub/media
 ln -fsT ${releaseDir}/src/magento/skin ${releaseDir}/pub/skin
 
-ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/css ${releaseDir}/pub/css
-ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/js ${releaseDir}/pub/js
-ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/images ${releaseDir}/pub/images
-ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/fonts ${releaseDir}/pub/fonts
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/pub/css ${releaseDir}/pub/css
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/pub/js ${releaseDir}/pub/js
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/pub/images ${releaseDir}/pub/images
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/pub/fonts ${releaseDir}/pub/fonts
 
 rm -fr ${releaseDir}/src/magento/media; ln -fsT ${shareDir}/media ${releaseDir}/src/magento/media
 #rm -rf ${releaseDir}/src/var && ln -fsT ${varDir} ${releaseDir}/src/var # TODO: Resolve
