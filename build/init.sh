@@ -1,14 +1,8 @@
 #!/bin/bash
 
-if [[ "$1" != /* ]]; then
-  echo "Absolute Release directory path must be specified as script argument (e.g. init.sh /path/)."
-  exit 1
-fi
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if [ ! -d "$1" ]; then
-  echo "Release directory $1 does not exist."
-  exit 1
-fi
+source "$DIR/check-release-directory-parameter.sh"
 
 releaseDir=$1
 shareDir=${releaseDir}/share
@@ -29,12 +23,12 @@ ln -fsT ${releaseDir}/src/magento/js ${releaseDir}/pub/mage-js
 ln -fsT ${shareDir}/media ${releaseDir}/pub/media
 ln -fsT ${releaseDir}/src/magento/skin ${releaseDir}/pub/skin
 
-#ln -fsT ${releaseDir}/vendor/lizards-and-pumpkins/catalog/pub/css ${releaseDir}/pub/css
-#ln -fsT ${releaseDir}/vendor/lizards-and-pumpkins/catalog/pub/js ${releaseDir}/pub/js
-#ln -fsT ${releaseDir}/vendor/lizards-and-pumpkins/catalog/pub/images ${releaseDir}/pub/images
-#ln -fsT ${releaseDir}/vendor/lizards-and-pumpkins/catalog/pub/fonts ${releaseDir}/pub/fonts
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/css ${releaseDir}/pub/css
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/js ${releaseDir}/pub/js
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/images ${releaseDir}/pub/images
+ln -fsT ${releaseDir}/src/lizards-and-pumpkins/catalog/pub/fonts ${releaseDir}/pub/fonts
 
 rm -fr ${releaseDir}/src/magento/media; ln -fsT ${shareDir}/media ${releaseDir}/src/magento/media
-#rm -rf ${releaseDir}/src/var && ln -fsT ${varDir} ${releaseDir}/src/var
+#rm -rf ${releaseDir}/src/var && ln -fsT ${varDir} ${releaseDir}/src/var # TODO: Resolve
 
 echo Symlinks created
