@@ -406,7 +406,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
         $this->changeFileLogPathInEnvironmentConfig($oldPath);
     }
 
-    public function testTwentyOneRunProductListingTitleSnippetRendererIsReturned()
+    public function testProductListingTitleSnippetRendererIsReturned()
     {
         $result = $this->factory->createProductListingTitleSnippetRenderer();
         $this->assertInstanceOf(DemoProjectProductListingTitleSnippetRenderer::class, $result);

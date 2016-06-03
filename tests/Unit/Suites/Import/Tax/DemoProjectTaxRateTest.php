@@ -10,7 +10,7 @@ use LizardsAndPumpkins\Import\Tax\Exception\InvalidTaxRateException;
  */
 class DemoProjectTaxRateTest extends \PHPUnit_Framework_TestCase
 {
-    public function testItImplementsTheTwentyOneRunTaxRateService()
+    public function testTaxServiceInterfaceIsImplemented()
     {
         $this->assertInstanceOf(TaxService::class, DemoProjectTaxRate::fromInt(19));
     }
