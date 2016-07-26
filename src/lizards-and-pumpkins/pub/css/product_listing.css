@@ -1,0 +1,46 @@
+@import "common.css";
+@import "product_grid.css";
+
+/* Filter navigation */
+.filter-container { max-height: 220px; margin: 0 0 20px; overflow-y: auto; position: relative }
+.filter-title, .filter-content { background: #ffffff }
+.filter-title { padding: 10px 15px; text-transform: uppercase; font-weight: bold }
+.filter-content { margin: 0; padding: 5px 15px; border-top: 3px solid #fafafa; list-style: none }
+.filter-content li a { padding: 10px 0; display: block }
+.filter-content li a span { float: right; font-size: 10px; line-height: 19px }
+.filter-color { padding: 10px 15px }
+.filter-color li { display: inline-block; margin: 4px }
+.filter-color li a { background: none; width: 26px; height: 26px; border-radius: 2px; border: #ececec solid 1px; padding: 0; font-size: 18px; text-align: center; line-height: 25px; color: #37a3d4 }
+
+/* Colors filters */
+.filter-color .black { background-color: #000000 }
+.filter-color .blue { background-color: #add9fe }
+.filter-color .charcoal { background-color: #625a57 }
+.filter-color .indigo { background-color: #8e2c85 }
+.filter-color .pink { background-color: #f0a6e8 }
+.filter-color .purple { background-color: #50105a }
+.filter-color .red { background-color: #ec6778 }
+.filter-color .royal-blue { background-color: #134d9c }
+.filter-color .silver { background-color: #dddddd }
+.filter-color .taupe { background-color: #fcd2a8 }
+.filter-color .white { background-color: #ffffff }
+
+/* Toolbar */
+.toolbar { margin: 0 15px 15px; background: #ffffff; padding: 0 30px }
+.toolbar .amount { float: left; width: 220px; font-size: 16px; margin: 25px 0 }
+.toolbar .limiter { float: right; margin: 25px 0 }
+.toolbar .limiter label { font-weight: bold }
+.toolbar .sort-by { float: left; margin: 19px 0; width: 300px }
+.toolbar .sort-by label { display: inline-block; font-weight: bold; margin: 7px 10px 0 0 }
+
+/* Pagination */
+#pagination { text-align: right; padding: 43px 0 0 0; font-size: 12px }
+#pagination li { display: inline-block; border: 1px solid #b3b3b3; margin-left: 2px; background-color: #f0f0f0 }
+#pagination a, #pagination .current { padding: 4px 9px; display: inline-block; color: #000000 }
+#pagination .spacing { padding: 4px 6px }
+#pagination .current { color: #ffffff; background-color: #37a3d4; border-color: #1280ac }
+#pagination .next, #pagination .prev { padding: 4px 7px; color: #3c3c3c }
+#pagination .prev { background-position: -6px -5px }
+
+/* Clearer */
+.toolbar:after { content: ""; display: block; height: 0; clear: both; visibility: hidden }

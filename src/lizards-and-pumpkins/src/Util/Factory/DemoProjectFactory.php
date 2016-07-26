@@ -55,6 +55,8 @@ use LizardsAndPumpkins\Logging\LogMessageWriter;
 use LizardsAndPumpkins\Logging\Writer\CompositeLogMessageWriter;
 use LizardsAndPumpkins\Logging\Writer\FileLogMessageWriter;
 use LizardsAndPumpkins\Logging\WritingLoggerDecorator;
+use LizardsAndPumpkins\Messaging\Command\CommandQueue;
+use LizardsAndPumpkins\Messaging\Event\DomainEventQueue;
 use LizardsAndPumpkins\Messaging\Queue;
 use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
@@ -89,6 +91,26 @@ class DemoProjectFactory implements Factory
      * @var ProductsPerPage
      */
     private $memoizedProductsPerPageConfig;
+
+    /**
+     * @var CommandQueue
+     */
+    private $eventMessageQueue;
+
+    /**
+     * @var CommandQueue
+     */
+    private $commandMessageQueue;
+
+    /**
+     * @var DomainEventQueue
+     */
+    private $eventQueue;
+
+    /**
+     * @var CommandQueue
+     */
+    private $commandQueue;
 
     /**
      * @return string[]
@@ -230,9 +252,39 @@ class DemoProjectFactory implements Factory
     }
 
     /**
-     * @return Queue
+     * @return DomainEventQueue
+     */
+    public function getEventQueue()
+    {
+        if (null === $this->eventQueue) {
+            $this->eventQueue = $this->createEventQueue();
+        }
+        return $this->eventQueue;
+    }
+
+    /**
+     * @return DomainEventQueue
      */
     public function createEventQueue()
+    {
+        return new DomainEventQueue($this->getEventMessageQueue());
+    }
+
+    /**
+     * @return Queue
+     */
+    public function getEventMessageQueue()
+    {
+        if (null === $this->eventMessageQueue) {
+            $this->eventMessageQueue = $this->createEventMessageQueue();
+        }
+        return $this->eventMessageQueue;
+    }
+
+    /**
+     * @return Queue
+     */
+    public function createEventMessageQueue()
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         $storagePath = $storageBasePath . '/event-queue/content';
@@ -242,9 +294,39 @@ class DemoProjectFactory implements Factory
     }
 
     /**
-     * @return Queue
+     * @return CommandQueue
+     */
+    public function getCommandQueue()
+    {
+        if (null === $this->commandQueue) {
+            $this->commandQueue = $this->createCommandQueue();
+        }
+        return $this->commandQueue;
+    }
+
+    /**
+     * @return CommandQueue
      */
     public function createCommandQueue()
+    {
+        return new CommandQueue($this->getCommandMessageQueue());
+    }
+
+    /**
+     * @return Queue
+     */
+    public function getCommandMessageQueue()
+    {
+        if (null === $this->commandMessageQueue) {
+            $this->commandMessageQueue = $this->createCommandMessageQueue();
+        }
+        return $this->commandMessageQueue;
+    }
+
+    /**
+     * @return Queue
+     */
+    public function createCommandMessageQueue()
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         $storagePath = $storageBasePath . '/command-queue/content';
@@ -423,7 +505,7 @@ class DemoProjectFactory implements Factory
      */
     public function createProductDetailsPageImageProcessingStrategySequence()
     {
-        $imageResizeStrategy = new ImageMagickInscribeStrategy(365, 340, 'white');
+        $imageResizeStrategy = new ImageMagickInscribeStrategy(489, 489, 'white');
 
         $strategySequence = new ImageProcessingStrategySequence();
         $strategySequence->add($imageResizeStrategy);
@@ -453,7 +535,7 @@ class DemoProjectFactory implements Factory
      */
     public function createProductListingImageProcessingStrategySequence()
     {
-        $imageResizeStrategy = new ImageMagickInscribeStrategy(188, 115, 'white');
+        $imageResizeStrategy = new ImageMagickInscribeStrategy(160, 160, 'white');
 
         $strategySequence = new ImageProcessingStrategySequence();
         $strategySequence->add($imageResizeStrategy);
@@ -483,7 +565,7 @@ class DemoProjectFactory implements Factory
      */
     public function createGalleyThumbnailImageProcessingStrategySequence()
     {
-        $imageResizeStrategy = new ImageMagickInscribeStrategy(48, 48, 'white');
+        $imageResizeStrategy = new ImageMagickInscribeStrategy(56, 56, 'white');
 
         $strategySequence = new ImageProcessingStrategySequence();
         $strategySequence->add($imageResizeStrategy);
@@ -732,7 +814,7 @@ class DemoProjectFactory implements Factory
      */
     public function createThemeLocator()
     {
-        return ThemeLocator::fromPath(__DIR__ . '/../../..');
+        return new ThemeLocator(__DIR__ . '/../../..');
     }
 
     /**

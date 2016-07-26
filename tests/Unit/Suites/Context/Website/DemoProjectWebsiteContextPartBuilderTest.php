@@ -28,9 +28,9 @@ class DemoProjectWebsiteContextPartBuilderTest extends \PHPUnit_Framework_TestCa
      */
     private function createStubRequestAndMapItToWebsiteWithGivenCode($testWebsiteCode)
     {
-        $dummyRequest = $this->getMock(HttpRequest::class, [], [], '', false);
+        $dummyRequest = $this->createMock(HttpRequest::class);
 
-        $dummyWebsite = $this->getMock(Website::class, [], [], '', false);
+        $dummyWebsite = $this->createMock(Website::class);
         $dummyWebsite->method('__toString')->willReturn($testWebsiteCode);
 
         $this->stubRequestToWebsiteMap->method('getWebsiteFromRequest')->with($dummyRequest)->willReturn($dummyWebsite);
@@ -40,7 +40,7 @@ class DemoProjectWebsiteContextPartBuilderTest extends \PHPUnit_Framework_TestCa
 
     protected function setUp()
     {
-        $this->stubRequestToWebsiteMap = $this->getMock(RequestToWebsiteMap::class, [], [], '', false);
+        $this->stubRequestToWebsiteMap = $this->createMock(RequestToWebsiteMap::class);
         $this->contextPartBuilder = new DemoProjectWebsiteContextPartBuilder($this->stubRequestToWebsiteMap);
     }
 

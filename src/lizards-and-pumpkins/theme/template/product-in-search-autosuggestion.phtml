@@ -1,0 +1,11 @@
+<?php
+/**
+ * @var \LizardsAndPumpkins\Import\TemplateRendering\Block\ProductBlock $this
+ */
+?>
+<li>
+    <a href="<?= $this->getProductUrl() ?>">
+        <img src="<?= $this->getMainProductImageUrl('search-autosuggestion') ?>" alt="<?= $this->getMainProductImageLabel() ?>" width="60" height="37"/>
+        <?= $this->getFirstValueOfProductAttribute('name') ?>
+    </a>
+</li>

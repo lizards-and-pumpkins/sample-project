@@ -34,7 +34,7 @@ class DemoProjectLocaleContextPartBuilderTest extends \PHPUnit_Framework_TestCas
      */
     private function setWebsiteWithGivenCodeOnRequest($websiteCode)
     {
-        $dummyWebsite = $this->getMock(Website::class, [], [], '', false);;
+        $dummyWebsite = $this->createMock(Website::class);
         $dummyWebsite->method('__toString')->willReturn($websiteCode);
         $this->stubRequestToWebsiteMap->method('getWebsiteFromRequest')->with($this->stubRequest)
             ->willReturn($dummyWebsite);
@@ -42,8 +42,8 @@ class DemoProjectLocaleContextPartBuilderTest extends \PHPUnit_Framework_TestCas
 
     protected function setUp()
     {
-        $this->stubRequest = $this->getMock(HttpRequest::class, [], [], '', false);
-        $this->stubRequestToWebsiteMap = $this->getMock(RequestToWebsiteMap::class, [], [], '', false);
+        $this->stubRequest = $this->createMock(HttpRequest::class);
+        $this->stubRequestToWebsiteMap = $this->createMock(RequestToWebsiteMap::class);
 
         $this->contextLocale = new DemoProjectLocaleContextPartBuilder($this->stubRequestToWebsiteMap);
     }

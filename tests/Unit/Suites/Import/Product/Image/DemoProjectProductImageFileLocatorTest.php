@@ -39,7 +39,7 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
     private function createStubPlaceholderImage($imageVariantCode)
     {
         $placeholderIdentifier = $this->stringStartsWith('product/placeholder/' . $imageVariantCode . '/');
-        $stubPlaceholderImage = $this->getMock(Image::class);
+        $stubPlaceholderImage = $this->createMock(Image::class);
         $this->stubImageStorage
             ->method('getFileReference')
             ->with($placeholderIdentifier)
@@ -49,12 +49,12 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->stubContext = $this->getMock(Context::class);
+        $this->stubContext = $this->createMock(Context::class);
         $this->stubContext->method('getValue')->willReturnMap([
             [Locale::CONTEXT_CODE, 'xx_XX'],
             [Website::CONTEXT_CODE, 'web123'],
         ]);
-        $this->stubImageStorage = $this->getMock(ImageStorage::class);
+        $this->stubImageStorage = $this->createMock(ImageStorage::class);
 
         $this->productImageFileLocator = new DemoProjectProductImageFileLocator($this->stubImageStorage);
     }
@@ -120,7 +120,7 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsAProductImageFileInstanceForValidVariantCodes($imageVariantCode)
     {
         $imageIdentifier = sprintf('product/%s/test.jpg', $imageVariantCode);
-        $stubImage = $this->getMock(Image::class);
+        $stubImage = $this->createMock(Image::class);
 
         $this->stubImageStorage->expects($this->once())
             ->method('getFileReference')

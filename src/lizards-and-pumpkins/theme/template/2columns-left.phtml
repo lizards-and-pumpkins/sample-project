@@ -1,0 +1,26 @@
+<?php
+/**
+ * @var \LizardsAndPumpkins\Import\TemplateRendering\Block $this
+ */
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <?= $this->getChildOutput('head') ?>
+</head>
+<body>
+<?= $this->getChildOutput('mobile.menu') ?>
+<div id="page">
+    <?= $this->getChildOutput('header') ?>
+    <div id="content" class="two-cols clearfix">
+        <div class="side-bar col span_2">
+            <?= $this->getChildOutput('left') ?>
+        </div>
+        <div class="page-content col span_10">
+            <?= $this->getChildOutput('content') ?>
+        </div>
+    </div>
+    <?= $this->getChildOutput('footer') ?>
+</div>
+</body>
+</html>

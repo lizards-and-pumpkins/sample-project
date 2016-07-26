@@ -40,11 +40,11 @@ class DemoProjectConfigurableProductViewTest extends \PHPUnit_Framework_TestCase
     
     protected function setUp()
     {
-        $this->stubProductViewLocator = $this->getMock(ProductViewLocator::class);
-        $this->mockProduct = $this->getMock(ConfigurableProduct::class, [], [], '', false);
-        $this->stubPageTitle = $this->getMock(DemoProjectProductPageTitle::class, [], [], '', false);
-        $this->stubProductImageFileLocator = $this->getMock(ProductImageFileLocator::class);
-        $this->stubProductImageFileLocator->method('getPlaceholder')->willReturn($this->getMock(Image::class));
+        $this->stubProductViewLocator = $this->createMock(ProductViewLocator::class);
+        $this->mockProduct = $this->createMock(ConfigurableProduct::class);
+        $this->stubPageTitle = $this->createMock(DemoProjectProductPageTitle::class);
+        $this->stubProductImageFileLocator = $this->createMock(ProductImageFileLocator::class);
+        $this->stubProductImageFileLocator->method('getPlaceholder')->willReturn($this->createMock(Image::class));
         $this->stubProductImageFileLocator->method('getVariantCodes')->willReturn(['large']);
 
         $this->productView = new DemoProjectConfigurableProductView(

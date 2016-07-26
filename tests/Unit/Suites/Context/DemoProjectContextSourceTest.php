@@ -19,7 +19,7 @@ class DemoProjectContextSourceTest extends \PHPUnit_Framework_TestCase
         ];
 
         /** @var ContextBuilder|\PHPUnit_Framework_MockObject_MockObject $stubContextBuilder */
-        $stubContextBuilder = $this->getMock(ContextBuilder::class);
+        $stubContextBuilder = $this->createMock(ContextBuilder::class);
         $stubContextBuilder->expects($this->once())
             ->method('createContextsFromDataSets')
             ->with($expectedContextMatrix);

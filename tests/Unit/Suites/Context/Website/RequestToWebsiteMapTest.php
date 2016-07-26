@@ -13,17 +13,17 @@ class RequestToWebsiteMapTest extends \PHPUnit_Framework_TestCase
     public function testWebsiteIsReturned()
     {
         $testUrlString = 'http://example.com/';
-        $dummyWebsite = $this->getMock(Website::class, [], [], '', false);
+        $dummyWebsite = $this->createMock(Website::class);
         
-        $stubHttpUrl = $this->getMock(HttpUrl::class, [], [], '', false);
+        $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->method('__toString')->willReturn($testUrlString);
         
         /** @var HttpRequest|\PHPUnit_Framework_MockObject_MockObject $stubHttpRequest */
-        $stubHttpRequest = $this->getMock(HttpRequest::class, [], [], '', false);
+        $stubHttpRequest = $this->createMock(HttpRequest::class);
         $stubHttpRequest->method('getUrl')->willReturn($stubHttpUrl);
 
         /** @var UrlToWebsiteMap|\PHPUnit_Framework_MockObject_MockObject $stubUrlToWebsiteMap */
-        $stubUrlToWebsiteMap = $this->getMock(UrlToWebsiteMap::class);
+        $stubUrlToWebsiteMap = $this->createMock(UrlToWebsiteMap::class);
         $stubUrlToWebsiteMap->method('getWebsiteCodeByUrl')->with($testUrlString)->willReturn($dummyWebsite);
 
         $requestToWebsiteMap = new RequestToWebsiteMap($stubUrlToWebsiteMap);

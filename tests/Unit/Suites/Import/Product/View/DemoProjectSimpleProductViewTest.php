@@ -36,10 +36,10 @@ class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->mockProduct = $this->getMock(Product::class);
-        $this->stubPageTitle = $this->getMock(DemoProjectProductPageTitle::class, [], [], '', false);
-        $this->mockProductImageFileLocator = $this->getMock(ProductImageFileLocator::class);
-        $this->mockProductImageFileLocator->method('getPlaceholder')->willReturn($this->getMock(Image::class));
+        $this->mockProduct = $this->createMock(Product::class);
+        $this->stubPageTitle = $this->createMock(DemoProjectProductPageTitle::class);
+        $this->mockProductImageFileLocator = $this->createMock(ProductImageFileLocator::class);
+        $this->mockProductImageFileLocator->method('getPlaceholder')->willReturn($this->createMock(Image::class));
         $this->mockProductImageFileLocator->method('getVariantCodes')->willReturn(['large']);
 
         $this->productView = new DemoProjectSimpleProductView(
@@ -180,12 +180,12 @@ class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
 
     public function testItUsesTheInjectedProductImageFileLocatorToGetPlaceholderImages()
     {
-        $stubAttributeList = $this->getMock(ProductAttributeList::class);
+        $stubAttributeList = $this->createMock(ProductAttributeList::class);
         $stubAttributeList->method('getAllAttributes')->willReturn([]);
         $this->mockProduct->method('getAttributes')->willReturn($stubAttributeList);
         $this->mockProduct->method('jsonSerialize')->willReturn(['images' => []]);
         $this->mockProduct->method('getImages')->willReturn(new \ArrayIterator([]));
-        $this->mockProduct->method('getContext')->willReturn($this->getMock(Context::class));
+        $this->mockProduct->method('getContext')->willReturn($this->createMock(Context::class));
 
         $this->mockProductImageFileLocator->expects($this->once())->method('getPlaceholder');
         json_encode($this->productView);

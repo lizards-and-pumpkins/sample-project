@@ -20,7 +20,8 @@ use LizardsAndPumpkins\Import\Tax\TaxServiceLocator;
 use LizardsAndPumpkins\Import\TemplateRendering\ThemeLocator;
 use LizardsAndPumpkins\Logging\Writer\CompositeLogMessageWriter;
 use LizardsAndPumpkins\Logging\WritingLoggerDecorator;
-use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
+use LizardsAndPumpkins\Messaging\Command\CommandQueue;
+use LizardsAndPumpkins\Messaging\Event\DomainEventQueue;
 use LizardsAndPumpkins\ProductListing\ContentDelivery\ProductsPerPage;
 use LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer;
 use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMap;
@@ -81,7 +82,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $masterFactory = new SampleMasterFactory();
         $masterFactory->register(new CommonFactory());
-        $masterFactory->register(new UnitTestFactory());
+        $masterFactory->register(new UnitTestFactory($this));
         $this->factory = new DemoProjectFactory();
         $masterFactory->register($this->factory);
     }
@@ -111,14 +112,14 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FileSearchEngine::class, $this->factory->createSearchEngine());
     }
 
-    public function testInMemoryEventQueueIsReturned()
+    public function testInDomainEventQueueIsReturned()
     {
-        $this->assertInstanceOf(FileQueue::class, $this->factory->createEventQueue());
+        $this->assertInstanceOf(DomainEventQueue::class, $this->factory->getEventQueue());
     }
 
-    public function testInMemoryCommandQueueIsReturned()
+    public function testCommandQueueIsReturned()
     {
-        $this->assertInstanceOf(FileQueue::class, $this->factory->createCommandQueue());
+        $this->assertInstanceOf(CommandQueue::class, $this->factory->getCommandQueue());
     }
 
     public function testWritingLoggerIsReturned()
@@ -146,7 +147,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsAListOfFacetFilterRequestFieldsForTheProductListings($fieldName)
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
-        $stubContext = $this->getMock(Context::class);
+        $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductListingFacetFilterRequestFields($stubContext));
         $this->assertContains($fieldName, $fieldCodes);
@@ -155,7 +156,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     public function testItInjectsThePriceAfterTheBrandFacetForProductListings()
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
-        $stubContext = $this->getMock(Context::class);
+        $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductListingFacetFilterRequestFields($stubContext));
         $brandPosition = array_search('brand', $fieldCodes, true);
@@ -169,7 +170,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsAListOfFacetFilterRequestFieldsForTheSearchResults($fieldName)
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
-        $stubContext = $this->getMock(Context::class);
+        $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductSearchFacetFilterRequestFields($stubContext));
         $this->assertContains($fieldName, $fieldCodes);
@@ -178,7 +179,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     public function testItInjectsThePriceAfterTheBrandFacetForSearchListings()
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
-        $stubContext = $this->getMock(Context::class);
+        $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductSearchFacetFilterRequestFields($stubContext));
         $brandPosition = array_search('brand', $fieldCodes, true);
@@ -373,7 +374,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsASearchFieldToRequestParamMap()
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
-        $stubContext = $this->getMock(Context::class);
+        $stubContext = $this->createMock(Context::class);
         $result = $this->factory->createSearchFieldToRequestParamMap($stubContext);
         $this->assertInstanceOf(SearchFieldToRequestParamMap::class, $result);
     }
@@ -381,7 +382,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsThePriceFacetFieldName()
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
-        $stubContext = $this->getMock(Context::class);
+        $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $this->assertSame('price_incl_tax_de', $this->factory->getPriceFacetFieldNameForContext($stubContext));
     }

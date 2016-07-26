@@ -1,0 +1,76 @@
+<?php
+/**
+ * @var \LizardsAndPumpkins\Import\TemplateRendering\Block $this
+ */
+?>
+<footer>
+    <div class="footer-newsletter">
+        <p class="subscribe-title">
+            <?= $this->__('Subscribe to our newsletter <span>and you\'ll get 5% discount on your next order</span>') ?>
+        </p>
+        <form action="<?= $this->getBaseUrl() ?>newsletter/subscriber/new/" method="post" class="span_6" id="newsletter-validate-detail">
+            <input type="text" name="email" id="newsletter" placeholder="<?= $this->__('Your email address') ?>" />
+            <button type="submit" class="button normal"><?= $this->__('Subscribe') ?></button>
+        </form>
+    </div>
+    <div class="footer-trust clearfix">
+        <div class="col span_6">
+            <p class="trust-title"><?= $this->__('Secure payment<br>with SSL encryption') ?></p>
+            <p><img src="<?= $this->getBaseUrl() ?>images/payment-icons.jpg" alt="" class="payment-icons" /></p>
+        </div>
+        <div class="col span_6">
+            <p class="trust-title"><?php echo $this->__('Do your have questions?<br>Please contat us!') ?></p>
+            <p><a href="tel:+49112233445566">+49(0)112233445566</a></p>
+        </div>
+    </div>
+
+    <div class="footer-wrapper clearfix">
+        <div class="footer-category">
+            <p class="title">Support</p>
+            <p class="link"><a href="<?= $this->getBaseUrl() ?>">Shipping</a></p>
+            <p class="link"><a href="#">Payment</a></p>
+            <p class="link"><a href="#">Revocation</a></p>
+            <p class="link"><a href="#">Contact</a></p>
+        </div>
+
+        <div class="footer-category">
+            <p class="title">Legals</p>
+            <p class="link"><a href="#">Terms</a></p>
+            <p class="link"><a href="#">Privacy</a></p>
+            <p class="link"><a href="#">Imprint</a></p>
+        </div>
+
+        <div class="footer-category">
+            <p class="title">Company</p>
+            <p class="link"><a href="#">About us</a></p>
+            <p class="link"><a href="#">Stores</a></p>
+            <p class="link"><a href="#">Joby</a></p>
+            <p class="link"><a href="#">Team</a></p>
+        </div>
+
+        <div class="footer-category">
+            <p class="title">Social</p>
+            <p class="link">
+                <a href="https://www.facebook.com" title="LP @ Facebook" target="_blank">
+                    <svg class="icon facebook" viewBox="0 0 1024 1024">
+                        <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#facebook"></use>
+                    </svg>
+                </a>
+            </p>
+            <p class="link">
+                <a href="https://twitter.com" title="LP @ Twitter" target="_blank">
+                    <svg class="icon twitter" viewBox="0 0 1024 1024">
+                        <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#twitter"></use>
+                    </svg>
+                </a>
+            </p>
+            <p class="link">
+                <a href="https://www.youtube.com" title="LP @ Youtube" target="_blank">
+                    <svg class="icon youtube" viewBox="0 0 1024 1024">
+                        <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#youtube"></use>
+                    </svg>
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>

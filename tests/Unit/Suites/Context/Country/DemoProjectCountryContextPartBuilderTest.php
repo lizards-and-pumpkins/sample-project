@@ -51,10 +51,10 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
      */
     private function mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest($testCountryCode)
     {
-        $dummyCountry = $this->getMock(Country::class, [], [], '', false);
+        $dummyCountry = $this->createMock(Country::class);
         $dummyCountry->method('__toString')->willReturn($testCountryCode);
 
-        $dummyWebsite = $this->getMock(Website::class, [], [], '', false);
+        $dummyWebsite = $this->createMock(Website::class);
 
         $this->stubRequestToWebsiteMap->method('getWebsiteFromRequest')->with($this->stubRequest)
             ->willReturn($dummyWebsite);
@@ -64,9 +64,9 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
 
     protected function setUp()
     {
-        $this->stubRequest = $this->getMock(HttpRequest::class, [], [], '', false);
-        $this->stubRequestToWebsiteMap = $this->getMock(RequestToWebsiteMap::class, [], [], '', false);
-        $this->stubWebsiteToCountryMap = $this->getMock(WebsiteToCountryMap::class);
+        $this->stubRequest = $this->createMock(HttpRequest::class);
+        $this->stubRequestToWebsiteMap = $this->createMock(RequestToWebsiteMap::class);
+        $this->stubWebsiteToCountryMap = $this->createMock(WebsiteToCountryMap::class);
 
         $this->contextPartBuilder = new DemoProjectCountryContextPartBuilder(
             $this->stubRequestToWebsiteMap,

@@ -21,7 +21,7 @@ class DemoProjectProductPageTitleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->stubProductView = $this->getMock(ProductView::class);
+        $this->stubProductView = $this->createMock(ProductView::class);
         $this->productPageTitle = new DemoProjectProductPageTitle();
     }
 
