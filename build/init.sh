@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source "$DIR/check-release-directory-parameter.sh"
+source "$DIR/checkReleaseDirectoryParameter.sh"
 
 releaseDir=$1
 shareDir=${releaseDir}/share
