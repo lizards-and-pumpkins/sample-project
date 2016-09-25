@@ -47,7 +47,7 @@ define(
         }
 
         function addLanguageSwitchEventListeners() {
-            var header = Array.prototype.pop.call(document.getElementsByTagName('header')),
+            var header = document.getElementsByTagName('header')[0],
                 content = document.getElementById('content');
 
             document.getElementById('language-switcher').addEventListener('click', function () {
