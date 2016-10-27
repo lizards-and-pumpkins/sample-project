@@ -10,7 +10,7 @@ class WebsiteToCountryMap
 
     private $map = [
         'de' => 'DE',
-        'en' => 'DE',
+        'en' => 'EN',
         'fr' => 'FR',
     ];
 
