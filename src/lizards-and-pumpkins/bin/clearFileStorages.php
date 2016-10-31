@@ -15,7 +15,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 class ClearFileStorage extends BaseCliCommand
 {
     /**
-     * @var MasterFactory
+     * @var MasterFactory|CommonFactory
      */
     private $factory;
 
@@ -40,8 +40,8 @@ class ClearFileStorage extends BaseCliCommand
     final protected function execute(CLImate $climate)
     {
         $this->factory->createDataPoolWriter()->clear();
-        $this->factory->createCommandQueue()->clear();
-        $this->factory->createEventQueue()->clear();
+        $this->factory->getCommandMessageQueue()->clear();
+        $this->factory->getEventMessageQueue()->clear();
 
         $this->output('Cleared data pool and queues');
         $this->output(sprintf("Storage dir: %s\n", $this->factory->getFileStorageBasePathConfig()));
