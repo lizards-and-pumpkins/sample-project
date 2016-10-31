@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z $LP_FILE_STORAGE_BASE_PATH ]; then
-  echo "LP_FILE_STORAGE_BASE_PATH is not sen in environment."
+  echo "LP_FILE_STORAGE_BASE_PATH is not seen in environment."
   exit 1
 fi
 
