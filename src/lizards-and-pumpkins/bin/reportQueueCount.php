@@ -40,7 +40,10 @@ class ReportQueueCount extends BaseCliCommand
 
     protected function execute(CLImate $climate)
     {
-        $tableData = $this->formatTableData($this->factory->getCommandQueue(), $this->factory->getEventQueue());
+        $tableData = $this->formatTableData(
+            $this->factory->getCommandMessageQueue(),
+            $this->factory->getEventMessageQueue()
+        );
         $climate->table($tableData);
     }
 
