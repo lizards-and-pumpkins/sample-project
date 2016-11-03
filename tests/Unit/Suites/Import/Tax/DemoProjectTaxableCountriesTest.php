@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Tax;
 
 /**
@@ -19,9 +21,8 @@ class DemoProjectTaxableCountriesTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider availableCountriesDataProvider
-     * @param string $availableCountry
      */
-    public function testItReturnsTheAvailableCountries($availableCountry)
+    public function testItReturnsTheAvailableCountries(string $availableCountry)
     {
         $this->assertContains($availableCountry, $this->countries->getCountries());
     }
@@ -29,7 +30,7 @@ class DemoProjectTaxableCountriesTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function availableCountriesDataProvider()
+    public function availableCountriesDataProvider() : array
     {
         return [
             ['DE'],

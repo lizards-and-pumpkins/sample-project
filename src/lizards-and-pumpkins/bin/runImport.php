@@ -1,18 +1,17 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins;
 
 use League\CLImate\CLImate;
-use LizardsAndPumpkins\DataPool\DataPoolWriter;
 use LizardsAndPumpkins\Import\CatalogImport;
 use LizardsAndPumpkins\Import\Image\NullProductImageImportCommandFactory;
 use LizardsAndPumpkins\Import\Image\UpdatingProductImageImportCommandFactory;
 use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
-use LizardsAndPumpkins\Messaging\Queue;
-use LizardsAndPumpkins\Messaging\QueueMessageConsumer;
 use LizardsAndPumpkins\ProductDetail\Import\UpdatingProductImportCommandFactory;
 use LizardsAndPumpkins\ProductListing\Import\UpdatingProductListingImportCommandFactory;
 use LizardsAndPumpkins\Util\BaseCliCommand;
@@ -26,7 +25,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 class RunImport extends BaseCliCommand
 {
     /**
-     * @var MasterFactory
+     * @var SampleMasterFactory
      */
     private $factory;
 
@@ -123,7 +122,6 @@ class RunImport extends BaseCliCommand
     {
         $this->output('Clearing queue and data pool before import...');
 
-        /** @var DataPoolWriter $dataPoolWriter */
         $dataPoolWriter = $this->factory->createDataPoolWriter();
         $dataPoolWriter->clear();
     }
@@ -153,26 +151,15 @@ class RunImport extends BaseCliCommand
     private function processCommandQueue()
     {
         $this->output('Processing command queue...');
-        $this->processQueueWhileMessagesPending(
-            $this->factory->getCommandMessageQueue(),
-            $this->factory->createCommandConsumer()
-        );
+        $commandConsumer = $this->factory->createCommandConsumer();
+        $commandConsumer->process();
     }
 
     private function processDomainEventQueue()
     {
         $this->output('Processing domain event queue...');
-        $this->processQueueWhileMessagesPending(
-            $this->factory->getEventMessageQueue(),
-            $this->factory->createDomainEventConsumer()
-        );
-    }
-
-    private function processQueueWhileMessagesPending(Queue $queue, QueueMessageConsumer $consumer)
-    {
-        while ($queue->count()) {
-            $consumer->process();
-        }
+        $domainEventConsumer = $this->factory->createDomainEventConsumer();
+        $domainEventConsumer->process();
     }
 }
 

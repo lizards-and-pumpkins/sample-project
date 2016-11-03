@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Locale;
 
 use LizardsAndPumpkins\Context\ContextBuilder;
@@ -26,10 +28,7 @@ class DemoProjectLocaleContextPartBuilder implements ContextPartBuilder
         $this->requestToWebsiteMap = $requestToWebsiteMap;
     }
 
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode() : string
     {
         return Locale::CONTEXT_CODE;
     }
@@ -38,7 +37,7 @@ class DemoProjectLocaleContextPartBuilder implements ContextPartBuilder
      * @param mixed[] $inputDataSet
      * @return string
      */
-    public function getValue(array $inputDataSet)
+    public function getValue(array $inputDataSet) : string
     {
         if (isset($inputDataSet[Locale::CONTEXT_CODE])) {
             return (string) $inputDataSet[Locale::CONTEXT_CODE];
@@ -53,11 +52,7 @@ class DemoProjectLocaleContextPartBuilder implements ContextPartBuilder
         );
     }
 
-    /**
-     * @param HttpRequest $request
-     * @return string
-     */
-    private function getLocaleFromRequest(HttpRequest $request)
+    private function getLocaleFromRequest(HttpRequest $request) : string
     {
         $websiteCode = (string) $this->requestToWebsiteMap->getWebsiteFromRequest($request);
 

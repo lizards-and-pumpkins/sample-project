@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
+use LizardsAndPumpkins\Import\Product\Product;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 
@@ -42,45 +45,29 @@ class DemoProjectConfigurableProductView extends AbstractConfigurableProductView
         $this->productImageFileLocator = $productImageFileLocator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOriginalProduct()
+    public function getOriginalProduct() : Product
     {
         return $this->product;
     }
 
-    /**
-     * @param ProductAttribute $attribute
-     * @return bool
-     */
-    final protected function isAttributePublic(ProductAttribute $attribute)
+    final protected function isAttributePublic(ProductAttribute $attribute) : bool
     {
         return in_array($attribute->getCode(), ['backorders']) ?
             false :
             parent::isAttributePublic($attribute);
     }
 
-    /**
-     * @return ProductImageFileLocator
-     */
-    final protected function getProductImageFileLocator()
+    final protected function getProductImageFileLocator() : ProductImageFileLocator
     {
         return $this->productImageFileLocator;
     }
 
-    /**
-     * @return ProductViewLocator
-     */
-    final protected function getProductViewLocator()
+    final protected function getProductViewLocator() : ProductViewLocator
     {
         return $this->productViewLocator;
     }
 
-    /**
-     * @return string
-     */
-    final public function getProductPageTitle()
+    final public function getProductPageTitle() : string
     {
         return $this->pageTitle->forProductView($this);
     }

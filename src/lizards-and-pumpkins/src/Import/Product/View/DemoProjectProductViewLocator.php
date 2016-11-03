@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
@@ -24,11 +26,7 @@ class DemoProjectProductViewLocator implements ProductViewLocator
         $this->pageTitle = $pageTitle;
     }
 
-    /**
-     * @param Product $product
-     * @return ProductView
-     */
-    public function createForProduct(Product $product)
+    public function createForProduct(Product $product) : ProductView
     {
         if ($product instanceof ConfigurableProduct) {
             return new DemoProjectConfigurableProductView($this, $product, $this->pageTitle, $this->imageFileLocator);

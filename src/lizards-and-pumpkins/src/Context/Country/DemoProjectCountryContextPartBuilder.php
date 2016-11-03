@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Country;
 
 use LizardsAndPumpkins\Context\ContextBuilder;
@@ -32,7 +34,7 @@ class DemoProjectCountryContextPartBuilder implements ContextPartBuilder
 
     /**
      * @param mixed[] $inputDataSet
-     * @return string
+     * @return string|null
      */
     public function getValue(array $inputDataSet)
     {
@@ -47,19 +49,12 @@ class DemoProjectCountryContextPartBuilder implements ContextPartBuilder
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode() : string
     {
         return Country::CONTEXT_CODE;
     }
 
-    /**
-     * @param HttpRequest $httpRequest
-     * @return string
-     */
-    private function getCountryCodeFromRequest(HttpRequest $httpRequest)
+    private function getCountryCodeFromRequest(HttpRequest $httpRequest) : string
     {
         if ($httpRequest->hasCookie(self::COOKIE_NAME)) {
             $cookieData = json_decode($httpRequest->getCookieValue(self::COOKIE_NAME), true);

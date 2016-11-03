@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Context\Context;
 use LizardsAndPumpkins\Import\ImageStorage\Image;
+use LizardsAndPumpkins\Import\Product\Image\ProductImageList;
 use LizardsAndPumpkins\Import\Product\Product;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
 use LizardsAndPumpkins\Import\Product\ProductAttributeList;
@@ -146,7 +149,7 @@ class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
         $this->mockProduct->method('getFirstValueOfAttribute')->with('backorders')->willReturn('true');
         $result = $this->productView->getFirstValueOfAttribute($stockAttributeCode);
 
-        $this->assertSame(DemoProjectSimpleProductView::MAX_PURCHASABLE_QTY, $result);
+        $this->assertSame((string) DemoProjectSimpleProductView::MAX_PURCHASABLE_QTY, $result);
     }
 
     public function testMaximumPurchasableQuantityIsReturnedIfProductQuantityIsGreaterThanMaximumPurchasableQuantity()
@@ -160,7 +163,7 @@ class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
         $this->mockProduct->method('getAttributes')->willReturn($attributeList);
         $result = $this->productView->getFirstValueOfAttribute($stockAttributeCode);
 
-        $this->assertSame(DemoProjectSimpleProductView::MAX_PURCHASABLE_QTY, $result);
+        $this->assertSame((string) DemoProjectSimpleProductView::MAX_PURCHASABLE_QTY, $result);
     }
 
     public function testItReturnsTheOriginalStockQtyIfBackordersIsFalseAndQtyIsSmallerThanMaximumPurchasableQuantity()
@@ -175,7 +178,7 @@ class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
         $this->mockProduct->method('getFirstValueOfAttribute')->with('backorders')->willReturn('false');
         $result = $this->productView->getFirstValueOfAttribute($stockAttributeCode);
 
-        $this->assertSame($testAttributeValue, $result);
+        $this->assertSame((string) $testAttributeValue, $result);
     }
 
     public function testItUsesTheInjectedProductImageFileLocatorToGetPlaceholderImages()
@@ -184,7 +187,7 @@ class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
         $stubAttributeList->method('getAllAttributes')->willReturn([]);
         $this->mockProduct->method('getAttributes')->willReturn($stubAttributeList);
         $this->mockProduct->method('jsonSerialize')->willReturn(['images' => []]);
-        $this->mockProduct->method('getImages')->willReturn(new \ArrayIterator([]));
+        $this->mockProduct->method('getImages')->willReturn(new ProductImageList());
         $this->mockProduct->method('getContext')->willReturn($this->createMock(Context::class));
 
         $this->mockProductImageFileLocator->expects($this->once())->method('getPlaceholder');

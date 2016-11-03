@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Tax;
 
 use LizardsAndPumpkins\Import\Price\Price;
@@ -24,8 +26,7 @@ class DemoProjectTaxRateTest extends \PHPUnit_Framework_TestCase
 
     public function testItThrowsAnExceptionIfTheTaxRateIsNotAnInteger()
     {
-        $this->expectException(InvalidTaxRateException::class);
-        $this->expectExceptionMessage('The tax rate has to be an integer value, got "');
+        $this->expectException(\TypeError::class);
         DemoProjectTaxRate::fromInt('10');
     }
 
@@ -42,12 +43,9 @@ class DemoProjectTaxRateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param int $rate
-     * @param int $price
-     * @param int $expected
      * @dataProvider taxRateExampleProvider
      */
-    public function testItAppliesTheTaxRate($rate, $price, $expected)
+    public function testItAppliesTheTaxRate(int $rate, int $price, int $expected)
     {
         $result = DemoProjectTaxRate::fromInt($rate)->applyTo(Price::fromFractions($price));
         $message = sprintf('Expected tax rate %s applied to %d to be %s, got %s', $rate, $price, $expected, $result);
@@ -57,7 +55,7 @@ class DemoProjectTaxRateTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function taxRateExampleProvider()
+    public function taxRateExampleProvider() : array
     {
         // rate, price, expected
         return [

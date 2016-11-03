@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Product\Image;
 
 use LizardsAndPumpkins\Context\Context;
 use LizardsAndPumpkins\Context\Locale\Locale;
+use LizardsAndPumpkins\Import\FileStorage\File;
 use LizardsAndPumpkins\Import\FileStorage\StorageAgnosticFileUri;
 use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageFileNameException;
 use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageVariantCodeException;
-use LizardsAndPumpkins\Import\ImageStorage\Image;
 use LizardsAndPumpkins\Import\ImageStorage\ImageStorage;
 use LizardsAndPumpkins\Import\Product\View\ProductImageFileLocator;
 
@@ -37,13 +39,7 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
         $this->imageStorage = $imageStorage;
     }
 
-    /**
-     * @param string $imageFileName
-     * @param string $imageVariantCode
-     * @param Context $context
-     * @return Image
-     */
-    public function get($imageFileName, $imageVariantCode, Context $context)
+    public function get(string $imageFileName, string $imageVariantCode, Context $context) : File
     {
         $this->validateImageFileName($imageFileName);
         $this->validateImageVariantCode($imageVariantCode);
@@ -56,31 +52,17 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
         return $this->imageStorage->getFileReference($imageIdentifier);
     }
 
-    /**
-     * @param string $imageFileName
-     * @param string $imageVariantCode
-     * @return StorageAgnosticFileUri
-     */
-    private function buildIdentifier($imageFileName, $imageVariantCode)
+    private function buildIdentifier(string $imageFileName, string $imageVariantCode) : StorageAgnosticFileUri
     {
         return $this->createIdentifierForString(sprintf('product/%s/%s', $imageVariantCode, $imageFileName));
     }
 
-    /**
-     * @param string $identifier
-     * @return StorageAgnosticFileUri
-     */
-    private function createIdentifierForString($identifier)
+    private function createIdentifierForString(string $identifier) : StorageAgnosticFileUri
     {
         return StorageAgnosticFileUri::fromString($identifier);
     }
 
-    /**
-     * @param string $imageVariantCode
-     * @param Context $context
-     * @return Image
-     */
-    public function getPlaceholder($imageVariantCode, Context $context)
+    public function getPlaceholder(string $imageVariantCode, Context $context) : File
     {
         $localeCode = $context->getValue(Locale::CONTEXT_CODE);
         $identifier = sprintf('product/placeholder/%s/placeholder-image-%s.jpg', $imageVariantCode, $localeCode);
@@ -88,11 +70,7 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
         return $this->imageStorage->getFileReference($placeholderIdentifier);
     }
 
-    /**
-     * @param string $imageVariantCode
-     * @return string
-     */
-    private function getInvalidTypeStringRepresentation($imageVariantCode)
+    private function getInvalidTypeStringRepresentation(string $imageVariantCode) : string
     {
         if (is_string($imageVariantCode)) {
             return $imageVariantCode;
@@ -103,10 +81,7 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
         return gettype($imageVariantCode);
     }
 
-    /**
-     * @param string $imageFileName
-     */
-    private function validateImageFileName($imageFileName)
+    private function validateImageFileName(string $imageFileName)
     {
         if (!is_string($imageFileName)) {
             throw new InvalidImageFileNameException(sprintf(
@@ -116,10 +91,7 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
         }
     }
 
-    /**
-     * @param string $imageVariantCode
-     */
-    private function validateImageVariantCode($imageVariantCode)
+    private function validateImageVariantCode(string $imageVariantCode)
     {
         if (!in_array($imageVariantCode, $this->imageVariantCodes)) {
             throw new InvalidImageVariantCodeException(sprintf(
@@ -133,16 +105,12 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
     /**
      * @return string[]
      */
-    public function getVariantCodes()
+    public function getVariantCodes() : array
     {
         return $this->imageVariantCodes;
     }
 
-    /**
-     * @param string $imageFileName
-     * @return bool
-     */
-    private function isImageFileAvailable($imageFileName)
+    private function isImageFileAvailable(string $imageFileName) : bool
     {
         return trim($imageFileName) !== '';
     }

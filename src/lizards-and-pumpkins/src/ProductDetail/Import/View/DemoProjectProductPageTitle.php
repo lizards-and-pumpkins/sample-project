@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\ProductDetail\Import\View;
 
 use LizardsAndPumpkins\Import\Product\View\ProductView;
@@ -10,11 +12,7 @@ class DemoProjectProductPageTitle
 
     const PRODUCT_TITLE_SUFFIX = ' | Demo Project';
 
-    /**
-     * @param ProductView $productView
-     * @return string
-     */
-    public function forProductView(ProductView $productView)
+    public function forProductView(ProductView $productView) : string
     {
         $base = $productView->getFirstValueOfAttribute('brand') . ' ' . $productView->getFirstValueOfAttribute('name');
 

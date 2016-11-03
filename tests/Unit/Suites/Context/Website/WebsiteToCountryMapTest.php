@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Context\Country\Country;
@@ -44,8 +46,6 @@ class WebsiteToCountryMapTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider websiteToCountryDataProvider
-     * @param Website $website
-     * @param Country $expectedCountry
      */
     public function testItReturnsTheCountryForAGivenWebsite(Website $website, Country $expectedCountry)
     {
@@ -55,7 +55,7 @@ class WebsiteToCountryMapTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function websiteToCountryDataProvider()
+    public function websiteToCountryDataProvider() : array
     {
         return [
             [Website::fromString('de'), Country::from2CharIso3166('DE')],

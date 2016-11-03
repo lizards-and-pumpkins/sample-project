@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @var \LizardsAndPumpkins\Import\TemplateRendering\Block $this
  */
@@ -19,7 +22,7 @@
             <p><img src="<?= $this->getBaseUrl() ?>images/payment-icons.jpg" alt="" class="payment-icons" /></p>
         </div>
         <div class="col span_6">
-            <p class="trust-title"><?php echo $this->__('Do your have questions?<br>Please contat us!') ?></p>
+            <p class="trust-title"><?= $this->__('Do your have questions?<br>Please contat us!') ?></p>
             <p><a href="tel:+49112233445566">+49(0)112233445566</a></p>
         </div>
     </div>

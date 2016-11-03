@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context;
 
 use LizardsAndPumpkins\Context\Locale\Locale;
@@ -10,7 +12,7 @@ class DemoProjectContextSource extends ContextSource
     /**
      * @return array[]
      */
-    final protected function getContextMatrix()
+    final protected function getContextMatrix() : array
     {
         return [
             [Website::CONTEXT_CODE => 'de', Locale::CONTEXT_CODE => 'de_DE'],

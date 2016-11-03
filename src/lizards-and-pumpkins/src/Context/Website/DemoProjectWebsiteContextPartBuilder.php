@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Context\ContextBuilder;
@@ -37,10 +39,7 @@ class DemoProjectWebsiteContextPartBuilder implements ContextPartBuilder
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode() : string
     {
         return Website::CONTEXT_CODE;
     }

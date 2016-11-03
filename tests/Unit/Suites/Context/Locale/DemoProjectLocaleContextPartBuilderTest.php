@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Locale;
 
 use LizardsAndPumpkins\Context\ContextBuilder;
@@ -29,10 +31,7 @@ class DemoProjectLocaleContextPartBuilderTest extends \PHPUnit_Framework_TestCas
      */
     private $stubRequestToWebsiteMap;
 
-    /**
-     * @param string $websiteCode
-     */
-    private function setWebsiteWithGivenCodeOnRequest($websiteCode)
+    private function setWebsiteWithGivenCodeOnRequest(string $websiteCode)
     {
         $dummyWebsite = $this->createMock(Website::class);
         $dummyWebsite->method('__toString')->willReturn($websiteCode);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Import\Product\Product;
@@ -35,38 +37,24 @@ class DemoProjectSimpleProductView extends AbstractProductView
         $this->productImageFileLocator = $productImageFileLocator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    final public function getOriginalProduct()
+    final public function getOriginalProduct() : Product
     {
         return $this->product;
     }
 
-    /**
-     * @return ProductImageFileLocator
-     */
-    final protected function getProductImageFileLocator()
+    final protected function getProductImageFileLocator() : ProductImageFileLocator
     {
         return $this->productImageFileLocator;
     }
 
-    /**
-     * @param ProductAttribute $attribute
-     * @return bool
-     */
-    final protected function isAttributePublic(ProductAttribute $attribute)
+    final protected function isAttributePublic(ProductAttribute $attribute) : bool
     {
         return (in_array($attribute->getCode(), ['backorders'])) ?
             false :
             parent::isAttributePublic($attribute);
     }
 
-    /**
-     * @param ProductAttribute $attribute
-     * @return ProductAttribute
-     */
-    final protected function getProcessedAttribute(ProductAttribute $attribute)
+    final protected function getProcessedAttribute(ProductAttribute $attribute) : ProductAttribute
     {
         if ($attribute->getCode() == 'stock_qty') {
             return $this->getBoundedStockQtyAttribute($attribute);
@@ -74,19 +62,12 @@ class DemoProjectSimpleProductView extends AbstractProductView
         return parent::getProcessedAttribute($attribute);
     }
 
-    /**
-     * @return string
-     */
-    final public function getProductPageTitle()
+    final public function getProductPageTitle() : string
     {
         return $this->pageTitle->forProductView($this);
     }
 
-    /**
-     * @param ProductAttribute $stockQty
-     * @return ProductAttribute
-     */
-    private function getBoundedStockQtyAttribute(ProductAttribute $stockQty)
+    private function getBoundedStockQtyAttribute(ProductAttribute $stockQty) : ProductAttribute
     {
         if ($this->isOverMaxQtyToShow($stockQty) || $this->hasBackorders()) {
             return $this->createStockQtyAttributeAtMaximumPurchasableLevel($stockQty);
@@ -95,28 +76,17 @@ class DemoProjectSimpleProductView extends AbstractProductView
         return $stockQty;
     }
 
-    /**
-     * @param ProductAttribute $stockQty
-     * @return bool
-     */
-    private function isOverMaxQtyToShow(ProductAttribute $stockQty)
+    private function isOverMaxQtyToShow(ProductAttribute $stockQty) : bool
     {
         return $stockQty->getValue() > self::MAX_PURCHASABLE_QTY;
     }
 
-    /**
-     * @return bool
-     */
-    private function hasBackorders()
+    private function hasBackorders() : bool
     {
         return $this->product->getFirstValueOfAttribute('backorders') === 'true';
     }
 
-    /**
-     * @param ProductAttribute $attribute
-     * @return ProductAttribute
-     */
-    private function createStockQtyAttributeAtMaximumPurchasableLevel(ProductAttribute $attribute)
+    private function createStockQtyAttributeAtMaximumPurchasableLevel(ProductAttribute $attribute) : ProductAttribute
     {
         return new ProductAttribute('stock_qty', self::MAX_PURCHASABLE_QTY, $attribute->getContextDataSet());
     }

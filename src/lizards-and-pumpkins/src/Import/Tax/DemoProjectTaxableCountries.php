@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Tax;
 
 class DemoProjectTaxableCountries implements TaxableCountries
@@ -21,15 +23,12 @@ class DemoProjectTaxableCountries implements TaxableCountries
     /**
      * @return string[]
      */
-    public function getCountries()
+    public function getCountries() : array
     {
         return self::$countries;
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    public function getIterator()
+    public function getIterator() : \Iterator
     {
         return new \ArrayIterator(self::$countries);
     }

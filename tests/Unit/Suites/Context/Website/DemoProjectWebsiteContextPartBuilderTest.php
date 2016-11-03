@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Context\ContextBuilder;
@@ -26,7 +28,7 @@ class DemoProjectWebsiteContextPartBuilderTest extends \PHPUnit_Framework_TestCa
      * @param string $testWebsiteCode
      * @return HttpRequest|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function createStubRequestAndMapItToWebsiteWithGivenCode($testWebsiteCode)
+    private function createStubRequestAndMapItToWebsiteWithGivenCode(string $testWebsiteCode) : HttpRequest
     {
         $dummyRequest = $this->createMock(HttpRequest::class);
 
@@ -62,20 +64,18 @@ class DemoProjectWebsiteContextPartBuilderTest extends \PHPUnit_Framework_TestCa
     }
 
     /**
-     * @param string $testWebsiteCode
      * @dataProvider websiteCodeProvider
      */
-    public function testWebsiteCodeProvidedInInputDataSetIsReturned($testWebsiteCode)
+    public function testWebsiteCodeProvidedInInputDataSetIsReturned(string $testWebsiteCode)
     {
         $inputDataSet = [Website::CONTEXT_CODE => $testWebsiteCode];
         $this->assertSame($testWebsiteCode, $this->contextPartBuilder->getValue($inputDataSet));
     }
 
     /**
-     * @param string $testWebsiteCode
      * @dataProvider websiteCodeProvider
      */
-    public function testDeterminationOfWebsiteIsDelegatedToRequestToWebsiteMap($testWebsiteCode)
+    public function testDeterminationOfWebsiteIsDelegatedToRequestToWebsiteMap(string $testWebsiteCode)
     {
         $dummyRequest = $this->createStubRequestAndMapItToWebsiteWithGivenCode($testWebsiteCode);
         $inputDataSet = [ContextBuilder::REQUEST => $dummyRequest];
@@ -97,7 +97,7 @@ class DemoProjectWebsiteContextPartBuilderTest extends \PHPUnit_Framework_TestCa
     /**
      * @return array[]
      */
-    public function websiteCodeProvider()
+    public function websiteCodeProvider() : array
     {
         return [['foo'], ['bar']];
     }

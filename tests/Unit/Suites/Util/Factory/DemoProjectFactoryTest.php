@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Util\Factory;
 
 use LizardsAndPumpkins\Context\Context;
@@ -51,7 +53,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
      * @param FacetFilterRequestField[] $facetFilterFields
      * @return string[]
      */
-    private function getFacetCodes(FacetFilterRequestField ...$facetFilterFields)
+    private function getFacetCodes(FacetFilterRequestField ...$facetFilterFields) : array
     {
         return array_map(function (FacetFilterRequestField $field) {
             return (string) $field->getAttributeCode();
@@ -141,10 +143,9 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $fieldName
      * @dataProvider facetFieldsToIncludeInResultProvider
      */
-    public function testItReturnsAListOfFacetFilterRequestFieldsForTheProductListings($fieldName)
+    public function testItReturnsAListOfFacetFilterRequestFieldsForTheProductListings(string $fieldName)
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
@@ -164,10 +165,9 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $fieldName
      * @dataProvider facetFieldsToIncludeInResultProvider
      */
-    public function testItReturnsAListOfFacetFilterRequestFieldsForTheSearchResults($fieldName)
+    public function testItReturnsAListOfFacetFilterRequestFieldsForTheSearchResults(string $fieldName)
     {
         /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
@@ -187,10 +187,9 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $fieldName
      * @dataProvider facetFieldsToIndexProvider
      */
-    public function testItReturnsAListOfFacetFilterCodesForSearchDocuments($fieldName)
+    public function testItReturnsAListOfFacetFilterCodesForSearchDocuments(string $fieldName)
     {
         $this->assertContains($fieldName, $this->factory->getFacetFilterRequestFieldCodesForSearchDocuments());
     }
@@ -198,7 +197,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function facetFieldsToIncludeInResultProvider()
+    public function facetFieldsToIncludeInResultProvider() : array
     {
         return array_merge($this->facetFieldsToIndexProvider(), [['price_incl_tax_de']]);
     }
@@ -206,7 +205,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function facetFieldsToIndexProvider()
+    public function facetFieldsToIndexProvider() : array
     {
         return [
             ['gender'],

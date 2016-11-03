@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Tax;
+
+use LizardsAndPumpkins\Import\Tax\Exception\UnableToLocateTaxServiceException;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Tax\DemoProjectTaxServiceLocator
@@ -17,9 +21,9 @@ class DemoProjectTaxServiceLocatorTest extends \PHPUnit_Framework_TestCase
      * @param string $website
      * @param string $taxClass
      * @param string $country
-     * @return mixed[]
+     * @return string[]
      */
-    private function createTaxServiceLocatorOptions($website, $taxClass, $country)
+    private function createTaxServiceLocatorOptions(string $website, string $taxClass, string $country) : array
     {
         return [
             TaxServiceLocator::OPTION_PRODUCT_TAX_CLASS => $taxClass,
@@ -28,14 +32,12 @@ class DemoProjectTaxServiceLocatorTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @param string $website
-     * @param string $productTaxClass
-     * @param string $country
-     * @param string $expectedRate
-     */
-    private function assertTaxServiceLocatorReturns($website, $productTaxClass, $country, $expectedRate)
-    {
+    private function assertTaxServiceLocatorReturns(
+        string $website,
+        string $productTaxClass,
+        string $country,
+        int $expectedRate
+    ) {
         $taxService = $this->getTaxServiceFor($website, $productTaxClass, $country);
         $this->assertInstanceOf(DemoProjectTaxRate::class, $taxService);
         $message = sprintf(
@@ -49,13 +51,7 @@ class DemoProjectTaxServiceLocatorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedRate, $taxService->getRate(), $message);
     }
 
-    /**
-     * @param string $website
-     * @param string $productTaxClass
-     * @param string $country
-     * @return DemoProjectTaxRate
-     */
-    private function getTaxServiceFor($website, $productTaxClass, $country)
+    private function getTaxServiceFor(string $website, string $productTaxClass, string $country) : DemoProjectTaxRate
     {
         $options = $this->createTaxServiceLocatorOptions($website, $productTaxClass, $country);
         return $this->taxServiceLocator->get($options);
@@ -86,20 +82,20 @@ class DemoProjectTaxServiceLocatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider taxServiceLocatorOptionsProvider
-     * @param string $website
-     * @param string $productTaxClass
-     * @param string $country
-     * @param string $rate
      */
-    public function testTaxServiceLocatorReturnsTheCorrectInstances($website, $productTaxClass, $country, $rate)
-    {
+    public function testTaxServiceLocatorReturnsTheCorrectInstances(
+        string $website,
+        string $productTaxClass,
+        string $country,
+        int $rate
+    ) {
         $this->assertTaxServiceLocatorReturns($website, $productTaxClass, $country, $rate);
     }
 
     /**
      * @return array[]
      */
-    public function taxServiceLocatorOptionsProvider()
+    public function taxServiceLocatorOptionsProvider() : array
     {
         return [
 

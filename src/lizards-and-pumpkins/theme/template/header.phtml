@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @var \LizardsAndPumpkins\Import\TemplateRendering\Block $this
  */
@@ -35,7 +38,7 @@ $currentWebsiteCode = $this->getWebsiteCode();
         </div>
 
         <a href="<?= $this->getBaseUrl() ?>"
-           title="<?php echo $currentCat . $this->__(' - Lizards & Pumpkins') ?>"
+           title="<?= $currentCat . $this->__(' - Lizards & Pumpkins') ?>"
            class="logo" >
             <svg class="icon main-logo" viewBox="0 0 1024 1024">
                 <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#main-logo"></use>

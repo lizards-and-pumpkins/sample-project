@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Product\Image;
 
 use LizardsAndPumpkins\Context\Context;
 use LizardsAndPumpkins\Context\Locale\Locale;
 use LizardsAndPumpkins\Context\Website\Website;
 use LizardsAndPumpkins\Import\FileStorage\StorageAgnosticFileUri;
-use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageFileNameException;
 use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageVariantCodeException;
 use LizardsAndPumpkins\Import\ImageStorage\Image;
 use LizardsAndPumpkins\Import\ImageStorage\ImageStorage;
@@ -36,7 +37,7 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
      * @param string $imageVariantCode
      * @return Image|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function createStubPlaceholderImage($imageVariantCode)
+    private function createStubPlaceholderImage(string $imageVariantCode) : Image
     {
         $placeholderIdentifier = $this->stringStartsWith('product/placeholder/' . $imageVariantCode . '/');
         $stubPlaceholderImage = $this->createMock(Image::class);
@@ -65,40 +66,35 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DemoProjectProductImageFileLocator::class, $this->productImageFileLocator);
     }
 
-    /**
-     * @param mixed $invalidImageVariantCode
-     * @param string $invalidType
-     * @dataProvider invalidImageVariantCodeProvider
-     */
-    public function testItThrowsAnExceptionIfImageVariantCodeNotValid($invalidImageVariantCode, $invalidType)
+    public function testItThrowsAnExceptionIfImageVariantCodeIsNotAString()
     {
-        $msg = 'The image variant code must be one of original, large, medium, small, search-autosuggestion, got "%s"';
-        $this->expectException(InvalidImageVariantCodeException::class);
-        $this->expectExceptionMessage(sprintf($msg, $invalidType));
+        $this->expectException(\TypeError::class);
 
         $imageFileName = 'test.jpg';
+        $invalidImageVariantCode = 123;
+
         $this->productImageFileLocator->get($imageFileName, $invalidImageVariantCode, $this->stubContext);
     }
 
-    /**
-     * @return array[]
-     */
-    public function invalidImageVariantCodeProvider()
+    public function testItThrowsAnExceptionIfImageVariantCodeNotValid()
     {
-        return [
-            ['invalid', 'invalid'],
-            [123, 'integer'],
-            [$this, get_class($this)],
-        ];
+        $imageFileName = 'test.jpg';
+        $invalidImageVariantCode = 'invalid';
+
+        $msg = 'The image variant code must be one of original, large, medium, small, search-autosuggestion, got "%s"';
+        $this->expectException(InvalidImageVariantCodeException::class);
+        $this->expectExceptionMessage(sprintf($msg, $invalidImageVariantCode));
+
+        $this->productImageFileLocator->get($imageFileName, $invalidImageVariantCode, $this->stubContext);
     }
 
     public function testItThrowsAnExceptionIfTheFileNameIsNotAString()
     {
-        $this->expectException(InvalidImageFileNameException::class);
-        $this->expectExceptionMessage(sprintf('The image file name must be a string, got "integer"'));
+        $this->expectException(\TypeError::class);
 
         $invalidImageFileName = 123;
         $variantCode = DemoProjectProductImageFileLocator::SMALL;
+
         $this->productImageFileLocator->get($invalidImageFileName, $variantCode, $this->stubContext);
     }
 
@@ -114,10 +110,9 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $imageVariantCode
      * @dataProvider validImageVariantCodeProvider
      */
-    public function testItReturnsAProductImageFileInstanceForValidVariantCodes($imageVariantCode)
+    public function testItReturnsAProductImageFileInstanceForValidVariantCodes(string $imageVariantCode)
     {
         $imageIdentifier = sprintf('product/%s/test.jpg', $imageVariantCode);
         $stubImage = $this->createMock(Image::class);
@@ -134,7 +129,7 @@ class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function validImageVariantCodeProvider()
+    public function validImageVariantCodeProvider() : array
     {
         return [
             [DemoProjectProductImageFileLocator::SMALL],

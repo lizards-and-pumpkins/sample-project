@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Util\Factory;
 
 use LizardsAndPumpkins\Context\Context;
@@ -115,7 +117,7 @@ class DemoProjectFactory implements Factory
     /**
      * @return string[]
      */
-    public function getSearchableAttributeCodes()
+    public function getSearchableAttributeCodes() : array
     {
         return [
             'brand',
@@ -135,7 +137,7 @@ class DemoProjectFactory implements Factory
      * @param int $pos
      * @return int
      */
-    private function findFacetFieldPosition(array $fields, $name, $pos = 0)
+    private function findFacetFieldPosition(array $fields, string $name, int $pos = 0) : int
     {
         if ($pos === count($fields) || $fields[$pos]->getAttributeCode() == $name) {
             return $pos;
@@ -149,8 +151,11 @@ class DemoProjectFactory implements Factory
      * @param FacetFilterRequestField[] $fields
      * @return FacetFilterRequestField[]
      */
-    private function injectFacetFieldAfter(FacetFilterRequestField $fieldToInject, $siblingName, array $fields)
-    {
+    private function injectFacetFieldAfter(
+        FacetFilterRequestField $fieldToInject,
+        string $siblingName,
+        array $fields
+    ) : array {
         $pos = $this->findFacetFieldPosition($fields, $siblingName);
         return array_merge(array_slice($fields, 0, $pos + 1), [$fieldToInject], array_slice($fields, $pos + 1));
     }
@@ -159,7 +164,7 @@ class DemoProjectFactory implements Factory
      * @param Context $context
      * @return FacetFilterRequestField[]
      */
-    public function getProductListingFacetFilterRequestFields(Context $context)
+    public function getProductListingFacetFilterRequestFields(Context $context) : array
     {
         $priceField = $this->createPriceRangeFacetFilterField($context);
         return $this->injectFacetFieldAfter($priceField, 'brand', $this->getCommonFacetFilterRequestFields());
@@ -169,7 +174,7 @@ class DemoProjectFactory implements Factory
      * @param Context $context
      * @return FacetFilterRequestField[]
      */
-    public function getProductSearchFacetFilterRequestFields(Context $context)
+    public function getProductSearchFacetFilterRequestFields(Context $context) : array
     {
         $priceField = $this->createPriceRangeFacetFilterField($context);
         return $this->injectFacetFieldAfter($priceField, 'brand', $this->getCommonFacetFilterRequestFields());
@@ -178,7 +183,7 @@ class DemoProjectFactory implements Factory
     /**
      * @return string[]
      */
-    public function getFacetFilterRequestFieldCodesForSearchDocuments()
+    public function getFacetFilterRequestFieldCodesForSearchDocuments() : array
     {
         return array_map(function (FacetFilterRequestField $field) {
             return (string) $field->getAttributeCode();
@@ -188,7 +193,7 @@ class DemoProjectFactory implements Factory
     /**
      * @return FacetFilterRequestField[]
      */
-    private function getCommonFacetFilterRequestFields()
+    private function getCommonFacetFilterRequestFields() : array
     {
         return [
             new FacetFilterRequestSimpleField(AttributeCode::fromString('gender')),
@@ -201,11 +206,7 @@ class DemoProjectFactory implements Factory
         ];
     }
 
-    /**
-     * @param Context $context
-     * @return FacetFilterRequestField
-     */
-    private function createPriceRangeFacetFilterField(Context $context)
+    private function createPriceRangeFacetFilterField(Context $context) : FacetFilterRequestField
     {
         return new FacetFilterRequestRangedField(
             AttributeCode::fromString($this->getPriceFacetFieldNameForContext($context)),
@@ -213,20 +214,12 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @param Context $context
-     * @return string
-     */
-    public function getPriceFacetFieldNameForContext(Context $context)
+    public function getPriceFacetFieldNameForContext(Context $context) : string
     {
         return $this->getPriceFacetFieldNameForCountry($context->getValue(Country::CONTEXT_CODE));
     }
 
-    /**
-     * @param string $countryCode
-     * @return string
-     */
-    private function getPriceFacetFieldNameForCountry($countryCode)
+    private function getPriceFacetFieldNameForCountry(string $countryCode) : string
     {
         return 'price_incl_tax_' . strtolower($countryCode);
     }
@@ -234,15 +227,12 @@ class DemoProjectFactory implements Factory
     /**
      * @return string[]
      */
-    public function getAdditionalAttributesForSearchIndex()
+    public function getAdditionalAttributesForSearchIndex() : array
     {
         return ['backorders', 'stock_qty', 'category', 'created_at'];
     }
 
-    /**
-     * @return KeyValueStore
-     */
-    public function createKeyValueStore()
+    public function createKeyValueStore() : KeyValueStore
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         $storagePath = $storageBasePath . '/key-value-store';
@@ -251,10 +241,7 @@ class DemoProjectFactory implements Factory
         return new FileKeyValueStore($storagePath);
     }
 
-    /**
-     * @return DomainEventQueue
-     */
-    public function getEventQueue()
+    public function getEventQueue() : DomainEventQueue
     {
         if (null === $this->eventQueue) {
             $this->eventQueue = $this->createEventQueue();
@@ -262,18 +249,12 @@ class DemoProjectFactory implements Factory
         return $this->eventQueue;
     }
 
-    /**
-     * @return DomainEventQueue
-     */
-    public function createEventQueue()
+    public function createEventQueue() : DomainEventQueue
     {
         return new DomainEventQueue($this->getEventMessageQueue());
     }
 
-    /**
-     * @return Queue
-     */
-    public function getEventMessageQueue()
+    public function getEventMessageQueue() : Queue
     {
         if (null === $this->eventMessageQueue) {
             $this->eventMessageQueue = $this->createEventMessageQueue();
@@ -281,10 +262,7 @@ class DemoProjectFactory implements Factory
         return $this->eventMessageQueue;
     }
 
-    /**
-     * @return Queue
-     */
-    public function createEventMessageQueue()
+    public function createEventMessageQueue() : Queue
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         $storagePath = $storageBasePath . '/event-queue/content';
@@ -293,10 +271,7 @@ class DemoProjectFactory implements Factory
         return new FileQueue($storagePath, $lockFile);
     }
 
-    /**
-     * @return CommandQueue
-     */
-    public function getCommandQueue()
+    public function getCommandQueue() : CommandQueue
     {
         if (null === $this->commandQueue) {
             $this->commandQueue = $this->createCommandQueue();
@@ -304,18 +279,12 @@ class DemoProjectFactory implements Factory
         return $this->commandQueue;
     }
 
-    /**
-     * @return CommandQueue
-     */
-    public function createCommandQueue()
+    public function createCommandQueue() : CommandQueue
     {
         return new CommandQueue($this->getCommandMessageQueue());
     }
 
-    /**
-     * @return Queue
-     */
-    public function getCommandMessageQueue()
+    public function getCommandMessageQueue() : Queue
     {
         if (null === $this->commandMessageQueue) {
             $this->commandMessageQueue = $this->createCommandMessageQueue();
@@ -323,10 +292,7 @@ class DemoProjectFactory implements Factory
         return $this->commandMessageQueue;
     }
 
-    /**
-     * @return Queue
-     */
-    public function createCommandMessageQueue()
+    public function createCommandMessageQueue() : Queue
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         $storagePath = $storageBasePath . '/command-queue/content';
@@ -335,10 +301,7 @@ class DemoProjectFactory implements Factory
         return new FileQueue($storagePath, $lockFile);
     }
 
-    /**
-     * @return Logger
-     */
-    public function createLogger()
+    public function createLogger() : Logger
     {
         return new WritingLoggerDecorator(
             new InMemoryLogger(),
@@ -346,10 +309,7 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @return LogMessageWriter
-     */
-    public function createLogMessageWriter()
+    public function createLogMessageWriter() : LogMessageWriter
     {
         $writers = [
             new FileLogMessageWriter($this->getMasterFactory()->getLogFilePathConfig()),
@@ -357,10 +317,7 @@ class DemoProjectFactory implements Factory
         return new CompositeLogMessageWriter(...$writers);
     }
 
-    /**
-     * @return string
-     */
-    public function getLogFilePathConfig()
+    public function getLogFilePathConfig() : string
     {
         /** @var ConfigReader $configReader */
         $configReader = $this->getMasterFactory()->createConfigReader();
@@ -373,10 +330,7 @@ class DemoProjectFactory implements Factory
         return __DIR__ . '/../log/system.log';
     }
 
-    /**
-     * @return SearchEngine
-     */
-    public function createSearchEngine()
+    public function createSearchEngine() : SearchEngine
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         $storagePath = $storageBasePath . '/search-engine';
@@ -390,19 +344,13 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @return FileUrlKeyStore
-     */
-    public function createUrlKeyStore()
+    public function createUrlKeyStore() : FileUrlKeyStore
     {
         $storageBasePath = $this->getMasterFactory()->getFileStorageBasePathConfig();
         return new FileUrlKeyStore($storageBasePath . '/url-key-store');
     }
 
-    /**
-     * @return FacetFieldTransformationRegistry
-     */
-    public function createFacetFieldTransformationRegistry()
+    public function createFacetFieldTransformationRegistry() : FacetFieldTransformationRegistry
     {
         $registry = new FacetFieldTransformationRegistry();
         $priceTransformation = $this->createEuroPriceRangeTransformation();
@@ -415,10 +363,7 @@ class DemoProjectFactory implements Factory
         return $registry;
     }
 
-    /**
-     * @return CurrencyPriceRangeTransformation
-     */
-    private function createEuroPriceRangeTransformation()
+    private function createEuroPriceRangeTransformation() : CurrencyPriceRangeTransformation
     {
         // Note: unable to use context directly to determine locale here due to circular dependency
         $localFactory = function () {
@@ -427,10 +372,7 @@ class DemoProjectFactory implements Factory
         return new CurrencyPriceRangeTransformation(new Currency('EUR'), $localFactory);
     }
 
-    /**
-     * @return ImageProcessorCollection
-     */
-    public function createImageProcessorCollection()
+    public function createImageProcessorCollection() : ImageProcessorCollection
     {
         $processorCollection = new ImageProcessorCollection();
         $processorCollection->add($this->getMasterFactory()->createOriginalImageProcessor());
@@ -442,10 +384,7 @@ class DemoProjectFactory implements Factory
         return $processorCollection;
     }
 
-    /**
-     * @return ImageProcessor
-     */
-    public function createOriginalImageProcessor()
+    public function createOriginalImageProcessor() : ImageProcessor
     {
         $strategySequence = $this->getMasterFactory()->createOriginalImageProcessingStrategySequence();
         $fileStorageReader = $this->getMasterFactory()->createFileStorageReader();
@@ -459,34 +398,22 @@ class DemoProjectFactory implements Factory
         return new ImageProcessor($strategySequence, $fileStorageReader, $fileStorageWriter, $resultImageDir);
     }
 
-    /**
-     * @return FileStorageReader
-     */
-    public function createFileStorageReader()
+    public function createFileStorageReader() : FileStorageReader
     {
         return new LocalFilesystemStorageReader();
     }
 
-    /**
-     * @return FileStorageWriter
-     */
-    public function createFileStorageWriter()
+    public function createFileStorageWriter() : FileStorageWriter
     {
         return new LocalFilesystemStorageWriter();
     }
 
-    /**
-     * @return ImageProcessingStrategySequence
-     */
-    public function createOriginalImageProcessingStrategySequence()
+    public function createOriginalImageProcessingStrategySequence() : ImageProcessingStrategySequence
     {
         return new ImageProcessingStrategySequence();
     }
 
-    /**
-     * @return ImageProcessor
-     */
-    public function createProductDetailsPageImageProcessor()
+    public function createProductDetailsPageImageProcessor() : ImageProcessor
     {
         $strategySequence = $this->getMasterFactory()->createProductDetailsPageImageProcessingStrategySequence();
         $fileStorageReader = $this->getMasterFactory()->createFileStorageReader();
@@ -500,10 +427,7 @@ class DemoProjectFactory implements Factory
         return new ImageProcessor($strategySequence, $fileStorageReader, $fileStorageWriter, $resultImageDir);
     }
 
-    /**
-     * @return ImageProcessingStrategySequence
-     */
-    public function createProductDetailsPageImageProcessingStrategySequence()
+    public function createProductDetailsPageImageProcessingStrategySequence() : ImageProcessingStrategySequence
     {
         $imageResizeStrategy = new ImageMagickInscribeStrategy(489, 489, 'white');
 
@@ -513,10 +437,7 @@ class DemoProjectFactory implements Factory
         return $strategySequence;
     }
 
-    /**
-     * @return ImageProcessor
-     */
-    public function createProductListingImageProcessor()
+    public function createProductListingImageProcessor() : ImageProcessor
     {
         $strategySequence = $this->getMasterFactory()->createProductListingImageProcessingStrategySequence();
         $fileStorageReader = $this->getMasterFactory()->createFileStorageReader();
@@ -530,10 +451,7 @@ class DemoProjectFactory implements Factory
         return new ImageProcessor($strategySequence, $fileStorageReader, $fileStorageWriter, $resultImageDir);
     }
 
-    /**
-     * @return ImageProcessingStrategySequence
-     */
-    public function createProductListingImageProcessingStrategySequence()
+    public function createProductListingImageProcessingStrategySequence() : ImageProcessingStrategySequence
     {
         $imageResizeStrategy = new ImageMagickInscribeStrategy(160, 160, 'white');
 
@@ -543,10 +461,7 @@ class DemoProjectFactory implements Factory
         return $strategySequence;
     }
 
-    /**
-     * @return ImageProcessor
-     */
-    public function createGalleyThumbnailImageProcessor()
+    public function createGalleyThumbnailImageProcessor() : ImageProcessor
     {
         $strategySequence = $this->getMasterFactory()->createGalleyThumbnailImageProcessingStrategySequence();
         $fileStorageReader = $this->getMasterFactory()->createFileStorageReader();
@@ -560,10 +475,7 @@ class DemoProjectFactory implements Factory
         return new ImageProcessor($strategySequence, $fileStorageReader, $fileStorageWriter, $resultImageDir);
     }
 
-    /**
-     * @return ImageProcessingStrategySequence
-     */
-    public function createGalleyThumbnailImageProcessingStrategySequence()
+    public function createGalleyThumbnailImageProcessingStrategySequence() : ImageProcessingStrategySequence
     {
         $imageResizeStrategy = new ImageMagickInscribeStrategy(56, 56, 'white');
 
@@ -573,10 +485,7 @@ class DemoProjectFactory implements Factory
         return $strategySequence;
     }
 
-    /**
-     * @return ImageProcessor
-     */
-    public function createSearchAutosuggestionImageProcessor()
+    public function createSearchAutosuggestionImageProcessor() : ImageProcessor
     {
         $strategySequence = $this->getMasterFactory()->createSearchAutosuggestionImageProcessingStrategySequence();
         $fileStorageReader = $this->getMasterFactory()->createFileStorageReader();
@@ -590,10 +499,7 @@ class DemoProjectFactory implements Factory
         return new ImageProcessor($strategySequence, $fileStorageReader, $fileStorageWriter, $resultImageDir);
     }
 
-    /**
-     * @return ImageProcessingStrategySequence
-     */
-    public function createSearchAutosuggestionImageProcessingStrategySequence()
+    public function createSearchAutosuggestionImageProcessingStrategySequence() : ImageProcessingStrategySequence
     {
         $imageResizeStrategy = new ImageMagickInscribeStrategy(60, 37, 'white');
 
@@ -603,10 +509,7 @@ class DemoProjectFactory implements Factory
         return $strategySequence;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileStorageBasePathConfig()
+    public function getFileStorageBasePathConfig() : string
     {
         /** @var ConfigReader $configReader */
         $configReader = $this->getMasterFactory()->createConfigReader();
@@ -616,10 +519,7 @@ class DemoProjectFactory implements Factory
             $basePath;
     }
 
-    /**
-     * @param string $path
-     */
-    private function createDirectoryIfNotExists($path)
+    private function createDirectoryIfNotExists(string $path)
     {
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
@@ -629,7 +529,7 @@ class DemoProjectFactory implements Factory
     /**
      * @return SortOrderConfig[]
      */
-    public function getProductListingSortOrderConfig()
+    public function getProductListingSortOrderConfig() : array
     {
         if (null === $this->memoizedProductListingSortOrderConfig) {
             $this->memoizedProductListingSortOrderConfig = [
@@ -654,7 +554,7 @@ class DemoProjectFactory implements Factory
     /**
      * @return SortOrderConfig[]
      */
-    public function getProductSearchSortOrderConfig()
+    public function getProductSearchSortOrderConfig() : array
     {
         if (null === $this->memoizedProductSearchSortOrderConfig) {
             $this->memoizedProductSearchSortOrderConfig = [
@@ -676,10 +576,7 @@ class DemoProjectFactory implements Factory
         return $this->memoizedProductSearchSortOrderConfig;
     }
 
-    /**
-     * @return SortOrderConfig
-     */
-    public function getProductSearchAutosuggestionSortOrderConfig()
+    public function getProductSearchAutosuggestionSortOrderConfig() : SortOrderConfig
     {
         if (null === $this->memoizedProductSearchAutosuggestionSortOrderConfig) {
             $this->memoizedProductSearchAutosuggestionSortOrderConfig = SortOrderConfig::createSelected(
@@ -691,10 +588,7 @@ class DemoProjectFactory implements Factory
         return $this->memoizedProductSearchAutosuggestionSortOrderConfig;
     }
 
-    /**
-     * @return ProductsPerPage
-     */
-    public function getProductsPerPageConfig()
+    public function getProductsPerPageConfig() : ProductsPerPage
     {
         if (null === $this->memoizedProductsPerPageConfig) {
             $numbersOfProductsPerPage = [60, 120];
@@ -709,34 +603,22 @@ class DemoProjectFactory implements Factory
         return $this->memoizedProductsPerPageConfig;
     }
 
-    /**
-     * @return WebsiteToCountryMap
-     */
-    public function createWebsiteToCountryMap()
+    public function createWebsiteToCountryMap() : WebsiteToCountryMap
     {
         return new WebsiteToCountryMap();
     }
 
-    /**
-     * @return TaxableCountries
-     */
-    public function createTaxableCountries()
+    public function createTaxableCountries() : TaxableCountries
     {
         return new DemoProjectTaxableCountries();
     }
 
-    /**
-     * @return DemoProjectTaxServiceLocator
-     */
-    public function createTaxServiceLocator()
+    public function createTaxServiceLocator() : DemoProjectTaxServiceLocator
     {
         return new DemoProjectTaxServiceLocator();
     }
 
-    /**
-     * @return DemoProjectProductViewLocator
-     */
-    public function createProductViewLocator()
+    public function createProductViewLocator() : DemoProjectProductViewLocator
     {
         return new DemoProjectProductViewLocator(
             $this->getMasterFactory()->createProductImageFileLocator(),
@@ -744,39 +626,27 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @return DemoProjectProductPageTitle
-     */
-    public function createProductTitle()
+    public function createProductTitle() : DemoProjectProductPageTitle
     {
         return new DemoProjectProductPageTitle();
     }
 
-    /**
-     * @return SearchCriteria
-     */
-    public function createGlobalProductListingCriteria()
+    public function createGlobalProductListingCriteria() : SearchCriteria
     {
         return CompositeSearchCriterion::createOr(
-            SearchCriterionGreaterThan::create('stock_qty', 0),
-            SearchCriterionEqual::create('backorders', 'true')
+            new SearchCriterionGreaterThan('stock_qty', 0),
+            new SearchCriterionEqual('backorders', 'true')
         );
     }
 
-    /**
-     * @return ProductImageFileLocator
-     */
-    public function createProductImageFileLocator()
+    public function createProductImageFileLocator() : ProductImageFileLocator
     {
         return new DemoProjectProductImageFileLocator(
             $this->getMasterFactory()->createImageStorage()
         );
     }
 
-    /**
-     * @return ImageStorage
-     */
-    public function createImageStorage()
+    public function createImageStorage() : ImageStorage
     {
         return new FilesystemImageStorage(
             $this->getMasterFactory()->createFilesystemFileStorage(),
@@ -785,11 +655,7 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @param Context $context
-     * @return SearchFieldToRequestParamMap
-     */
-    public function createSearchFieldToRequestParamMap(Context $context)
+    public function createSearchFieldToRequestParamMap(Context $context) : SearchFieldToRequestParamMap
     {
         $queryParameter = 'price';
         $facetField = $this->getPriceFacetFieldNameForContext($context);
@@ -798,10 +664,7 @@ class DemoProjectFactory implements Factory
         return new SearchFieldToRequestParamMap($facetFieldToQueryParameterMap, $queryParameterToFacetFieldMap);
     }
 
-    /**
-     * @return SnippetRenderer
-     */
-    public function createProductListingTitleSnippetRenderer()
+    public function createProductListingTitleSnippetRenderer() : SnippetRenderer
     {
         return new DemoProjectProductListingTitleSnippetRenderer(
             $this->getMasterFactory()->createProductListingTitleSnippetKeyGenerator(),
@@ -809,38 +672,26 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @return ThemeLocator
-     */
-    public function createThemeLocator()
+    public function createThemeLocator() : ThemeLocator
     {
         return new ThemeLocator(__DIR__ . '/../../..');
     }
 
-    /**
-     * @return ContextSource
-     */
-    public function createContextSource()
+    public function createContextSource() : ContextSource
     {
         return new DemoProjectContextSource(
             $this->getMasterFactory()->createContextBuilder()
         );
     }
 
-    /**
-     * @return ContextPartBuilder
-     */
-    public function createWebsiteContextPartBuilder()
+    public function createWebsiteContextPartBuilder() : ContextPartBuilder
     {
         return new DemoProjectWebsiteContextPartBuilder(
             $this->createRequestToWebsiteMap()
         );
     }
     
-    /**
-     * @return ContextPartBuilder
-     */
-    public function createCountryContextPartBuilder()
+    public function createCountryContextPartBuilder() : ContextPartBuilder
     {
         return new DemoProjectCountryContextPartBuilder(
             $this->createRequestToWebsiteMap(),
@@ -848,26 +699,17 @@ class DemoProjectFactory implements Factory
         );
     }
 
-    /**
-     * @return RequestToWebsiteMap
-     */
-    private function createRequestToWebsiteMap()
+    private function createRequestToWebsiteMap() : RequestToWebsiteMap
     {
         return new RequestToWebsiteMap($this->getMasterFactory()->createUrlToWebsiteMap());
     }
 
-    /**
-     * @return UrlToWebsiteMap
-     */
-    public function createUrlToWebsiteMap()
+    public function createUrlToWebsiteMap() : UrlToWebsiteMap
     {
         return ConfigurableUrlToWebsiteMap::fromConfig($this->getMasterFactory()->createConfigReader());
     }
 
-    /**
-     * @return ContextPartBuilder
-     */
-    public function createLocaleContextPartBuilder()
+    public function createLocaleContextPartBuilder() : ContextPartBuilder
     {
         return new DemoProjectLocaleContextPartBuilder($this->createRequestToWebsiteMap());
     }

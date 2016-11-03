@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Country;
 
 use LizardsAndPumpkins\Context\ContextBuilder;
@@ -34,10 +36,7 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
      */
     private $stubWebsiteToCountryMap;
 
-    /**
-     * @param string $countryCode
-     */
-    private function setCountryCookieOnRequest($countryCode)
+    private function setCountryCookieOnRequest(string $countryCode)
     {
         $json = json_encode(['country' => $countryCode]);
         $this->stubRequest->method('getCookieValue')->with(DemoProjectCountryContextPartBuilder::COOKIE_NAME)
@@ -46,10 +45,7 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
             ->willReturn(true);
     }
 
-    /**
-     * @param string $testCountryCode
-     */
-    private function mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest($testCountryCode)
+    private function mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest(string $testCountryCode)
     {
         $dummyCountry = $this->createMock(Country::class);
         $dummyCountry->method('__toString')->willReturn($testCountryCode);
@@ -91,20 +87,18 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
     }
 
     /**
-     * @param string $testCountryCode
      * @dataProvider countryCodeProvider
      */
-    public function testCountryCodeProvidedInInputDataSetIsReturned($testCountryCode)
+    public function testCountryCodeProvidedInInputDataSetIsReturned(string $testCountryCode)
     {
         $inputDataSet = [Country::CONTEXT_CODE => $testCountryCode];
         $this->assertSame($testCountryCode, $this->contextPartBuilder->getValue($inputDataSet));
     }
 
     /**
-     * @param string $testCountryCode
      * @dataProvider countryCodeProvider
      */
-    public function testCountryCodeFromCookieIsReturned($testCountryCode)
+    public function testCountryCodeFromCookieIsReturned(string $testCountryCode)
     {
         $this->setCountryCookieOnRequest($testCountryCode);
         $inputDataSet = [ContextBuilder::REQUEST => $this->stubRequest];
@@ -113,10 +107,9 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
     }
 
     /**
-     * @param string $testCountryCode
      * @dataProvider countryCodeProvider
      */
-    public function testDeterminationOfCountryIsDelegatedToWebsiteToCountryMap($testCountryCode)
+    public function testDeterminationOfCountryIsDelegatedToWebsiteToCountryMap(string $testCountryCode)
     {
         $this->mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest($testCountryCode);
         $inputDataSet = [ContextBuilder::REQUEST => $this->stubRequest];
@@ -157,7 +150,7 @@ class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCa
     /**
      * @return array[]
      */
-    public function countryCodeProvider()
+    public function countryCodeProvider() : array
     {
         return [['foo'], ['bar']];
     }

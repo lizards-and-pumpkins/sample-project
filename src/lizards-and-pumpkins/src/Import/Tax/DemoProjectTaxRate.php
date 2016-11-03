@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Import\Tax;
 
 use LizardsAndPumpkins\Import\Price\Price;
@@ -12,71 +14,36 @@ class DemoProjectTaxRate implements TaxService
      */
     private $rate;
 
-    /**
-     * @param int $rate
-     */
-    private function __construct($rate)
+    private function __construct(int $rate)
     {
         $this->validateRate($rate);
         $this->rate = $rate;
     }
 
-    /**
-     * @param int $rate
-     * @return DemoProjectTaxRate
-     */
-    public static function fromInt($rate)
+    public static function fromInt(int $rate) : DemoProjectTaxRate
     {
         return new self($rate);
     }
 
-    /**
-     * @param int $rate
-     */
-    private function validateRate($rate)
+    private function validateRate(int $rate)
     {
-        if (!is_int($rate)) {
-            $message = sprintf('The tax rate has to be an integer value, got "%s"', $this->getType($rate));
-            throw new InvalidTaxRateException($message);
-        }
         if (0 === $rate) {
             throw new InvalidTaxRateException('The tax rate must not be zero');
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getRate()
+    public function getRate() : int
     {
         return (int) ($this->getFactor() * 100 - 100);
     }
 
-    /**
-     * @param Price $price
-     * @return Price
-     */
-    public function applyTo(Price $price)
+    public function applyTo(Price $price) : Price
     {
         return $price->multiplyBy($this->getFactor());
     }
 
-    /**
-     * @return float
-     */
-    final protected function getFactor()
+    final protected function getFactor() : float
     {
         return 1 + $this->rate / 100;
-    }
-
-    /**
-     * @param mixed $variable
-     * @return string
-     */
-    private function getType($variable)
-    {
-        return is_object($variable) ?
-            get_class($variable) :
-            gettype($variable);
     }
 }

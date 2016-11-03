@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Http\HttpRequest;
@@ -16,12 +18,8 @@ class RequestToWebsiteMap
         $this->urlToWebsiteMap = $urlToWebsiteMap;
     }
 
-    /**
-     * @param HttpRequest $httpRequest
-     * @return Website
-     */
-    public function getWebsiteFromRequest(HttpRequest $httpRequest)
+    public function getWebsiteFromRequest(HttpRequest $httpRequest) : Website
     {
-        return $this->urlToWebsiteMap->getWebsiteCodeByUrl($httpRequest->getUrl());
+        return $this->urlToWebsiteMap->getWebsiteCodeByUrl((string) $httpRequest->getUrl());
     }
 }

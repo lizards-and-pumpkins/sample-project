@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Context\Country\Country;
@@ -14,32 +16,19 @@ class WebsiteToCountryMap
         'fr' => 'FR',
     ];
 
-    /**
-     * @param Website $website
-     * @return Country
-     */
-    public function getCountry(Website $website)
+    public function getCountry(Website $website) : Country
     {
-        $countryCode = $this->getCountryFromMap((string) $website);
-        return Country::from2CharIso3166($countryCode);
+        $country = $this->getCountryFromMap((string) $website);
+        return Country::from2CharIso3166($country);
     }
     
-    /**
-     * @return Country
-     */
-    public function getDefaultCountry()
+    public function getDefaultCountry() : Country
     {
         return Country::from2CharIso3166($this->defaultCountry);
     }
 
-    /**
-     * @param string $mapKey
-     * @return string
-     */
-    private function getCountryFromMap($mapKey)
+    private function getCountryFromMap(string $mapKey) : string
     {
-        return isset($this->map[$mapKey]) ?
-            $this->map[$mapKey] :
-            $this->getDefaultCountry();
+        return $this->map[$mapKey] ?? (string) $this->getDefaultCountry();
     }
 }

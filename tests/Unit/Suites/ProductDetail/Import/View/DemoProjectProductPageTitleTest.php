@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LizardsAndPumpkins\ProductDetail\Import\View;
 
 use LizardsAndPumpkins\Import\Product\View\ProductView;
@@ -27,9 +29,8 @@ class DemoProjectProductPageTitleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider requiredAttributeCodeProvider
-     * @param string $requiredAttributeCode
      */
-    public function testProductTitleContainsRequiredProductAttributes($requiredAttributeCode)
+    public function testProductTitleContainsRequiredProductAttributes(string $requiredAttributeCode)
     {
         $testAttributeValue = 'foo';
 
@@ -48,7 +49,7 @@ class DemoProjectProductPageTitleTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array[]
      */
-    public function requiredAttributeCodeProvider()
+    public function requiredAttributeCodeProvider() : array
     {
         return [
             ['name'],
@@ -67,7 +68,9 @@ class DemoProjectProductPageTitleTest extends \PHPUnit_Framework_TestCase
     public function testProductMetaTitleIsNotExceedingDefinedLimit()
     {
         $maxTitleLength = DemoProjectProductPageTitle::MAX_PRODUCT_TITLE_LENGTH;
-        $attributeLength = ($maxTitleLength - strlen(DemoProjectProductPageTitle::PRODUCT_TITLE_SUFFIX)) / 2 - 1;
+        $attributeLength = (int) round(
+            ($maxTitleLength - strlen(DemoProjectProductPageTitle::PRODUCT_TITLE_SUFFIX)) / 2 - 1
+        );
 
         $this->stubProductView->method('getFirstValueOfAttribute')->willReturn(str_repeat('-', $attributeLength));
 
