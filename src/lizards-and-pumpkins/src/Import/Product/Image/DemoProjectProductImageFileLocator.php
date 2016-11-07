@@ -8,7 +8,6 @@ use LizardsAndPumpkins\Context\Context;
 use LizardsAndPumpkins\Context\Locale\Locale;
 use LizardsAndPumpkins\Import\FileStorage\File;
 use LizardsAndPumpkins\Import\FileStorage\StorageAgnosticFileUri;
-use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageFileNameException;
 use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageVariantCodeException;
 use LizardsAndPumpkins\Import\ImageStorage\ImageStorage;
 use LizardsAndPumpkins\Import\Product\View\ProductImageFileLocator;
@@ -41,7 +40,6 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
 
     public function get(string $imageFileName, string $imageVariantCode, Context $context) : File
     {
-        $this->validateImageFileName($imageFileName);
         $this->validateImageVariantCode($imageVariantCode);
 
         if (! $this->isImageFileAvailable($imageFileName)) {
@@ -70,34 +68,13 @@ class DemoProjectProductImageFileLocator implements ProductImageFileLocator
         return $this->imageStorage->getFileReference($placeholderIdentifier);
     }
 
-    private function getInvalidTypeStringRepresentation(string $imageVariantCode) : string
-    {
-        if (is_string($imageVariantCode)) {
-            return $imageVariantCode;
-        }
-        if (is_object($imageVariantCode)) {
-            return get_class($imageVariantCode);
-        }
-        return gettype($imageVariantCode);
-    }
-
-    private function validateImageFileName(string $imageFileName)
-    {
-        if (!is_string($imageFileName)) {
-            throw new InvalidImageFileNameException(sprintf(
-                'The image file name must be a string, got "%s"',
-                $this->getInvalidTypeStringRepresentation($imageFileName)
-            ));
-        }
-    }
-
     private function validateImageVariantCode(string $imageVariantCode)
     {
         if (!in_array($imageVariantCode, $this->imageVariantCodes)) {
             throw new InvalidImageVariantCodeException(sprintf(
                 'The image variant code must be one of %s, got "%s"',
                 implode(', ', $this->imageVariantCodes),
-                $this->getInvalidTypeStringRepresentation($imageVariantCode)
+                $imageVariantCode
             ));
         }
     }
