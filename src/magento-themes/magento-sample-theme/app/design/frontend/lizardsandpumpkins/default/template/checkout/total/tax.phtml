@@ -1,0 +1,50 @@
+<?php global $taxIter; $taxIter++ ?>
+<?php if ($this->helper('tax')->displayFullSummary() && $this->getTotal()->getValue() != 0): ?>
+<?php $isTop = 1 ?>
+    <?php foreach ($this->getTotal()->getFullInfo() as $info): ?>
+        <?php if (isset($info['hidden']) && $info['hidden']) continue; ?>
+
+        <?php
+        $percent = $info['percent'];
+        $amount = $info['amount'];
+        $rates = $info['rates'];
+        $isFirst = 1;
+        ?>
+
+        <?php foreach ($rates as $rate): ?>
+            <div class="line">
+                <div class="summary-details-<?php echo $taxIter ?> summary-details<?php if ($isTop): echo ' summary-details-first'; endif ?>" style="display:none;">
+                    <div class="title">
+                        <?php echo $this->escapeHtml($rate['title']) ?>
+                        <?php if (!is_null($rate['percent'])): ?>
+                            (<?php echo (float)$rate['percent'] ?>%)
+                        <?php endif ?>
+                        &mdash;
+                    </div>
+                    <?php if ($isFirst): ?>
+                        <div class="price">
+                            <?php echo $this->helper('checkout')->formatPrice($amount); ?>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+            <?php $isFirst = 0 ?>
+            <?php $isTop = 0 ?>
+        <?php endforeach ?>
+    <?php endforeach ?>
+<?php endif ?>
+
+<div<?php if ($this->helper('tax')->displayFullSummary() && $this->getTotal()->getValue() !=0 ): ?> class="summary-total"
+    onclick="expandDetails(this, '.summary-details-<?php echo $taxIter ?>')"<?php endif ?>>
+    <div class="title">
+        <?php if ($this->helper('tax')->displayFullSummary()): ?>
+            <div class="summary-collapse"><?php echo $this->getTotal()->getTitle() ?></div>
+        <?php else: ?>
+            <?php echo $this->getTotal()->getTitle() ?>
+        <?php endif ?>
+        &mdash;
+    </div>
+    <div class="price">
+        <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?></strong>
+    </div>
+</div>

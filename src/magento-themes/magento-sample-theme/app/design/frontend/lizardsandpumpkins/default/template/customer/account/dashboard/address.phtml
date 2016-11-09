@@ -1,0 +1,27 @@
+<div class="col-2 row clearfix">
+    <div class="col span_12">
+        <a href="<?php echo $this->getAddressBookUrl() ?>" class="edit">
+            <i class="icon-edit"></i>
+        </a>
+        <h3><?php echo $this->__('Address Book') ?></h3>
+
+        <div class="row">
+            <div class="col span_6">
+                <h4><?php echo $this->__('Default Billing Address') ?></h4>
+                <address>
+                    <?php echo $this->getPrimaryBillingAddressHtml() ?><br />
+                    <a href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>">
+                        <?php echo $this->__('Edit Address') ?></a>
+                </address>
+            </div>
+            <div class="col span_6">
+                <h4><?php echo $this->__('Default Shipping Address') ?></h4>
+                <address>
+                    <?php echo $this->getPrimaryShippingAddressHtml() ?><br />
+                    <a href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>">
+                        <?php echo $this->__('Edit Address') ?></a>
+                </address>
+            </div>
+        </div>
+    </div>
+</div>

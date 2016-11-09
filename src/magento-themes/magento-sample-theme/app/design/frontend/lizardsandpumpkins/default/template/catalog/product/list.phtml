@@ -1,0 +1,67 @@
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+$productCollection  = $this->getLoadedProductCollection();
+$_helper            = $this->helper('catalog/output');
+$productListBlock   = $this->getLayout()->createBlock('lizardsandpumpkins_demotheme/catalog_product_list');
+?>
+
+<?php if(!$productCollection->count()): ?>
+
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+
+<?php else: ?>
+
+<div class="catalog">
+
+    <ul class="list clearfix">
+
+    <?php foreach ($productCollection as $product): ?>
+        <li class="item">
+
+            <a href="<?php echo $product->getProductUrl() ?>"
+               title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>"
+               class="link">
+
+                <?php if($productListBlock->isNew($product)): ?>
+                    <div class="product-label new">
+                        <span><?php echo $this->__('New') ?></span>
+                    </div>
+                <?php elseif($productListBlock->isOnSale($product)): ?>
+                    <div class="product-label sale">
+                        <span><?php echo '- '. $productListBlock->getSavings($product) . '%' ?></span>
+                    </div>
+                <?php endif ?>
+
+                <div class="image">
+                    <img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(270) ?>"
+                         alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
+                </div>
+
+                <?php $productNameStripped = $this->stripTags($product->getName(), null, true) ?>
+
+                <div class="name">
+                    <?php echo $_helper->productAttribute($product, $product->getName() , 'name') ?>
+                </div>
+
+                <?php echo $this->getPriceHtml($product, true) ?>
+
+                <?php if(!$product->isSaleable()): ?>
+                    <div class="availability out-of-stock">
+                        <?php echo $this->__('Out of stock') ?>
+                    </div>
+                <?php endif ?>
+            </a>
+
+        </li>
+    <?php endforeach ?>
+
+    </ul>
+
+</div>
+<?php endif ?>

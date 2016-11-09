@@ -1,0 +1,72 @@
+<?php
+/**
+ * Grouped product data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ * @see Mage_Catalog_Block_Product_View_Type_Grouped
+ */
+?>
+<?php
+$this->setPreconfiguredValue();
+
+$_product               = $this->getProduct();
+$_associatedProducts    = $this->getAssociatedProducts();
+$_hasAssociatedProducts = count($_associatedProducts) > 0;
+?>
+
+<div class="product-group">
+
+    <div class="title"><?php echo $this->__('Choose color and quantity') ?> :</div>
+
+    <?php if ($_hasAssociatedProducts): ?>
+
+        <div class="empty-option-flag"><?php echo $this->__('Please select an quantity first') ?></div>
+
+        <?php foreach ($_associatedProducts as $_item): ?>
+
+            <div class="group-item">
+                <img class="image" src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(35) ?>"
+                     alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+                     title="<?php echo $this->escapeHtml($_item->getName()) ?>" />
+
+                <?php if ($_product->isSaleable()): ?>
+                    <?php if ($_item->isSaleable()) : ?>
+                        <label for="qty" class="dropdown">
+                            <select name="super_group[<?php echo $_item->getId() ?>]" id="qty">
+                                <?php
+                                for ($i = 0; $i < 51; $i ++) {
+                                    echo '<option value="' . $i . '">' . $i . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </label>
+                    <?php else: ?>
+                        <p class="availability out-of-stock">
+                            <span><?php echo $this->__('Out of stock') ?></span>
+                        </p>
+                    <?php endif ?>
+                <?php endif ?>
+
+                <p class="name">
+                    <?php echo $_item->getAttributeText('color') ?>
+                </p>
+            </div>
+        <?php endforeach ?>
+
+    <?php else: ?>
+
+       <p>
+           <?php echo $this->__('No options of this product are available.') ?>
+       </p>
+    <?php endif ?>
+</div>
+
+<div class="price-block">
+    <?php
+    $first_element = array_shift($_associatedProducts);
+
+    echo $this->getPriceHtml($first_element, true)
+    ?>
+
+    <?php echo $this->getChildHtml('product_type_data_extra') ?>
+</div>

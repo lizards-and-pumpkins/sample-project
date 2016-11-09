@@ -1,0 +1,101 @@
+.cms {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 50px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 1024px) {
+  .cms {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .cms {
+    padding: 0 5px;
+  }
+}
+.cms h1,
+.cms h2 {
+  text-align: center;
+}
+.cms h1 {
+  margin-bottom: 40px;
+  font-size: 30px;
+}
+.cms h2 {
+  position: relative;
+  margin: 40px 0 20px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+}
+.cms h2:after {
+  position: absolute;
+  content: '';
+  width: 100px;
+  height: 3px;
+  bottom: -10px;
+  background: #fafafa;
+  left: 50%;
+  margin-left: -50px;
+}
+.cms h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+.cms p {
+  margin: 10px 0;
+}
+.cms img {
+  display: inline-block;
+  max-width: 100%;
+}
+.cms ul li {
+  margin-left: 50px;
+  list-style: disc;
+}
+.cms .text-center {
+  text-align: center;
+}
+.cms a {
+  text-decoration: underline;
+}
+
+#contactForm {
+  text-align: center;
+  margin-bottom: 30px;
+}
+#contactForm ul {
+  display: inline-block;
+  text-align: left;
+}
+#contactForm ul li {
+  margin: 10px 0;
+  list-style: none;
+}
+#contactForm ul li label {
+  float: left;
+  width: 170px;
+}
+#contactForm ul li input {
+  width: 300px;
+}
+#contactForm ul li .input-box {
+  float: left;
+}
+#contactForm ul li textarea {
+  width: 300px;
+}
+#contactForm ul li.mandatory-info {
+  font-size: 12px;
+}
+
+.success-information {
+  display: none;
+  margin-bottom: 30px;
+  text-align: center;
+}

@@ -1,0 +1,35 @@
+<?php
+/* @var $this Mage_Core_Block_Template */
+/* @var $catalogSearchHelper Mage_Catalogsearch_Helper_Data */
+
+$catalogSearchHelper =  $this->helper('catalogsearch');
+?>
+<form id="search_mini_form" action="<?php echo $catalogSearchHelper->getResultUrl() ?>" method="get" autocomplete="off">
+
+    <fieldset>
+        <div class="form-search">
+            <label for="search"></label>
+            <input id="search" type="text" name="<?php echo $catalogSearchHelper->getQueryParamName() ?>"
+                   placeholder="<?php echo $this->__('What are you looking for?') ?>"
+                   class="input-text"
+                   autocomplete="off" />
+
+            <button class="search-btn" type="submit" title="<?php echo $this->__('Search') ?>">
+                <svg class="icon magnifier" viewBox="0 0 1024 1024">
+                    <use xlink:href="<?php echo $this->getSkinUrl('images/assets.svg')?>#magnifier"></use>
+                </svg>
+            </button>
+
+            <ul class="form-search-suggest">
+                <li><span class="name">Sugg<span>estion</span> 1</span><span class="amount">55</span></li>
+                <li><span class="name">Sugg<span>estion</span> 2</span><span class="amount">100</span></li>
+                <li><span class="name">Sugg<span>estion</span> 3</span><span class="amount">9999</span></li>
+                <li><span class="name">Sugg<span>estion</span> 4</span><span class="amount">1</span></li>
+                <li><span class="name">Sugg<span>estion</span> 5</span><span class="amount">6</span></li>
+                <li><span class="name">Sugg<span>estion</span> 6</span><span class="amount">49</span></li>
+                <li><span class="name">Sugg<span>estion</span> 7</span><span class="amount">32</span></li>
+            </ul>
+        </div>
+    </fieldset>
+
+</form>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var $this Mage_Tax_Block_Checkout_Grandtotal
+ * @see Mage_Tax_Block_Checkout_Grandtotal
+ */
+?>
+<?php if ($this->includeTax() && $this->getTotalExclTax() >= 0): ?>
+    <div class="grand-total line">
+        <div class="title">
+            <strong><?php echo $this->helper('tax')->__('Grand Total Excl. Tax')?></strong> &mdash;
+        </div>
+        <div class="price">
+            <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotalExclTax()) ?></strong>
+        </div>
+    </div>
+    <?php echo $this->renderTotals('taxes', $this->getColspan()) ?>
+    <div class="grand-total line">
+        <div class="title">
+            <strong><?php echo $this->helper('tax')->__('Grand Total Incl. Tax')?></strong> &mdash;
+        </div>
+        <div class="price">
+            <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?></strong>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="grand-total line">
+        <div class="price">
+            <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?></strong>
+        </div>
+    </div>
+<?php endif ?>

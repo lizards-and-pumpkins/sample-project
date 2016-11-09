@@ -1,0 +1,13 @@
+<?php  $_order = $this->getOrder() ?>
+
+<div class="info-buttons">
+    <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
+        <a href="<?php echo $this->getReorderUrl($_order) ?>" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
+        <span class="separator">|</span>
+    <?php endif ?>
+
+    <a href="<?php echo $this->getPrintUrl($_order) ?>" class="link-print" onclick="this.target='_blank';">
+        <?php echo $this->__('Print Order') ?>
+    </a>
+    <?php echo $this->getChildHtml() ?>
+</div>

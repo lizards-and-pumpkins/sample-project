@@ -1,0 +1,74 @@
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+$productCollection  = $this->getLoadedProductCollection();
+$_helper            = $this->helper('catalog/output');
+$category           = Mage::getModel('catalog/category')->load($this->getCategoryId());
+$productListBlock   = $this->getLayout()->createBlock('craft/catalog_product_list');
+?>
+
+<?php if(!$productCollection->count() ): ?>
+
+<?php elseif ($category->getIsActive()): ?>
+
+<?php if($productCollection->count() > 1 ): ?>
+    <a href="<?php echo $category->getUrl() ?>" class="cat-link button normal">
+        <?php echo $this->__('Show all products') ?>
+    </a>
+<?php endif ?>
+
+<h3><?php echo $category->getName() ?></h3>
+
+<ul class="list clearfix">
+
+    <?php foreach ($productCollection as $product): ?>
+    <li class="item">
+        <div class="link">
+
+            <?php if($productListBlock->isNew($product)): ?>
+                <div class="product-label new">
+                    <span><?php echo $this->__('New') ?></span>
+                </div>
+            <?php elseif($productListBlock->isOnSale($product)): ?>
+                <div class="product-label sale">
+                    <span><?php echo '- '. $productListBlock->getSavings($product) . '%' ?></span>
+                </div>
+            <?php endif ?>
+
+            <a href="<?php echo $product->getProductUrl() ?>"
+               title="<?php echo $product->getName() ?>"
+               class="image">
+                <img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(270, 270) ?>"
+                     alt="<?php echo $product->getName() ?>" />
+            </a>
+
+
+            <h2 class="name">
+                <a href="<?php echo $product->getProductUrl() ?>" >
+                    <?php echo $product->getName() ?>
+                </a>
+            </h2>
+
+            <div class="description">
+                <?php echo $_helper->productAttribute($product, $product->getShortDescription(), 'short_description') ?>
+            </div>
+
+            <?php echo $this->getPriceHtml($product, true) ?>
+
+            <?php if($product->isSaleable()): ?>
+                <a href="<?php echo $product->getProductUrl() ?>" class="button strong">
+                    <span><?php echo $this->__('Show details') ?></span>
+                </a>
+            <?php endif ?>
+        </div>
+    </li>
+    <?php endforeach ?>
+
+</ul>
+
+<?php endif ?>

@@ -1,0 +1,34 @@
+<?php if (($_products = $this->getProductCollection()) && $_products->getSize()): ?>
+    <div class="category-description">
+        <h2><?php echo $this->__('New Products') ?></h2>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+    </div>
+
+<?php $_columnCount = $this->getColumnCount() ?>
+
+    <ul class="list clearfix">
+    <?php foreach ($_products->getItems() as $_product): ?>
+
+        <li class="item">
+            <div class="link">
+                <a href="<?php echo $_product->getProductUrl() ?>"
+                   title="<?php echo $this->escapeHtml($_product->getName()) ?>"
+                   class="image">
+                    <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(300) ?>"
+                         alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                </a>
+
+                <h3 class="name">
+                    <a href="<?php echo $_product->getProductUrl() ?>"
+                       title="<?php echo $this->escapeHtml($_product->getName()) ?>">
+                        <?php echo $this->escapeHtml($_product->getName()) ?>
+                    </a>
+                </h3>
+
+                <?php echo $this->getPriceHtml($_product, true, '-new') ?>
+            </div>
+        </li>
+
+    <?php endforeach ?>
+    </ul>
+<?php endif ?>

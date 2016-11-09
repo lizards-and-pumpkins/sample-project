@@ -1,0 +1,22 @@
+<p class="block-title">
+    <?php echo $this->__('Subscribe to our newsletter <span>and you\'ll get 5% discount on your next order</span>') ?>
+</p>
+<form action="<?php echo $this->getFormActionUrl() ?>" method="post" class="span_6" id="newsletter-validate-detail">
+    <input type="text"
+           name="email"
+           id="newsletter"
+           title="<?php echo $this->__('Sign up for our newsletter') ?>"
+           placeholder="<?php echo $this->__('Your email address') ?>"
+           class="input-text required-entry validate-email" />
+
+    <button type="submit"
+            title="<?php echo $this->__('Subscribe') ?>"
+            class="button normal">
+        <?php echo $this->__('Subscribe') ?>
+    </button>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+//]]>
+</script>

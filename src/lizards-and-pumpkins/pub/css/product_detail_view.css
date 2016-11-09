@@ -1,0 +1,36 @@
+@import "common.css";
+@import "product_grid.css";
+@import "lib/zoom.css";
+
+.product-view { max-width: 1600px; margin: 0 auto; padding: 0 50px }
+.product-shop h1 { font-size: 30px; margin: 0 0 10px 10px; text-transform: uppercase; font-weight: normal }
+.product-shop .short-description { margin: 0 0 50px 10px }
+
+/* Images */
+.zoom-flyout { left: 490px; width: 594px; height: 490px }
+.more-views { margin-left: -5px; padding-left: 0; font-size: 0 }
+.more-views li { display: inline-block; padding-left: 5px }
+
+/* Controls */
+#selects { margin-bottom: 46px }
+#selects > span { margin-left: 10px }
+.product-shop button { padding: 15px 40px; text-transform: uppercase; font-weight: bold; color: #ffffff; letter-spacing: 2px; border: 2px solid #87BBA2; background: #87BBA2; cursor: pointer }
+.product-shop button:hover { background-color: #ffffff; color: #87BBA2 }
+
+/* Prices */
+.price-box { display: inline-block; width: 30%; vertical-align: top; font-size: 25px; font-weight: bold }
+.regular-price { margin-left: 10px }
+.old-price { margin-left: 10px; text-decoration: line-through }
+.special-price { color: #ff3e3e }
+
+.box-description { clear: both; padding-top: 20px }
+.box-description h5, .box-additional h5 { margin: 30px 0 20px; font-size: 20px; font-weight: normal }
+.box-additional table { margin-bottom: 60px }
+.box-additional td { padding: 3px }
+
+@media (max-width: 1024px) {
+    .product-view { padding: 0 15px }
+}
+@media (max-width: 767px) {
+    .product-view { padding: 0 5px }
+}

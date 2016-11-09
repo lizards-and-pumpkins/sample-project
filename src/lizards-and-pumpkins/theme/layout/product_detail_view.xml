@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<snippet xmlns="http://lizardsandpumpkins.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://lizardsandpumpkins.com ../../../../vendor/lizards-and-pumpkins/catalog/schema/snippet.xsd">
+    <block name="product_details_snippet" class="LizardsAndPumpkins\Import\TemplateRendering\Block" template="template/1column.phtml">
+        <block name="head" class="LizardsAndPumpkins\Import\TemplateRendering\Block" template="template/head.phtml" />
+        <block name="header" class="LizardsAndPumpkins\Import\TemplateRendering\Block" template="template/header.phtml"/>
+        <block name="content" class="LizardsAndPumpkins\Import\TemplateRendering\Block\ProductBlock" template="template/product-details.phtml"/>
+        <block name="footer" class="LizardsAndPumpkins\Import\TemplateRendering\Block" template="template/footer.phtml" />
+    </block>
+</snippet>

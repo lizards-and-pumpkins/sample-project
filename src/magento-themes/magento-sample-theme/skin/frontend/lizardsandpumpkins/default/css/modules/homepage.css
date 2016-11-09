@@ -1,0 +1,214 @@
+.list {
+  margin-left: -15px;
+}
+.list .item {
+  float: left;
+  width: 20%;
+  padding-bottom: 50px;
+  text-align: center;
+  border: 0 solid transparent;
+  border-left-width: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.list .link {
+  position: relative;
+  display: block;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: -webkit-all 0.15s ease;
+  -moz-transition: -moz-all 0.15s ease;
+  -ms-transition: -ms-all 0.15s ease;
+  -o-transition: -o-all 0.15s ease;
+  transition: all 0.15s ease;
+  outline: 1px solid #fafafa;
+  background: #ffffff;
+}
+.list .link:hover {
+  color: #333333;
+  outline: 1px solid #87BBA2;
+}
+.list .link .button {
+  width: 100%;
+  margin-top: 10px;
+}
+.list .image {
+  text-align: center;
+}
+.list .image img {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+.list .name {
+  margin: 10px 0 5px 0;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+.list .description {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.list .old-price,
+.list .special-price {
+  display: inline-block;
+}
+.list .old-price {
+  margin-right: 10px;
+  text-decoration: line-through;
+}
+.list .special-price {
+  color: #ff3e3e;
+}
+.list .special-price,
+.list .minimal-price-link {
+  float: right;
+}
+.list .tax-details {
+  display: none;
+}
+.list .product-label {
+  position: absolute;
+  top: 10px;
+  right: -10px;
+  background: #ffffff;
+}
+.list .product-label span {
+  position: relative;
+  display: block;
+  padding: 5px 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.list .product-label span:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: -1px;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 0;
+}
+.list .product-label.new span {
+  color: #87BBA2;
+  background: #fafafa;
+}
+.list .product-label.new span:after {
+  border-color: #cccccc transparent transparent transparent;
+}
+.list .product-label.sale span {
+  color: #ff3e3e;
+  background: rgba(255, 62, 62, 0.2);
+}
+.list .product-label.sale span:after {
+  border-color: rgba(255, 62, 62, 0.5) transparent transparent transparent;
+}
+
+@media (max-width: 1024px) {
+  .list .item {
+    width: 25%;
+  }
+}
+@media (max-width: 900px) {
+  .list .item {
+    width: 33.33333%;
+  }
+}
+@media (max-width: 767px) {
+  .list {
+    margin-left: -5px;
+  }
+  .list .link {
+    padding: 5px;
+  }
+  .list .item {
+    width: 50%;
+    padding-bottom: 25px;
+    border-left-width: 5px;
+  }
+  .list .name {
+    font-size: 14px;
+  }
+  .list .description {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .list .link .button {
+    padding: 10px 15px;
+    font-size: 10px;
+  }
+  .list .product-label {
+    right: -4px;
+  }
+}
+.cms-home img {
+  max-width: 100%;
+}
+.cms-home .hero-text {
+  position: absolute;
+  padding: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  background: rgba(255, 255, 255, 0);
+  -webkit-transition: -webkit-all 0.15s ease;
+  -moz-transition: -moz-all 0.15s ease;
+  -ms-transition: -ms-all 0.15s ease;
+  -o-transition: -o-all 0.15s ease;
+  transition: all 0.15s ease;
+}
+.cms-home .hero-text p {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 20px;
+  border-bottom: 5px solid transparent;
+  padding-bottom: 20px;
+  -webkit-transition: -webkit-all 0.15s ease;
+  -moz-transition: -moz-all 0.15s ease;
+  -ms-transition: -ms-all 0.15s ease;
+  -o-transition: -o-all 0.15s ease;
+  transition: all 0.15s ease;
+}
+.cms-home .hero-text span {
+  font-size: 60px;
+  display: block;
+  white-space: nowrap;
+}
+.cms-home .col {
+  position: relative;
+}
+.cms-home .col:hover .hero-text {
+  background: rgba(255, 255, 255, 0.5);
+}
+.cms-home .col:hover p {
+  border-color: #000000;
+}
+.cms-home .category-description {
+  margin: 50px 0 20px 0;
+  text-align: center;
+}
+.cms-home .category-description h2 {
+  margin-bottom: 10px;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+.cms-home .category-description p {
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.cms-home .list {
+  margin-bottom: 50px;
+}

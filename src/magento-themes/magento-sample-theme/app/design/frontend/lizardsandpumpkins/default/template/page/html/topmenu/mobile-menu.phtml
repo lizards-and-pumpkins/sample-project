@@ -1,0 +1,38 @@
+<?php
+/**
+ * @var LizardsAndPumpkins_DemoTheme_Block_Page_Html_Topmenu_Menu $this
+ */
+?>
+<?php
+
+/** @var Mage_Customer_Model_Session $customerSession */
+$customerSession = Mage::getSingleton('customer/session');
+
+?>
+<nav id="mobile-navigation">
+    <div class="close"></div>
+
+    <div class="scroll-wrapper">
+        <?php echo $this->mobileMenuToHtml() ?>
+
+        <?php if (!$customerSession->isLoggedIn()): ?>
+            <a href="<?php echo $this->getUrl('customer/account/login') ?>" class="customer-account">
+                <span><?php echo $this->__('Login / Register') ?></span>
+            </a>
+
+        <?php else: ?>
+
+            <?php $customer_name = $customerSession->getCustomer()->getFirstname() ?>
+            <a href="<?php echo $this->getUrl('customer/account') ?>" class="customer-account">
+                <span><?php echo $this->__('%s\'s Account', $customer_name) ?></span>
+            </a>
+            <a href="<?php echo $this->getUrl('customer/account/logout') ?>" class="customer-logout">
+                <?php echo $this->__('Log out') ?>
+            </a>
+        <?php endif ?>
+
+        <a href="<?php echo $this->getUrl('wishlist') ?>" class="customer-wishlist">
+            <?php echo $this->__('Wish list') ?>
+        </a>
+    </div>
+</nav>

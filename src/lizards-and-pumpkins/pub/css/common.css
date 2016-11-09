@@ -1,0 +1,143 @@
+@import url(//fonts.googleapis.com/css?family=Montserrat:400,700);
+
+body { font-size: 15px; font-family: 'Montserrat', sans-serif; color: #333333; margin: 0; position: relative }
+#page { background: #fafafa; position: relative }
+
+input, textarea { padding: 10px 15px; font-size: 14px; font-family: 'Montserrat', sans-serif }
+fieldset { border: 0; padding: 0; margin: 0 }
+button { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 14px }
+input, textarea, button { outline: none; border: none; background: none; margin: 0 }
+a { color: #333333; text-decoration: none }
+a:hover { color: #87BBA2 }
+
+/* Header */
+header { top: -138px; margin-bottom: 40px; background: #ffffff; display: block; position: fixed; left: 0; right: 0; z-index: 10 }
+header .header-wrapper { max-width: 1600px; margin: 0 auto; padding: 0 50px; position: relative }
+header .logo { float: left; width: 100px; height: 80px; fill: #87BBA2 }
+header .logo .icon { margin-top: -15px }
+header.hidden { top: -283px }
+
+/* Language switch */
+.language-wrapper { padding: 20px 0; text-align: center; background: #fafafa }
+.language-wrapper .language-switch { position: relative; max-width: 1600px; margin: 0 auto }
+.language-wrapper p { font-size: 18px; margin: 0 0 10px }
+.language-wrapper .lang-flag { display: inline-block; text-align: center; margin: 0 20px; padding: 5px; border-radius: 3px }
+.language-wrapper .lang-flag img { width: 40px; display: inline-block }
+.language-wrapper .lang-flag span { display: block; margin-top: 10px; white-space: nowrap; font-size: 12px }
+.language-switch-close { position: absolute; top: -10px; right: 30px; width: 20px; height: 20px; cursor: pointer }
+.language-switch-close:before { transform: rotate(-45deg) }
+.language-switch-close:after { transform: rotate(45deg) }
+.language-switch-close:before, header .language-wrapper .language-switch-close:after { position: absolute; content: ''; top: 10px; left: 0; width: 20px; height: 1px; background: #cccccc }
+
+/* Search Form */
+#search_mini_form { display: block; width: auto; margin-top: 10px; padding-top: 13px; text-align: center }
+#search_mini_form .form-search { position: relative; display: inline-block; margin-top: 5px; width: 60% }
+#search_mini_form input { width: 100%; border: 2px solid #333333; box-sizing: border-box }
+#search_mini_form button { position: absolute; top: 0; right: 0; bottom: 0; padding: 0; width: 40px }
+#search_mini_form button .icon { position: relative; width: 22px; top: 2px }
+
+/* Top Links */
+.top-links { float: right; margin-top: 25px; font-size: 11px; padding: 0 }
+.top-links li { display: inline-block; margin-right: 15px; padding: 5px 0; vertical-align: top }
+#language-switcher img { cursor: pointer; width: 30px; border: 2px solid #ffffff; border-radius: 3px }
+#language-switcher:hover img { border-color: #87BBA2 }
+.top-links .icon-shopping-bag { width: 20px; display: inline-block }
+#cart-meta-info { display: inline-block; padding: 5px 0 0 5px; vertical-align: top }
+#account-meta { padding-top: 10px }
+
+/* Navigation */
+header nav { padding: 0 50px }
+#top-navigation, #top-navigation .content-wrapper { max-width: 1600px; margin: 0 auto }
+#top-navigation > ul { position: relative; width: 100%; list-style: none; padding: 0 }
+#top-navigation > ul > li { float: left; width: 16.666% }
+#top-navigation .sub-level { border-bottom: 3px solid #000000; display: none; position: fixed; left: 0; right: 0; background: #ffffff }
+#top-navigation > ul > li > a { display: block; padding: 8px; white-space: nowrap; text-align: center; text-transform: uppercase; letter-spacing: 1px; border-bottom: #ffffff solid 3px }
+#top-navigation > ul > li:hover > a { color: #333333; border-color: #333333 }
+#top-navigation li:hover .sub-level { display: block }
+#top-navigation .sub-level { border-bottom: 3px solid #000000 }
+#top-navigation .sub-level .left { float: left; width: 30% }
+#top-navigation .sub-level .right { float: right; width: 70% }
+#top-navigation .sub-level .special { margin: 40px; padding: 0 40px; border-left: 1px solid #cccccc }
+#top-navigation .nav-2 { padding: 20px 0 }
+#top-navigation .nav-2 a { display: block; padding: 10px 50px }
+#top-navigation .title { margin: 0; background: #fafafa }
+#top-navigation .title a { display: block; position: relative; padding: 20px 50px; color: #333333 }
+#top-navigation .title a:after { position: absolute; content: ''; display: inline-block; top: 26px; margin-left: 10px; border: solid #333333; border-width: 0 2px 2px 0; padding: 3px; transform: rotate(-45deg) }
+
+.mobile-logo, #mobile-navigation, #mobile-search { display: none }
+
+/* Layout */
+.col { float: left }
+.span_2 { width: 16.66667%; border-left-width: 5px; padding: 0; margin-left: 0 }
+.span_5 { width: 41.66667%; border-left-width: 5px; padding: 0; margin-left: 0 }
+.span_6 { width: 50%; border-left-width: 5px; padding: 0; margin-left: 0 }
+.span_7 { width: 58.33333%; border-left-width: 5px; padding: 0; margin-left: 0 }
+.span_10 { width: 83.33333%; border-left-width: 5px; padding: 0; margin-left: 0 }
+
+#content { width: 100%; overflow: hidden; min-height: 700px; padding-top: 160px; max-width: 1600px; margin: 0 auto }
+#content.pushed { margin-top: 145px; }
+header.pushed { top: 0 }
+
+/* Footer */
+.footer-trust { padding: 80px 0; text-align: center; background: #ffffff }
+.trust-title { font-size: 24px; font-weight: bold }
+.footer-trust a { font-size: 18px }
+.footer-category { float: left; width: 25% }
+.footer-category .icon { width: 20px }
+.footer-category .title { margin-bottom: 15px; text-transform: uppercase }
+.footer-wrapper { max-width: 1600px; margin: 0 auto; padding: 20px 50px 40px }
+
+/* Newsletter */
+.footer-newsletter { padding: 80px 0; text-align: center; background: url("../images/subscribe-background.jpg") center no-repeat }
+.subscribe-title { margin: 0 10px 0 0; font-weight: bold; font-size: 24px; text-align: center }
+.subscribe-title span { display: block; margin-top: 10px; font-weight: normal; font-size: 16px }
+.footer-newsletter form { display: inline-block; margin-top: 30px }
+.footer-newsletter input { width: 65%; padding: 10px 15px; background: #ffffff; border: 2px solid #cccccc }
+.footer-newsletter button { color: #87BBA2; text-transform: uppercase; border: 2px solid #87BBA2; padding: 10px 40px }
+
+/* Styled dropdown */
+.styled-select-wrapper { padding: 6px 30px 6px 6px; border: 2px solid #cccccc; background: #ffffff; color: #666666; position: relative }
+.styled-select-wrapper select { position: absolute; opacity: 0; left: 0; width: 100% }
+.styled-select-wrapper span { line-height: 21px }
+.styled-select-wrapper span:after { position: absolute; content: ''; width: 0; height: 0; top: 14px; right: 6px; border-style: solid; border-width: 4px 4px 0 4px; border-color: #cccccc transparent transparent transparent }
+
+/* Clearer */
+.clearfix:after, header nav:after { content: ""; display: block; height: 0; clear: both; visibility: hidden }
+
+@media (max-width: 1024px) {
+    header .header-wrapper, header nav, footer .footer-wrapper { padding: 0 15px }
+    nav ul li a { font-size: 11px }
+}
+@media (max-width: 767px) {
+    header .header-wrapper, header nav, footer .footer-wrapper { padding: 0 5px }
+    .nav-wrapper, header .main-logo, #account-meta, #cart-meta-info, #top-navigation { display: none }
+
+    header { border-bottom: 1px solid #cccccc }
+    header .logo { float: none; width: 40px; height: 40px; display: inline-block }
+    header .logo .icon { margin-top: 5px }
+    header .mobile-logo { display: block; vertical-align: top }
+
+    #mobile-menu { display: inline-block; cursor: pointer; width: 25px; height: 25px; margin: 10px 10px 0 0; vertical-align: top }
+    #mobile-menu .lines { position: relative; display: inline-block; width: 25px; height: 2px; background: #333333 }
+    #mobile-menu .lines:before, #mobile-menu .lines:after { position: absolute; content: ''; display: inline-block; width: 25px; height: 2px; background: #333333 }
+    #mobile-menu .lines:before { top: -6px }
+    #mobile-menu .lines:after { bottom: -6px }
+
+    #search_mini_form { max-height: 0; margin: 5px 0; padding: 0; overflow: hidden }
+    #search_mini_form.active { max-height: 80px }
+    #search_mini_form .form-search { width: 100% }
+
+    .top-links { position: absolute; top: 10px; right: 0; margin: 0 }
+    .language-switch-close { right: 10px }
+    #mobile-search { position: absolute; right: 105px; top: 15px; width: 20px; display: inline-block; font-size: 22px; fill: #333333 }
+
+    body.no-flow { overflow: hidden }
+    #page.pushed { left: 270px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) }
+
+    #mobile-navigation { display: block; position: fixed; top: 55px; bottom: 0; width: 100% }
+
+    #content { padding-top: 60px }
+
+    .span_5, .span_7 { width: 100%; float: none }
+    .zoom img { max-width: 100% }
+}

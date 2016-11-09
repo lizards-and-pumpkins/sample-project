@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<snippet xmlns="http://lizardsandpumpkins.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://lizardsandpumpkins.com ../../../../vendor/lizards-and-pumpkins/catalog/schema/snippet.xsd">
+    <block name="autosuggestion" class="LizardsAndPumpkins\Import\TemplateRendering\Block" template="template/product-search-autosuggestion.phtml"/>
+</snippet>

@@ -1,0 +1,596 @@
+table {
+  width: 100%;
+}
+table .nobr {
+  white-space: nowrap;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+table thead {
+  border-bottom: 1px solid #cccccc;
+}
+table thead th {
+  padding: 15px 0 5px 0;
+  width: 25%;
+}
+table tbody {
+  border-bottom: 1px solid #cccccc;
+}
+table tbody td {
+  padding: 10px 0;
+}
+table tbody td .product-name {
+  font-size: 16px;
+}
+table tbody td a {
+  color: #333333;
+}
+table tbody td a:hover {
+  color: #87BBA2;
+  text-decoration: none;
+}
+table tbody td img {
+  float: left;
+}
+table tbody td .product-info {
+  padding-left: 150px;
+}
+table tbody td .button {
+  display: inline-block;
+  margin-top: 10px;
+}
+table tbody td .button i {
+  top: 1px;
+}
+table tbody td .small-text {
+  margin: 10px 0;
+}
+table tbody td .remove {
+  position: relative;
+  font-size: 12px;
+}
+table tbody td .remove i {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  height: 18px;
+  width: 18px;
+  margin-right: 5px;
+  font-size: 18px;
+  line-height: 21px;
+  color: #ffffff;
+  text-align: center;
+  background: #cccccc;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+}
+table tbody td .remove:hover {
+  color: #87BBA2;
+}
+table tbody td .remove:hover i {
+  color: #ffffff;
+  background: #87BBA2;
+}
+table tbody tr:first-child td {
+  padding-top: 30px;
+}
+table tbody tr:last-child td {
+  padding-bottom: 30px;
+}
+
+@media (max-width: 767px) {
+  table tbody td {
+    padding: 10px 3px;
+    font-size: 12px;
+  }
+  table tbody td img {
+    float: none;
+    width: 100px;
+  }
+  table tbody td .product-info {
+    padding: 0;
+  }
+  table tbody td .product-name {
+    font-size: 12px;
+  }
+}
+[class^='customer-'] #content,
+[class*=' customer-'] #content,
+[class^='sales-'] #content,
+[class*=' sales-'] #content,
+[class^='newsletter-'] #content,
+[class*=' newsletter-'] #content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 50px;
+  padding-top: 138px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 1024px) {
+  [class^='customer-'] #content,
+  [class*=' customer-'] #content,
+  [class^='sales-'] #content,
+  [class*=' sales-'] #content,
+  [class^='newsletter-'] #content,
+  [class*=' newsletter-'] #content {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 767px) {
+  [class^='customer-'] #content,
+  [class*=' customer-'] #content,
+  [class^='sales-'] #content,
+  [class*=' sales-'] #content,
+  [class^='newsletter-'] #content,
+  [class*=' newsletter-'] #content {
+    padding: 0 5px;
+  }
+}
+@media (max-width: 767px) {
+  [class^='customer-'] #content,
+  [class*=' customer-'] #content,
+  [class^='sales-'] #content,
+  [class*=' sales-'] #content,
+  [class^='newsletter-'] #content,
+  [class*=' newsletter-'] #content {
+    padding-top: 20px;
+  }
+}
+[class^='customer-'] .block-account .block-title,
+[class*=' customer-'] .block-account .block-title,
+[class^='sales-'] .block-account .block-title,
+[class*=' sales-'] .block-account .block-title,
+[class^='newsletter-'] .block-account .block-title,
+[class*=' newsletter-'] .block-account .block-title {
+  margin: 20px 0 0 0;
+}
+[class^='customer-'] .block-account .block-title span,
+[class*=' customer-'] .block-account .block-title span,
+[class^='sales-'] .block-account .block-title span,
+[class*=' sales-'] .block-account .block-title span,
+[class^='newsletter-'] .block-account .block-title span,
+[class*=' newsletter-'] .block-account .block-title span {
+  padding: 15px 10px;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border-bottom: 1px solid #fafafa;
+}
+[class^='customer-'] .block-account li a,
+[class^='customer-'] .block-account li strong,
+[class*=' customer-'] .block-account li a,
+[class*=' customer-'] .block-account li strong,
+[class^='sales-'] .block-account li a,
+[class^='sales-'] .block-account li strong,
+[class*=' sales-'] .block-account li a,
+[class*=' sales-'] .block-account li strong,
+[class^='newsletter-'] .block-account li a,
+[class^='newsletter-'] .block-account li strong,
+[class*=' newsletter-'] .block-account li a,
+[class*=' newsletter-'] .block-account li strong {
+  display: block;
+  padding: 15px 10px;
+  border-bottom: 1px solid #fafafa;
+}
+[class^='customer-'] .block-account li.current,
+[class*=' customer-'] .block-account li.current,
+[class^='sales-'] .block-account li.current,
+[class*=' sales-'] .block-account li.current,
+[class^='newsletter-'] .block-account li.current,
+[class*=' newsletter-'] .block-account li.current {
+  background: #fafafa;
+}
+[class^='customer-'] .my-account,
+[class*=' customer-'] .my-account,
+[class^='sales-'] .my-account,
+[class*=' sales-'] .my-account,
+[class^='newsletter-'] .my-account,
+[class*=' newsletter-'] .my-account {
+  margin: 72px 0 50px 0;
+}
+[class^='customer-'] .my-account h3,
+[class*=' customer-'] .my-account h3,
+[class^='sales-'] .my-account h3,
+[class*=' sales-'] .my-account h3,
+[class^='newsletter-'] .my-account h3,
+[class*=' newsletter-'] .my-account h3 {
+  padding: 10px 0;
+  font-size: 16px;
+  border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #fafafa;
+}
+[class^='customer-'] .my-account h3.product-name,
+[class*=' customer-'] .my-account h3.product-name,
+[class^='sales-'] .my-account h3.product-name,
+[class*=' sales-'] .my-account h3.product-name,
+[class^='newsletter-'] .my-account h3.product-name,
+[class*=' newsletter-'] .my-account h3.product-name {
+  border: none;
+}
+[class^='customer-'] .my-account h3 span.separator,
+[class*=' customer-'] .my-account h3 span.separator,
+[class^='sales-'] .my-account h3 span.separator,
+[class*=' sales-'] .my-account h3 span.separator,
+[class^='newsletter-'] .my-account h3 span.separator,
+[class*=' newsletter-'] .my-account h3 span.separator {
+  font-style: normal;
+}
+[class^='customer-'] .my-account h4,
+[class*=' customer-'] .my-account h4,
+[class^='sales-'] .my-account h4,
+[class*=' sales-'] .my-account h4,
+[class^='newsletter-'] .my-account h4,
+[class*=' newsletter-'] .my-account h4 {
+  margin: 20px 0 10px 0;
+}
+[class^='customer-'] .my-account .welcome-msg,
+[class*=' customer-'] .my-account .welcome-msg,
+[class^='sales-'] .my-account .welcome-msg,
+[class*=' sales-'] .my-account .welcome-msg,
+[class^='newsletter-'] .my-account .welcome-msg,
+[class*=' newsletter-'] .my-account .welcome-msg {
+  padding: 20px;
+  background: #fafafa;
+}
+[class^='customer-'] .my-account .welcome-msg .hello,
+[class*=' customer-'] .my-account .welcome-msg .hello,
+[class^='sales-'] .my-account .welcome-msg .hello,
+[class*=' sales-'] .my-account .welcome-msg .hello,
+[class^='newsletter-'] .my-account .welcome-msg .hello,
+[class*=' newsletter-'] .my-account .welcome-msg .hello {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+[class^='customer-'] .my-account .col-2,
+[class*=' customer-'] .my-account .col-2,
+[class^='sales-'] .my-account .col-2,
+[class*=' sales-'] .my-account .col-2,
+[class^='newsletter-'] .my-account .col-2,
+[class*=' newsletter-'] .my-account .col-2 {
+  margin-top: 40px;
+}
+[class^='customer-'] .my-account .col-2 p,
+[class*=' customer-'] .my-account .col-2 p,
+[class^='sales-'] .my-account .col-2 p,
+[class*=' sales-'] .my-account .col-2 p,
+[class^='newsletter-'] .my-account .col-2 p,
+[class*=' newsletter-'] .my-account .col-2 p {
+  margin-top: 20px;
+}
+[class^='customer-'] .my-account a,
+[class*=' customer-'] .my-account a,
+[class^='sales-'] .my-account a,
+[class*=' sales-'] .my-account a,
+[class^='newsletter-'] .my-account a,
+[class*=' newsletter-'] .my-account a {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+[class^='customer-'] .my-account .edit,
+[class*=' customer-'] .my-account .edit,
+[class^='sales-'] .my-account .edit,
+[class*=' sales-'] .my-account .edit,
+[class^='newsletter-'] .my-account .edit,
+[class*=' newsletter-'] .my-account .edit {
+  float: right;
+  width: 35px;
+  height: 30px;
+  text-align: center;
+  line-height: 35px;
+  margin-top: 7px;
+  background: #fafafa;
+}
+[class^='customer-'] .my-account .form-list,
+[class*=' customer-'] .my-account .form-list,
+[class^='sales-'] .my-account .form-list,
+[class*=' sales-'] .my-account .form-list,
+[class^='newsletter-'] .my-account .form-list,
+[class*=' newsletter-'] .my-account .form-list {
+  margin-top: 40px;
+}
+[class^='customer-'] .my-account .form-list .field,
+[class*=' customer-'] .my-account .form-list .field,
+[class^='sales-'] .my-account .form-list .field,
+[class*=' sales-'] .my-account .form-list .field,
+[class^='newsletter-'] .my-account .form-list .field,
+[class*=' newsletter-'] .my-account .form-list .field {
+  padding: 5px 0;
+}
+[class^='customer-'] .my-account .form-list label,
+[class*=' customer-'] .my-account .form-list label,
+[class^='sales-'] .my-account .form-list label,
+[class*=' sales-'] .my-account .form-list label,
+[class^='newsletter-'] .my-account .form-list label,
+[class*=' newsletter-'] .my-account .form-list label {
+  float: left;
+  width: 170px;
+  padding-top: 10px;
+}
+[class^='customer-'] .my-account .form-list label.checkbox,
+[class*=' customer-'] .my-account .form-list label.checkbox,
+[class^='sales-'] .my-account .form-list label.checkbox,
+[class*=' sales-'] .my-account .form-list label.checkbox,
+[class^='newsletter-'] .my-account .form-list label.checkbox,
+[class*=' newsletter-'] .my-account .form-list label.checkbox {
+  padding-top: 2px;
+}
+[class^='customer-'] .my-account .form-list label.dropdown,
+[class*=' customer-'] .my-account .form-list label.dropdown,
+[class^='sales-'] .my-account .form-list label.dropdown,
+[class*=' sales-'] .my-account .form-list label.dropdown,
+[class^='newsletter-'] .my-account .form-list label.dropdown,
+[class*=' newsletter-'] .my-account .form-list label.dropdown {
+  padding-top: 0;
+  width: 250px;
+}
+[class^='customer-'] .my-account .form-list input,
+[class*=' customer-'] .my-account .form-list input,
+[class^='sales-'] .my-account .form-list input,
+[class*=' sales-'] .my-account .form-list input,
+[class^='newsletter-'] .my-account .form-list input,
+[class*=' newsletter-'] .my-account .form-list input {
+  width: 250px;
+}
+[class^='customer-'] .my-account .form-list input#dummy,
+[class*=' customer-'] .my-account .form-list input#dummy,
+[class^='sales-'] .my-account .form-list input#dummy,
+[class*=' sales-'] .my-account .form-list input#dummy,
+[class^='newsletter-'] .my-account .form-list input#dummy,
+[class*=' newsletter-'] .my-account .form-list input#dummy {
+  display: none;
+}
+[class^='customer-'] .my-account .form-list .control,
+[class*=' customer-'] .my-account .form-list .control,
+[class^='sales-'] .my-account .form-list .control,
+[class*=' sales-'] .my-account .form-list .control,
+[class^='newsletter-'] .my-account .form-list .control,
+[class*=' newsletter-'] .my-account .form-list .control {
+  margin-top: 15px;
+}
+[class^='customer-'] .my-account .madatory-info,
+[class*=' customer-'] .my-account .madatory-info,
+[class^='sales-'] .my-account .madatory-info,
+[class*=' sales-'] .my-account .madatory-info,
+[class^='newsletter-'] .my-account .madatory-info,
+[class*=' newsletter-'] .my-account .madatory-info {
+  font-size: 12px;
+}
+[class^='customer-'] #order-info-tabs,
+[class*=' customer-'] #order-info-tabs,
+[class^='sales-'] #order-info-tabs,
+[class*=' sales-'] #order-info-tabs,
+[class^='newsletter-'] #order-info-tabs,
+[class*=' newsletter-'] #order-info-tabs {
+  margin: 20px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #fafafa;
+}
+[class^='customer-'] #order-info-tabs li,
+[class*=' customer-'] #order-info-tabs li,
+[class^='sales-'] #order-info-tabs li,
+[class*=' sales-'] #order-info-tabs li,
+[class^='newsletter-'] #order-info-tabs li,
+[class*=' newsletter-'] #order-info-tabs li {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #cccccc;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+[class^='customer-'] #order-info-tabs li.current,
+[class*=' customer-'] #order-info-tabs li.current,
+[class^='sales-'] #order-info-tabs li.current,
+[class*=' sales-'] #order-info-tabs li.current,
+[class^='newsletter-'] #order-info-tabs li.current,
+[class*=' newsletter-'] #order-info-tabs li.current {
+  background: #fafafa;
+}
+[class^='customer-'] #order-info-tabs li a,
+[class*=' customer-'] #order-info-tabs li a,
+[class^='sales-'] #order-info-tabs li a,
+[class*=' sales-'] #order-info-tabs li a,
+[class^='newsletter-'] #order-info-tabs li a,
+[class*=' newsletter-'] #order-info-tabs li a {
+  margin: 0;
+  text-decoration: none;
+}
+[class^='customer-'] .info-buttons a,
+[class*=' customer-'] .info-buttons a,
+[class^='sales-'] .info-buttons a,
+[class*=' sales-'] .info-buttons a,
+[class^='newsletter-'] .info-buttons a,
+[class*=' newsletter-'] .info-buttons a {
+  display: inline-block;
+}
+[class^='customer-'] .order-items,
+[class*=' customer-'] .order-items,
+[class^='sales-'] .order-items,
+[class*=' sales-'] .order-items,
+[class^='newsletter-'] .order-items,
+[class*=' newsletter-'] .order-items {
+  margin-top: 40px;
+}
+[class^='customer-'] table tbody td img,
+[class*=' customer-'] table tbody td img,
+[class^='sales-'] table tbody td img,
+[class*=' sales-'] table tbody td img,
+[class^='newsletter-'] table tbody td img,
+[class*=' newsletter-'] table tbody td img {
+  float: left;
+}
+[class^='customer-'] table tbody td .product-info,
+[class*=' customer-'] table tbody td .product-info,
+[class^='sales-'] table tbody td .product-info,
+[class*=' sales-'] table tbody td .product-info,
+[class^='newsletter-'] table tbody td .product-info,
+[class*=' newsletter-'] table tbody td .product-info {
+  padding-left: 70px;
+}
+[class^='customer-'] table tfoot tr:first-child td,
+[class*=' customer-'] table tfoot tr:first-child td,
+[class^='sales-'] table tfoot tr:first-child td,
+[class*=' sales-'] table tfoot tr:first-child td,
+[class^='newsletter-'] table tfoot tr:first-child td,
+[class*=' newsletter-'] table tfoot tr:first-child td {
+  padding-top: 10px;
+}
+[class^='customer-'] table tfoot tr:last-child td,
+[class*=' customer-'] table tfoot tr:last-child td,
+[class^='sales-'] table tfoot tr:last-child td,
+[class*=' sales-'] table tfoot tr:last-child td,
+[class^='newsletter-'] table tfoot tr:last-child td,
+[class*=' newsletter-'] table tfoot tr:last-child td {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.sales-order-creditmemo table thead th {
+  width: 20%;
+}
+
+@media (max-width: 1024px) {
+  [class^='customer-'] #content,
+  [class*=' customer-'] #content,
+  [class^='sales-'] #content,
+  [class*=' sales-'] #content,
+  [class^='newsletter-'] #content,
+  [class*=' newsletter-'] #content {
+    padding-top: 110px;
+  }
+  [class^='customer-'] .span_2,
+  [class*=' customer-'] .span_2,
+  [class^='sales-'] .span_2,
+  [class*=' sales-'] .span_2,
+  [class^='newsletter-'] .span_2,
+  [class*=' newsletter-'] .span_2 {
+    width: 30%;
+  }
+  [class^='customer-'] .span_10,
+  [class*=' customer-'] .span_10,
+  [class^='sales-'] .span_10,
+  [class*=' sales-'] .span_10,
+  [class^='newsletter-'] .span_10,
+  [class*=' newsletter-'] .span_10 {
+    width: 70%;
+  }
+}
+@media (max-width: 767px) {
+  [class^='customer-'] #content,
+  [class*=' customer-'] #content,
+  [class^='sales-'] #content,
+  [class*=' sales-'] #content,
+  [class^='newsletter-'] #content,
+  [class*=' newsletter-'] #content {
+    padding-top: 50px;
+  }
+  [class^='customer-'] .span_2,
+  [class^='customer-'] .span_6,
+  [class^='customer-'] .span_10,
+  [class*=' customer-'] .span_2,
+  [class*=' customer-'] .span_6,
+  [class*=' customer-'] .span_10,
+  [class^='sales-'] .span_2,
+  [class^='sales-'] .span_6,
+  [class^='sales-'] .span_10,
+  [class*=' sales-'] .span_2,
+  [class*=' sales-'] .span_6,
+  [class*=' sales-'] .span_10,
+  [class^='newsletter-'] .span_2,
+  [class^='newsletter-'] .span_6,
+  [class^='newsletter-'] .span_10,
+  [class*=' newsletter-'] .span_2,
+  [class*=' newsletter-'] .span_6,
+  [class*=' newsletter-'] .span_10 {
+    width: 100%;
+  }
+  [class^='customer-'] .my-account .form-list input,
+  [class^='customer-'] .my-account .form-list label,
+  [class^='customer-'] .my-account .form-list label.dropdown
+  button,
+  [class^='customer-'] .my-account .form-list .button,
+  [class*=' customer-'] .my-account .form-list input,
+  [class*=' customer-'] .my-account .form-list label,
+  [class*=' customer-'] .my-account .form-list label.dropdown
+  button,
+  [class*=' customer-'] .my-account .form-list .button,
+  [class^='sales-'] .my-account .form-list input,
+  [class^='sales-'] .my-account .form-list label,
+  [class^='sales-'] .my-account .form-list label.dropdown
+  button,
+  [class^='sales-'] .my-account .form-list .button,
+  [class*=' sales-'] .my-account .form-list input,
+  [class*=' sales-'] .my-account .form-list label,
+  [class*=' sales-'] .my-account .form-list label.dropdown
+  button,
+  [class*=' sales-'] .my-account .form-list .button,
+  [class^='newsletter-'] .my-account .form-list input,
+  [class^='newsletter-'] .my-account .form-list label,
+  [class^='newsletter-'] .my-account .form-list label.dropdown
+  button,
+  [class^='newsletter-'] .my-account .form-list .button,
+  [class*=' newsletter-'] .my-account .form-list input,
+  [class*=' newsletter-'] .my-account .form-list label,
+  [class*=' newsletter-'] .my-account .form-list label.dropdown
+  button,
+  [class*=' newsletter-'] .my-account .form-list .button {
+    width: 100%;
+  }
+  [class^='customer-'] table thead th,
+  [class*=' customer-'] table thead th,
+  [class^='sales-'] table thead th,
+  [class*=' sales-'] table thead th,
+  [class^='newsletter-'] table thead th,
+  [class*=' newsletter-'] table thead th {
+    font-size: 12px;
+    padding: 5px 2px;
+  }
+  [class^='customer-'] table tbody td img,
+  [class*=' customer-'] table tbody td img,
+  [class^='sales-'] table tbody td img,
+  [class*=' sales-'] table tbody td img,
+  [class^='newsletter-'] table tbody td img,
+  [class*=' newsletter-'] table tbody td img {
+    float: none;
+    width: 50px;
+  }
+  [class^='customer-'] table tbody td .product-info,
+  [class*=' customer-'] table tbody td .product-info,
+  [class^='sales-'] table tbody td .product-info,
+  [class*=' sales-'] table tbody td .product-info,
+  [class^='newsletter-'] table tbody td .product-info,
+  [class*=' newsletter-'] table tbody td .product-info {
+    padding: 0;
+  }
+  [class^='customer-'] table tbody td .product-info h3,
+  [class*=' customer-'] table tbody td .product-info h3,
+  [class^='sales-'] table tbody td .product-info h3,
+  [class*=' sales-'] table tbody td .product-info h3,
+  [class^='newsletter-'] table tbody td .product-info h3,
+  [class*=' newsletter-'] table tbody td .product-info h3 {
+    font-size: 12px;
+  }
+  [class^='customer-'] #order-info-tabs li,
+  [class*=' customer-'] #order-info-tabs li,
+  [class^='sales-'] #order-info-tabs li,
+  [class*=' sales-'] #order-info-tabs li,
+  [class^='newsletter-'] #order-info-tabs li,
+  [class*=' newsletter-'] #order-info-tabs li {
+    margin-top: -1px;
+    width: 100%;
+  }
+}

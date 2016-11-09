@@ -1,0 +1,79 @@
+<footer>
+    <div class="footer-newsletter">
+        <?php echo $this->getChildHtml('newsletter') ?>
+    </div>
+    <div class="footer-trust">
+        <div class="row clearfix">
+            <div class="col span_6">
+                <p class="block-title">
+                    <?php echo $this->__('Secure payment<br>with SSL encryption') ?>
+                </p>
+                <p>
+                    <img src="<?php echo $this->getSkinUrl('images/') . 'payment-icons.jpg' ?>"
+                         alt="<?php echo $this->__('Secure payment<br>with SSL encryption') ?>"
+                         class="payment-icons" />
+                </p>
+            </div>
+            <div class="col span_6">
+                <p class="block-title">
+                    <?php echo $this->__('Do your have questions?<br>Please contat us!') ?>
+                </p>
+                <p>
+                    <a href="tel:+49112233445566">+49(0)112233445566</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-categories">
+        <div class="footer-wrapper clearfix">
+            <div class="footer-category">
+                <p class="title">Support</p>
+                <p class="link"><a href="#">Shipping</a></p>
+                <p class="link"><a href="#">Payment</a></p>
+                <p class="link"><a href="#">Revocation</a></p>
+                <p class="link"><a href="#">Contact</a></p>
+            </div>
+
+            <div class="footer-category">
+                <p class="title">Legals</p>
+                <p class="link"><a href="#">Terms</a></p>
+                <p class="link"><a href="#">Privacy</a></p>
+                <p class="link"><a href="#">Imprint</a></p>
+            </div>
+
+            <div class="footer-category">
+                <p class="title">Company</p>
+                <p class="link"><a href="#">About us</a></p>
+                <p class="link"><a href="#">Stores</a></p>
+                <p class="link"><a href="#">Joby</a></p>
+                <p class="link"><a href="#">Team</a></p>
+            </div>
+
+            <div class="footer-category">
+                <p class="title">Social</p>
+                <p class="link">
+                    <a href="https://www.facebook.com" title="LP @ Facebook" target="_blank">
+                        <svg class="icon facebook" viewBox="0 0 1024 1024">
+                            <use xlink:href="<?php echo $this->getSkinUrl('images/assets.svg')?>#facebook"></use>
+                        </svg>
+                    </a>
+                </p>
+                <p class="link">
+                    <a href="https://twitter.com" title="LP @ Twitter" target="_blank">
+                        <svg class="icon twitter" viewBox="0 0 1024 1024">
+                            <use xlink:href="<?php echo $this->getSkinUrl('images/assets.svg')?>#twitter"></use>
+                        </svg>
+                    </a>
+                </p>
+                <p class="link">
+                    <a href="https://www.youtube.com" title="LP @ Youtube" target="_blank">
+                        <svg class="icon youtube" viewBox="0 0 1024 1024">
+                            <use xlink:href="<?php echo $this->getSkinUrl('images/assets.svg')?>#youtube"></use>
+                        </svg>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

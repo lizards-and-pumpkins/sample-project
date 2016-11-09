@@ -1,0 +1,118 @@
+.customer-account-login #content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 50px;
+  padding-top: 138px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 50px;
+}
+@media screen and (max-width: 1024px) {
+  .customer-account-login #content {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .customer-account-login #content {
+    padding: 0 5px;
+  }
+}
+@media (max-width: 767px) {
+  .customer-account-login #content {
+    padding-top: 20px;
+  }
+}
+.customer-account-login .span_6 h2 {
+  margin-top: 40px;
+  padding: 10px 25px;
+  font-size: 20px;
+  background: rgba(135, 187, 162, 0.1);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border: #87BBA2;
+}
+.customer-account-login .span_6 .content {
+  padding: 40px 25px;
+  border: 1px solid #cccccc;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.customer-account-login .span_6.register .content {
+  background: #fafafa;
+}
+.customer-account-login .span_6 .form-list li,
+.customer-account-login .span_6 .form-list .field {
+  padding: 5px 0;
+}
+.customer-account-login .span_6 .form-list label {
+  float: left;
+  width: 170px;
+  margin: 10px 5px 0 0;
+}
+.customer-account-login .span_6 .form-list label.confirmation {
+  margin-bottom: 45px;
+}
+.customer-account-login .span_6 .form-list input {
+  width: 300px;
+}
+.customer-account-login .span_6 .form-list input[type=checkbox] + label {
+  width: 260px;
+  font-size: 13px;
+}
+.customer-account-login .span_6 .form-list input[type=checkbox] + label span {
+  display: block;
+  margin: 3px 0;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.customer-account-login .span_6 .form-list input[type=checkbox] + label:before {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+.customer-account-login .span_6 .form-list p {
+  float: left;
+  width: 300px;
+}
+.customer-account-login .span_6 .form-list .forgot-password {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  text-align: left;
+  text-decoration: underline;
+}
+.customer-account-login .span_6 .form-list .button-set {
+  float: left;
+  text-align: left;
+  width: 300px;
+}
+.customer-account-login .span_6 .mandatory-info {
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .customer-account-login #content {
+    padding-top: 138px;
+  }
+}
+@media (max-width: 1024px) and (max-width: 767px) {
+  .customer-account-login #content {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .customer-account-login .col {
+    border-left-width: 0;
+  }
+  .customer-account-login .span_6 .content {
+    padding: 40px 5px;
+  }
+  .customer-account-login .span_6 .form-list label.confirmation {
+    margin-bottom: 0;
+  }
+}

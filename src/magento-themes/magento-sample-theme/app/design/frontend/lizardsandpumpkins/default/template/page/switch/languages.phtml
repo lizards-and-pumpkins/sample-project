@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var Mage_Page_Block_Switch $this
+ * @var Mage_Core_Model_Store $store
+ */
+?>
+<?php if(count($this->getStores()) > 1): ?>
+    <div class="language-switch">
+        <p><?= $this->__('Please, chose your language') ?></p>
+
+        <?php foreach ($this->getStores() as $store) : ?>
+            <a class="lang-flag" href="<?= $store->getCurrentUrl(false) ?>">
+                <img src="<?= $this->getSkinUrl('images/flags/' . $store->getCode() . '.png') ?>"
+                     alt="<?= $store->getName() ?>">
+                <span><?= $this->__($store->getName()) ?></span>
+            </a>
+        <?php endforeach ?>
+
+        <i class="language-switch-close"></i>
+    </div>
+<?php endif ?>

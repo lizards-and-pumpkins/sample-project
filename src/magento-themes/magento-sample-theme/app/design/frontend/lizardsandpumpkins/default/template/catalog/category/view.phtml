@@ -1,0 +1,46 @@
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php
+    $_helper    = $this->helper('catalog/output');
+    $_category  = $this->getCurrentCategory();
+    $_imgHtml   = '';
+    if ($_imgUrl = $_category->getImageUrl()) {
+        $_imgHtml = '<img src="'.$_imgUrl.'"
+                          alt="'.$this->escapeHtml($_category->getName()).'"
+                          title="'.$this->escapeHtml($_category->getName()).'" />';
+        $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+    }
+?>
+<div class="category-title">
+    <?php if($_description = $this->getCurrentCategory()->getDescription()): ?>
+        <div class="category-description">
+            <?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?>
+        </div>
+    <?php endif ?>
+
+    <?php if($_imgUrl): ?>
+        <div class="category-image">
+            <?php echo $_imgHtml ?>
+        </div>
+    <?php endif ?>
+</div>
+
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+
+<?php echo $this->getChildHtml('breadcrumbs') ?>
+
+<?php if($this->isContentMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+
+<?php elseif($this->isMixedMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+    <?php echo $this->getProductListHtml() ?>
+
+<?php else: ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php endif ?>

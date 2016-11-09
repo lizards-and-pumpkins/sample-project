@@ -1,0 +1,34 @@
+<?php
+/**
+ * Category left navigation
+ *
+ * @see Mage_Catalog_Block_Navigation
+ */
+?>
+<?php if (!Mage::registry('current_category')) return ?>
+<?php $_categories = $this->getCurrentChildCategories() ?>
+<?php $_count = is_array($_categories)?count($_categories):$_categories->count() ?>
+<?php if($_count): ?>
+<div id="layered-nav">
+    <dl>
+        <dt><?php echo $this->__('Category') ?></dt>
+        <dd>
+            <ol>
+            <?php foreach ($_categories as $_category): ?>
+                <?php if($_category->getIsActive()): ?>
+                <li>
+                    <a href="<?php echo $this->getCategoryUrl($_category) ?>"
+                        <?php if ($this->isCategoryActive($_category)): ?>
+                        class="current"
+                        <?php endif ?>>
+                        <?php echo $this->escapeHtml($_category->getName()) ?>
+                        <span class="count">(<?php echo $_category->getProductCount() ?>)</span>
+                    </a>
+                </li>
+                <?php endif ?>
+            <?php endforeach ?>
+            </ol>
+        </dd>
+    </dl>
+</div>
+<?php endif ?>

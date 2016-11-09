@@ -1,0 +1,88 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @var \LizardsAndPumpkins\Import\TemplateRendering\Block $this
+ */
+
+$currentWebsiteCode = $this->getWebsiteCode();
+
+?>
+<header>
+    <div class="language-wrapper">
+        <div class="language-switch">
+            <p><?= $this->__('Please, chose your language') ?></p>
+
+            <a class="lang-flag" href="<?= preg_replace('#[^/]+/?$#', 'de/', $this->getBaseUrl()) ?>">
+                <img src="<?= $this->getBaseUrl() ?>images/flags/de.png" alt=""/>
+                <span>Deutsch</span>
+            </a>
+            <a class="lang-flag" href="<?= preg_replace('#[^/]+/?$#', 'en/', $this->getBaseUrl()) ?>">
+                <img src="<?= $this->getBaseUrl() ?>images/flags/en.png" alt=""/>
+                <span>English</span>
+            </a>
+            <a class="lang-flag" href="<?= preg_replace('#[^/]+/?$#', 'fr/', $this->getBaseUrl()) ?>">
+                <img src="<?= $this->getBaseUrl() ?>images/flags/fr.png" alt=""/>
+                <span>Français</span>
+            </a>
+
+            <i class="language-switch-close"></i>
+        </div>
+    </div>
+
+    <div class="header-wrapper clearfix">
+
+        <div id="mobile-menu">
+            <span class="lines"></span>
+        </div>
+
+        <a href="<?= $this->getBaseUrl() ?>"
+           title="<?= $currentCat . $this->__(' - Lizards & Pumpkins') ?>"
+           class="logo" >
+            <svg class="icon main-logo" viewBox="0 0 1024 1024">
+                <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#main-logo"></use>
+            </svg>
+            <svg class="icon mobile-logo" viewBox="0 0 1024 1024">
+                <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#mobile-logo"></use>
+            </svg>
+        </a>
+
+        <i id="mobile-search">
+            <svg class="icon magnifier" viewBox="0 0 1024 1024">
+                <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#magnifier"></use>
+            </svg>
+        </i>
+
+        <ul class="top-links">
+            <li id="account-meta"></li>
+            <li id="language-switcher">
+                <img src="<?= $this->getBaseUrl() ?>images/flags/<?= $currentWebsiteCode ?>.png" alt=""/>
+            </li>
+            <li>
+                <svg class="icon-shopping-bag" viewBox="0 0 1024 1024">
+                    <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#shopping-bag"></use>
+                </svg>
+                <span id="cart-meta-info"></span>
+            </li>
+        </ul>
+
+        <form id="search_mini_form" action="<?= $this->getBaseUrl() ?>catalogsearch/result/" method="get" autocomplete="off">
+            <fieldset>
+                <div class="form-search">
+                    <input id="search" type="text" name="q"
+                           placeholder="<?= $this->__('What are you looking for?') ?>"
+                           autocomplete="off" />
+
+                    <button type="submit" title="<?= $this->__('Search') ?>">
+                        <svg class="icon magnifier" viewBox="0 0 1024 1024">
+                            <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#magnifier"></use>
+                        </svg>
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <?= $this->getChildOutput('content_block_main-menu') ?>
+</header>

@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @var \LizardsAndPumpkins\Import\TemplateRendering\Block $this
+ */
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <?= $this->getChildOutput('head') ?>
+</head>
+<body>
+<nav id="mobile-navigation">
+    <div class="close"></div>
+    <div class="scroll-wrapper">
+        <?= $this->getChildOutput('content_block_main-menu') ?>
+    </div>
+</nav>
+<div id="page">
+    <?= $this->getChildOutput('header') ?>
+    <div id="content" class="clearfix">
+        <?= $this->getChildOutput('content') ?>
+    </div>
+    <?= $this->getChildOutput('footer') ?>
+</div>
+</body>
+</html>

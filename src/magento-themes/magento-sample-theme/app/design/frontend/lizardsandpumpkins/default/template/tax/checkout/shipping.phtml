@@ -1,0 +1,43 @@
+<?php
+/**
+ * @var $this Mage_Tax_Block_Checkout_Shipping
+ * @see Mage_Tax_Block_Checkout_Shipping
+ */
+?>
+<?php if ($this->displayBoth()):?>
+    <div class="line">
+        <div class="title">
+            <?php echo $this->getExcludeTaxLabel() ?> &mdash;
+        </div>
+        <div class="price">
+            <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+        </div>
+    </div>
+
+    <div class="line">
+        <div class="title">
+            <?php echo $this->getIncludeTaxLabel() ?> &mdash;
+        </div>
+        <div class="price">
+            <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
+        </div>
+    </div>
+<?php elseif($this->displayIncludeTax()) : ?>
+    <div class="line">
+        <div class="title">
+            <?php echo $this->getTotal()->getTitle() ?> &mdash;
+        </div>
+        <div class="price">
+            <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
+        </div>
+    </div>
+<?php else:?>
+    <div class="line">
+        <div class="title">
+            <?php echo $this->escapeHtml($this->getTotal()->getTitle()) ?> &mdash;
+        </div>
+        <div class="price">
+            <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+        </div>
+    </div>
+<?php endif ?>

@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @var \LizardsAndPumpkins\Import\TemplateRendering\Block\ProductBlock $this
+ */
+
+use LizardsAndPumpkins\ProductDetail\Import\ConfigurableProductJsonSnippetRenderer as ConfigurableProductJson;
+
+?>
+<script>
+
+    var stockQty = '<?= $this->getProductStockQuantity() ?>',
+        baseUrl = '<?= $this->getBaseUrl() ?>',
+        product = <?= $this->getChildOutput('product_json') ?>,
+        variation_attributes = <?= $this->getChildOutput(ConfigurableProductJson::VARIATION_ATTRIBUTES_CODE) ?>,
+        associated_products = <?= $this->getChildOutput(ConfigurableProductJson::ASSOCIATED_PRODUCTS_CODE) ?>,
+        translations = {{snippet translations}}
+
+</script>
