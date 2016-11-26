@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace LizardsAndPumpkins;
 
@@ -34,10 +34,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
         $this->setCLImate($CLImate);
     }
 
-    /**
-     * @return RunImport
-     */
-    public static function bootstrap()
+    public static function bootstrap() : BaseCliCommand
     {
         $factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
@@ -63,26 +60,29 @@ class TriggerTemplateUpdate extends BaseCliCommand
      * @param CLImate $climate
      * @return array[]
      */
-    protected function getCommandLineArgumentsArray(CLImate $climate)
+    protected function getCommandLineArgumentsArray(CLImate $climate) : array
     {
-        return array_merge(parent::getCommandLineArgumentsArray($climate), [
-            'processQueues' => [
-                'prefix'      => 'p',
-                'longPrefix'  => 'processQueues',
-                'description' => 'Process queues',
-                'noValue'     => true,
-            ],
-            'list' => [
-                'prefix'      => 'l',
-                'longPrefix'  => 'list',
-                'description' => 'List available template IDs',
-                'noValue' => true,
-            ],
-            'templateId'    => [
-                'description' => 'Template ID',
-                'required'    => false,
-            ],
-        ]);
+        return array_merge(
+            parent::getCommandLineArgumentsArray($climate),
+            [
+                'processQueues' => [
+                    'prefix'      => 'p',
+                    'longPrefix'  => 'processQueues',
+                    'description' => 'Process queues',
+                    'noValue'     => true,
+                ],
+                'list'          => [
+                    'prefix'      => 'l',
+                    'longPrefix'  => 'list',
+                    'description' => 'List available template IDs',
+                    'noValue'     => true,
+                ],
+                'templateId'    => [
+                    'description' => 'Template ID',
+                    'required'    => false,
+                ],
+            ]
+        );
     }
 
     protected function execute(CLImate $CLImate)
@@ -141,24 +141,17 @@ class TriggerTemplateUpdate extends BaseCliCommand
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getTemplateIdToProject()
+    private function getTemplateIdToProject() : string
     {
         $templateId = $this->getArg('templateId');
-        if (!in_array($templateId, $this->getValidTemplateIds())) {
+        if (! in_array($templateId, $this->getValidTemplateIds())) {
             $message = $this->getInvalidTemplateIdMessage($templateId);
             throw new \InvalidArgumentException($message);
         }
         return $templateId;
     }
 
-    /**
-     * @param string $templateId
-     * @return string
-     */
-    private function getInvalidTemplateIdMessage($templateId)
+    private function getInvalidTemplateIdMessage(string $templateId) : string
     {
         return sprintf(
             'Invalid template ID "%s". Valid template IDs are: %s',
@@ -170,17 +163,14 @@ class TriggerTemplateUpdate extends BaseCliCommand
     /**
      * @return string[]
      */
-    private function getValidTemplateIds()
+    private function getValidTemplateIds() : array
     {
         /** @var TemplateProjectorLocator $templateProjectorLocator */
         $templateProjectorLocator = $this->factory->createTemplateProjectorLocator();
         return $templateProjectorLocator->getRegisteredProjectorCodes();
     }
 
-    /**
-     * @return bool
-     */
-    protected function isTemplateIdListRequested()
+    protected function isTemplateIdListRequested() : bool
     {
         return (bool) $this->getArg('list');
     }
