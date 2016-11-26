@@ -35,10 +35,7 @@ class RunContentBlockImport extends BaseCliCommand
         $this->setCLImate($CLImate);
     }
 
-    /**
-     * @return RunImport
-     */
-    public static function bootstrap()
+    public static function bootstrap() : RunContentBlockImport
     {
         $factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
@@ -64,7 +61,7 @@ class RunContentBlockImport extends BaseCliCommand
      * @param CLImate $climate
      * @return array[]
      */
-    protected function getCommandLineArgumentsArray(CLImate $climate)
+    protected function getCommandLineArgumentsArray(CLImate $climate) : array
     {
         return array_merge(parent::getCommandLineArgumentsArray($climate), [
             'processQueues'   => [
@@ -102,20 +99,12 @@ class RunContentBlockImport extends BaseCliCommand
         }, $contentFileNames);
     }
 
-    /**
-     * @param string $blockId
-     * @return bool
-     */
-    private function isProductListingContentBlock($blockId)
+    private function isProductListingContentBlock(string $blockId) : bool
     {
         return strpos($blockId, 'product_listing_content_block_') === 0;
     }
 
-    /**
-     * @param string $fileName
-     * @return ContentBlockId
-     */
-    private function createContentBlockIdBasedOnFileName($fileName)
+    private function createContentBlockIdBasedOnFileName(string $fileName) : ContentBlockId
     {
         $blockIdString = preg_replace('/.*\/|\.html$/i', '', $fileName);
 
@@ -127,7 +116,11 @@ class RunContentBlockImport extends BaseCliCommand
         return ContentBlockId::fromString($blockIdString);
     }
 
-    private function createKeyGeneratorParamsBasedOnFileName($fileName)
+    /**
+     * @param string $fileName
+     * @return string[]
+     */
+    private function createKeyGeneratorParamsBasedOnFileName(string $fileName) : array
     {
         $blockIdString = preg_replace('/.*\/|\.html$/i', '', $fileName);
 

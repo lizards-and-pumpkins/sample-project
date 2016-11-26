@@ -35,10 +35,7 @@ class RunImport extends BaseCliCommand
         $this->setCLImate($CLImate);
     }
 
-    /**
-     * @return RunImport
-     */
-    public static function bootstrap()
+    public static function bootstrap() : RunImport
     {
         $factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
@@ -66,32 +63,35 @@ class RunImport extends BaseCliCommand
      * @param CLImate $climate
      * @return array[]
      */
-    protected function getCommandLineArgumentsArray(CLImate $climate)
+    protected function getCommandLineArgumentsArray(CLImate $climate) : array
     {
-        return array_merge(parent::getCommandLineArgumentsArray($climate), [
-            'clearStorage'  => [
-                'prefix'      => 'c',
-                'longPrefix'  => 'clearStorage',
-                'description' => 'Clear queues and data pool before the import',
-                'noValue'     => true,
-            ],
-            'processQueues' => [
-                'prefix'      => 'p',
-                'longPrefix'  => 'processQueues',
-                'description' => 'Process queues after the import',
-                'noValue'     => true,
-            ],
-            'importImages'  => [
-                'prefix'      => 'i',
-                'longPrefix'  => 'importImages',
-                'description' => 'Process images during import',
-                'noValue'     => true,
-            ],
-            'importFile'    => [
-                'description' => 'Import XML file',
-                'required'    => true,
-            ],
-        ]);
+        return array_merge(
+            parent::getCommandLineArgumentsArray($climate),
+            [
+                'clearStorage'  => [
+                    'prefix'      => 'c',
+                    'longPrefix'  => 'clearStorage',
+                    'description' => 'Clear queues and data pool before the import',
+                    'noValue'     => true,
+                ],
+                'processQueues' => [
+                    'prefix'      => 'p',
+                    'longPrefix'  => 'processQueues',
+                    'description' => 'Process queues after the import',
+                    'noValue'     => true,
+                ],
+                'importImages'  => [
+                    'prefix'      => 'i',
+                    'longPrefix'  => 'importImages',
+                    'description' => 'Process images during import',
+                    'noValue'     => true,
+                ],
+                'importFile'    => [
+                    'description' => 'Import XML file',
+                    'required'    => true,
+                ],
+            ]
+        );
     }
 
     protected function execute(CLImate $CLImate)

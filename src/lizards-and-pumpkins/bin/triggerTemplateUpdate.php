@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LizardsAndPumpkins;
 
@@ -34,7 +34,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
         $this->setCLImate($CLImate);
     }
 
-    public static function bootstrap() : BaseCliCommand
+    public static function bootstrap() : TriggerTemplateUpdate
     {
         $factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
