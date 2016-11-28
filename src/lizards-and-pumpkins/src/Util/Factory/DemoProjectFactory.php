@@ -59,6 +59,7 @@ use LizardsAndPumpkins\Logging\Writer\FileLogMessageWriter;
 use LizardsAndPumpkins\Logging\WritingLoggerDecorator;
 use LizardsAndPumpkins\Messaging\Command\CommandQueue;
 use LizardsAndPumpkins\Messaging\Event\DomainEventQueue;
+use LizardsAndPumpkins\Messaging\MessageQueueFactory;
 use LizardsAndPumpkins\Messaging\Queue;
 use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
@@ -70,7 +71,7 @@ use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
 use SebastianBergmann\Money\Currency;
 
-class DemoProjectFactory implements Factory
+class DemoProjectFactory implements Factory, MessageQueueFactory
 {
     use FactoryTrait;
 
