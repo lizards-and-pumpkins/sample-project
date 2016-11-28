@@ -21,26 +21,29 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
      * @param CLImate $climate
      * @return array[]
      */
-    protected function getCommandLineArgumentsArray(CLImate $climate)
+    protected function getCommandLineArgumentsArray(CLImate $climate) : array
     {
-        return array_merge(parent::getCommandLineArgumentsArray($climate), [
-            'sortBy' => [
-                'prefix' => 's',
-                'longPrefix' => 'sortBy',
-                'description' => 'Sort by field (handler|count|total|avg)',
-                'defaultValue' => 'avg',
-            ],
-            'direction' => [
-                'prefix' => 'd',
-                'longPrefix' => 'direction',
-                'description' => 'Sort direction (asc|desc)',
-                'defaultValue' => 'asc',
-            ],
-            'logfile' => [
-                'description' => 'Log file',
-                'required' => true
+        return array_merge(
+            parent::getCommandLineArgumentsArray($climate),
+            [
+                'sortBy'    => [
+                    'prefix'       => 's',
+                    'longPrefix'   => 'sortBy',
+                    'description'  => 'Sort by field (handler|count|total|avg)',
+                    'defaultValue' => 'avg',
+                ],
+                'direction' => [
+                    'prefix'       => 'd',
+                    'longPrefix'   => 'direction',
+                    'description'  => 'Sort direction (asc|desc)',
+                    'defaultValue' => 'asc',
+                ],
+                'logfile'   => [
+                    'description' => 'Log file',
+                    'required'    => true,
+                ],
             ]
-        ]);
+        );
     }
 
     protected function execute(CLImate $climate)
@@ -51,7 +54,7 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
             $this->getArg('sortBy'),
             $this->getArg('direction')
         );
-        if (!$tableData) {
+        if (! $tableData) {
             $climate->yellow('No data to report');
         } else {
             $climate->table($tableData);
@@ -64,15 +67,18 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
      * @param string $direction
      * @return array[]
      */
-    private function sortTableData($tableData, $field, $direction)
+    private function sortTableData(array $tableData, string $field, string $direction) : array
     {
         $directionalOperator = $direction === 'asc' ? 1 : -1;
-        usort($tableData, function (array $rowA, array $rowB) use ($field, $directionalOperator) {
-            $valueA = $this->getComparisonValueFromRow($rowA, $field);
-            $valueB = $this->getComparisonValueFromRow($rowB, $field);
-            $result = $this->threeWayCompare($valueA, $valueB);
-            return $result * $directionalOperator;
-        });
+        usort(
+            $tableData,
+            function (array $rowA, array $rowB) use ($field, $directionalOperator) {
+                $valueA = $this->getComparisonValueFromRow($rowA, $field);
+                $valueB = $this->getComparisonValueFromRow($rowB, $field);
+                $result = $this->threeWayCompare($valueA, $valueB);
+                return $result * $directionalOperator;
+            }
+        );
         return $tableData;
     }
 
@@ -81,16 +87,9 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
      * @param mixed $valueB
      * @return int
      */
-    private function threeWayCompare($valueA, $valueB)
+    private function threeWayCompare($valueA, $valueB) : int
     {
-        if ($valueA > $valueB) {
-            $result = 1;
-        } elseif ($valueA < $valueB) {
-            $result = -1;
-        } else {
-            $result = 0;
-        }
-        return $result;
+        return $valueA <=> $valueB;
     }
 
     /**
@@ -98,31 +97,26 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
      * @param string $field
      * @return mixed
      */
-    private function getComparisonValueFromRow(array $row, $field)
+    private function getComparisonValueFromRow(array $row, string $field)
     {
         $key = $this->getArrayKeyFromSortByField($field);
         return $row[$key];
     }
 
-    /**
-     * @param string $field
-     * @return string
-     */
-    private function getArrayKeyFromSortByField($field)
+    private function getArrayKeyFromSortByField(string $field) : string
     {
-        return array_search($field, [
-            'Handler' => 'handler',
-            'Count' => 'count',
-            'Total Sec' => 'total',
-            'Average Sec' => 'avg'
-        ]);
+        return array_search(
+            $field,
+            [
+                'Handler'     => 'handler',
+                'Count'       => 'count',
+                'Total Sec'   => 'total',
+                'Average Sec' => 'avg',
+            ]
+        );
     }
 
-    /**
-     * @param string $filePath
-     * @return array[]
-     */
-    private function collectTableDataFromFile($filePath)
+    private function collectTableDataFromFile(string $filePath) : array
     {
         $eventHandlerStats = $this->readEventHandlerStatsFromFile($filePath);
         return $this->buildTableDataFromStats($eventHandlerStats);
@@ -132,7 +126,7 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
      * @param string $filePath
      * @return array[]
      */
-    private function readEventHandlerStatsFromFile($filePath)
+    private function readEventHandlerStatsFromFile(string $filePath) : array
     {
         $eventHandlers = [];
         foreach ($this->getDomainEventHandlerRecordsFromFile($filePath) as $record) {
@@ -142,15 +136,11 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
         return $eventHandlers;
     }
 
-    /**
-     * @param string $filePath
-     * @return \Generator
-     */
-    private function getDomainEventHandlerRecordsFromFile($filePath)
+    private function getDomainEventHandlerRecordsFromFile(string $filePath)
     {
         $f = fopen($filePath, 'r');
         $matches = null;
-        while (!feof($f)) {
+        while (! feof($f)) {
             if (preg_match("/^.{25}\tDomainEventHandler::process (\\S+) (\\S+)/", fgets($f), $matches)) {
                 yield array_slice($matches, 1);
             }
@@ -162,28 +152,31 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
      * @param array[] $eventHandlerStats
      * @return array[]
      */
-    private function buildTableDataFromStats(array $eventHandlerStats)
+    private function buildTableDataFromStats(array $eventHandlerStats) : array
     {
-        return array_map(function ($handler) use ($eventHandlerStats) {
-            $count = count($eventHandlerStats[$handler]);
-            $sum = array_sum($eventHandlerStats[$handler]);
-            return $this->getTableRow($handler, $count, $sum);
-        }, array_keys($eventHandlerStats));
+        return array_map(
+            function ($handler) use ($eventHandlerStats) {
+                $count = count($eventHandlerStats[$handler]);
+                $sum = array_sum($eventHandlerStats[$handler]);
+                return $this->getTableRow($handler, $count, $sum);
+            },
+            array_keys($eventHandlerStats)
+        );
     }
 
     /**
      * @param string $handler
      * @param int $count
-     * @param float $sum
+     * @param float|int $sum
      * @return mixed[]
      */
-    private function getTableRow($handler, $count, $sum)
+    private function getTableRow(string $handler, int $count, $sum) : array
     {
         return [
-            'Handler' => $handler,
-            'Count' => $count,
-            'Total Sec' => sprintf('%11.4F', $sum),
-            'Average Sec' => sprintf('%.4F', $sum / $count)
+            'Handler'     => $handler,
+            'Count'       => $count,
+            'Total Sec'   => sprintf('%11.4F', $sum),
+            'Average Sec' => sprintf('%.4F', $sum / $count),
         ];
     }
 
@@ -194,35 +187,26 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
         $this->validateSortDirection($climate->arguments->get('direction'));
     }
 
-    /**
-     * @param string $filePath
-     */
-    private function validateLogFilePath($filePath)
+    private function validateLogFilePath(string $filePath)
     {
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             throw new \RuntimeException(sprintf('Log file not found: "%s"', $filePath));
         }
-        if (!is_readable($filePath)) {
+        if (! is_readable($filePath)) {
             throw new \RuntimeException(sprintf('Log file not readable: "%s"', $filePath));
         }
     }
 
-    /**
-     * @param string $order
-     */
-    private function validateSortField($order)
+    private function validateSortField(string $order)
     {
-        if (!in_array($order, ['handler', 'count', 'total', 'avg'])) {
+        if (! in_array($order, ['handler', 'count', 'total', 'avg'])) {
             throw new \RuntimeException(sprintf('Invalid order: "%s"', $order));
         }
     }
 
-    /**
-     * @param string $direction
-     */
-    private function validateSortDirection($direction)
+    private function validateSortDirection(string $direction)
     {
-        if (!in_array($direction, ['asc', 'desc'])) {
+        if (! in_array($direction, ['asc', 'desc'])) {
             throw new \RuntimeException(sprintf('Invalid sort direction: "%s"', $direction));
         }
     }

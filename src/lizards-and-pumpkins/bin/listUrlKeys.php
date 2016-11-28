@@ -32,10 +32,7 @@ class ListUrlKeys extends BaseCliCommand
         $this->setCLImate($CLImate);
     }
 
-    /**
-     * @return ListUrlKeys
-     */
-    public static function bootstrap()
+    public static function bootstrap() : ListUrlKeys
     {
         $factory = new SampleMasterFactory();
         $factory->register(new CommonFactory());
@@ -48,28 +45,31 @@ class ListUrlKeys extends BaseCliCommand
      * @param CLImate $CLImate
      * @return array[]
      */
-    protected function getCommandLineArgumentsArray(CLImate $CLImate)
+    protected function getCommandLineArgumentsArray(CLImate $CLImate) : array
     {
-        return array_merge(parent::getCommandLineArgumentsArray($CLImate), [
-            'withContext' => [
-                'prefix' => 'c',
-                'longPrefix' => 'withContext',
-                'description' => 'Display the context string together with the URL keys',
-                'noValue' => true
-            ],
-            'type' => [
-                'prefix' => 't',
-                'longPrefix' => 'type',
-                'description' => 'Display url keys for page type only (listing or product or all)',
-                'required' => false,
-                'defaultValue' => 'all'
-            ],
-            'dataVersion' => [
-                'description' => 'List url keys for the given catalog data version',
-                'defaultValue' => 'current',
-                'required' => false
+        return array_merge(
+            parent::getCommandLineArgumentsArray($CLImate),
+            [
+                'withContext' => [
+                    'prefix'      => 'c',
+                    'longPrefix'  => 'withContext',
+                    'description' => 'Display the context string together with the URL keys',
+                    'noValue'     => true,
+                ],
+                'type'        => [
+                    'prefix'       => 't',
+                    'longPrefix'   => 'type',
+                    'description'  => 'Display url keys for page type only (listing or product or all)',
+                    'required'     => false,
+                    'defaultValue' => 'all',
+                ],
+                'dataVersion' => [
+                    'description'  => 'List url keys for the given catalog data version',
+                    'defaultValue' => 'current',
+                    'required'     => false,
+                ],
             ]
-        ]);
+        );
     }
 
     protected function execute(CLImate $climate)
@@ -77,9 +77,12 @@ class ListUrlKeys extends BaseCliCommand
         $version = $this->getVersionToDisplay();
         $type = $this->getArg('type');
         $rawUrlKeyRecords = $this->getDataPoolReader()->getUrlKeysForVersion($version);
-        $urlKeyRecordsForType = array_filter($rawUrlKeyRecords, function ($rawUrlKeyRecord) use ($type) {
-            return $type === 'all' || $rawUrlKeyRecord[self::IDX_TYPE] === $type;
-        });
+        $urlKeyRecordsForType = array_filter(
+            $rawUrlKeyRecords,
+            function ($rawUrlKeyRecord) use ($type) {
+                return $type === 'all' || $rawUrlKeyRecord[self::IDX_TYPE] === $type;
+            }
+        );
         $formattedUrlKeys = $this->getFormattedUrlKeysArray($urlKeyRecordsForType);
         $this->outputArray($formattedUrlKeys);
     }
@@ -88,10 +91,12 @@ class ListUrlKeys extends BaseCliCommand
      * @param array[] $rawUrlKeyRecords
      * @return string[]
      */
-    private function getFormattedUrlKeysArray($rawUrlKeyRecords)
+    private function getFormattedUrlKeysArray(array $rawUrlKeyRecords) : array
     {
         return $this->getArg('withContext') ?
-            $this->formatUrlKeysWithContext($rawUrlKeyRecords) :
+            $this->formatUrlKeysWithContext(
+                $rawUrlKeyRecords
+            ) :
             $this->formatUrlKeysWithoutContext($rawUrlKeyRecords);
     }
 
@@ -99,30 +104,37 @@ class ListUrlKeys extends BaseCliCommand
      * @param array[] $rawUrlKeyRecords
      * @return string[]
      */
-    private function formatUrlKeysWithoutContext(array $rawUrlKeyRecords)
+    private function formatUrlKeysWithoutContext(array $rawUrlKeyRecords) : array
     {
         $this->outputMessage('URL keys without context:');
-        return array_unique(array_map(function (array $urlKeyRecord) {
-            return $urlKeyRecord[self::IDX_URL_KEY];
-        }, $rawUrlKeyRecords));
+        return array_unique(
+            array_map(
+                function (array $urlKeyRecord) {
+                    return $urlKeyRecord[self::IDX_URL_KEY];
+                },
+                $rawUrlKeyRecords
+            )
+        );
     }
 
     /**
      * @param string[] $rawUrlKeyRecords
      * @return string[]
      */
-    private function formatUrlKeysWithContext(array $rawUrlKeyRecords)
+    private function formatUrlKeysWithContext(array $rawUrlKeyRecords) : array
     {
         $this->outputMessage('URL keys with context:');
-        return array_unique(array_map(function (array $urlKeyRecord) {
-            return sprintf("%-30s\t%s", $urlKeyRecord[self::IDX_URL_KEY], $urlKeyRecord[self::IDX_CONTEXT]);
-        }, $rawUrlKeyRecords));
+        return array_unique(
+            array_map(
+                function (array $urlKeyRecord) {
+                    return sprintf("%-30s\t%s", $urlKeyRecord[self::IDX_URL_KEY], $urlKeyRecord[self::IDX_CONTEXT]);
+                },
+                $rawUrlKeyRecords
+            )
+        );
     }
 
-    /**
-     * @param string $message
-     */
-    private function outputMessage($message)
+    private function outputMessage(string $message)
     {
         $this->getCLImate()->bold($message);
     }
@@ -138,10 +150,7 @@ class ListUrlKeys extends BaseCliCommand
         return $version;
     }
 
-    /**
-     * @return DataPoolReader
-     */
-    private function getDataPoolReader()
+    private function getDataPoolReader() : DataPoolReader
     {
         return $this->factory->createDataPoolReader();
     }
@@ -151,9 +160,12 @@ class ListUrlKeys extends BaseCliCommand
      */
     private function outputArray(array $formattedUrlKeys)
     {
-        array_map(function ($urlKey) {
-            $this->output($urlKey);
-        }, $formattedUrlKeys);
+        array_map(
+            function ($urlKey) {
+                $this->output($urlKey);
+            },
+            $formattedUrlKeys
+        );
     }
 }
 

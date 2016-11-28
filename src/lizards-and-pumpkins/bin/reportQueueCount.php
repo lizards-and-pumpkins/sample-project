@@ -28,10 +28,7 @@ class ReportQueueCount extends BaseCliCommand
         $this->setCLImate($climate);
     }
 
-    /**
-     * @return ReportQueueCount
-     */
-    public static function bootstrap()
+    public static function bootstrap() : ReportQueueCount
     {
         $factory = new SampleMasterFactory();
         $factory->register(new CommonFactory());
@@ -54,7 +51,7 @@ class ReportQueueCount extends BaseCliCommand
      * @param Queue $eventQueue
      * @return string[]
      */
-    private function formatTableData(Queue $commandQueue, Queue $eventQueue)
+    private function formatTableData(Queue $commandQueue, Queue $eventQueue) : array
     {
         return [
             [

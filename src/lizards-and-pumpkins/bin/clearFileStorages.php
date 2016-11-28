@@ -27,10 +27,7 @@ class ClearFileStorage extends BaseCliCommand
         $this->setCLImate($climate);
     }
 
-    /**
-     * @return ClearFileStorage
-     */
-    public static function bootstrap()
+    public static function bootstrap() : ClearFileStorage
     {
         $factory = new SampleMasterFactory();
         $factory->register(new CommonFactory());
