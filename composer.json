@@ -1,4 +1,13 @@
 {
+  "name": "lizards-and-pumpkins/sample-project",
+  "description": "Lizards & Pumpkins Sample Project",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Lizards & Pumpkins UG",
+      "email": "hello@lizardsandpumpkins.com"
+    }
+  ],
   "require": {
     "php": "^7.0.0",
     "lizards-and-pumpkins/catalog": "0.12.0-alpha",
