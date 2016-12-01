@@ -24,7 +24,7 @@
         beStrictAboutTestsThatDoNotTestAnything="true"
         beStrictAboutOutputDuringTests="true"
         verbose="false">
-    <testsuite name="21run Unit Tests">
+    <testsuite name="Demo Project Unit Tests">
         <directory>Suites</directory>
     </testsuite>
     <filter>
