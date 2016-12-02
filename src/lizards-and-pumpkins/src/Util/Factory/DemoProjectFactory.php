@@ -26,8 +26,8 @@ use LizardsAndPumpkins\DataPool\SearchEngine\FacetFilterRequestRangedField;
 use LizardsAndPumpkins\DataPool\SearchEngine\FacetFilterRequestSimpleField;
 use LizardsAndPumpkins\DataPool\SearchEngine\Filesystem\FileSearchEngine;
 use LizardsAndPumpkins\DataPool\SearchEngine\FilterNavigationPriceRangesBuilder;
-use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortOrderConfig;
-use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortOrderDirection;
+use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortBy;
+use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortDirection;
 use LizardsAndPumpkins\DataPool\SearchEngine\SearchCriteria\CompositeSearchCriterion;
 use LizardsAndPumpkins\DataPool\SearchEngine\SearchCriteria\SearchCriteria;
 use LizardsAndPumpkins\DataPool\SearchEngine\SearchCriteria\SearchCriterionEqual;
@@ -65,30 +65,17 @@ use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 use LizardsAndPumpkins\ProductListing\ContentDelivery\ProductsPerPage;
 use LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer;
+use LizardsAndPumpkins\ProductSearch\ContentDelivery\ProductSearchFactory;
 use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMap;
+use LizardsAndPumpkins\RestApi\RestApiFactory;
 use LizardsAndPumpkins\Util\Config\ConfigReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
 use SebastianBergmann\Money\Currency;
 
-class DemoProjectFactory implements Factory, MessageQueueFactory
+class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCallback
 {
     use FactoryTrait;
-
-    /**
-     * @var SortOrderConfig[]
-     */
-    private $memoizedProductListingSortOrderConfig;
-
-    /**
-     * @var SortOrderConfig[]
-     */
-    private $memoizedProductSearchSortOrderConfig;
-
-    /**
-     * @var SortOrderConfig
-     */
-    private $memoizedProductSearchAutosuggestionSortOrderConfig;
 
     /**
      * @var ProductsPerPage
@@ -130,6 +117,12 @@ class DemoProjectFactory implements Factory, MessageQueueFactory
             'series',
             'style'
         ];
+    }
+
+    public function factoryRegistrationCallback(MasterFactory $masterFactory)
+    {
+        $masterFactory->register(new RestApiFactory());
+        $masterFactory->register(new ProductSearchFactory());
     }
 
     /**
@@ -228,7 +221,7 @@ class DemoProjectFactory implements Factory, MessageQueueFactory
     /**
      * @return string[]
      */
-    public function getAdditionalAttributesForSearchIndex() : array
+    public function getSortableAttributeCodes() : array
     {
         return ['backorders', 'stock_qty', 'category', 'created_at'];
     }
@@ -528,65 +521,37 @@ class DemoProjectFactory implements Factory, MessageQueueFactory
     }
 
     /**
-     * @return SortOrderConfig[]
+     * @return SortBy[]
      */
-    public function getProductListingSortOrderConfig() : array
+    public function getProductListingAvailableSortBy() : array
     {
-        if (null === $this->memoizedProductListingSortOrderConfig) {
-            $this->memoizedProductListingSortOrderConfig = [
-                SortOrderConfig::createSelected(
-                    AttributeCode::fromString('name'),
-                    SortOrderDirection::create(SortOrderDirection::ASC)
-                ),
-                SortOrderConfig::create(
-                    AttributeCode::fromString('price'),
-                    SortOrderDirection::create(SortOrderDirection::ASC)
-                ),
-                SortOrderConfig::create(
-                    AttributeCode::fromString('created_at'),
-                    SortOrderDirection::create(SortOrderDirection::DESC)
-                ),
-            ];
-        }
+        return [
+            new SortBy(AttributeCode::fromString('name'), SortDirection::create(SortDirection::ASC)),
+            new SortBy(AttributeCode::fromString('price'), SortDirection::create(SortDirection::ASC)),
+            new SortBy(AttributeCode::fromString('created_at'), SortDirection::create(SortDirection::DESC)),
+        ];
+    }
 
-        return $this->memoizedProductListingSortOrderConfig;
+    public function getProductListingDefaultSortBy() : SortBy
+    {
+        return new SortBy(AttributeCode::fromString('name'), SortDirection::create(SortDirection::ASC));
     }
 
     /**
-     * @return SortOrderConfig[]
+     * @return SortBy[]
      */
-    public function getProductSearchSortOrderConfig() : array
+    public function getProductSearchAvailableSortBy() : array
     {
-        if (null === $this->memoizedProductSearchSortOrderConfig) {
-            $this->memoizedProductSearchSortOrderConfig = [
-                SortOrderConfig::createSelected(
-                    AttributeCode::fromString('name'),
-                    SortOrderDirection::create(SortOrderDirection::ASC)
-                ),
-                SortOrderConfig::create(
-                    AttributeCode::fromString('price'),
-                    SortOrderDirection::create(SortOrderDirection::ASC)
-                ),
-                SortOrderConfig::create(
-                    AttributeCode::fromString('created_at'),
-                    SortOrderDirection::create(SortOrderDirection::ASC)
-                ),
-            ];
-        }
-
-        return $this->memoizedProductSearchSortOrderConfig;
+        return [
+            new SortBy(AttributeCode::fromString('name'), SortDirection::create(SortDirection::ASC)),
+            new SortBy(AttributeCode::fromString('price'), SortDirection::create(SortDirection::ASC)),
+            new SortBy(AttributeCode::fromString('created_at'), SortDirection::create(SortDirection::DESC)),
+        ];
     }
 
-    public function getProductSearchAutosuggestionSortOrderConfig() : SortOrderConfig
+    public function getProductSearchDefaultSortBy() : SortBy
     {
-        if (null === $this->memoizedProductSearchAutosuggestionSortOrderConfig) {
-            $this->memoizedProductSearchAutosuggestionSortOrderConfig = SortOrderConfig::createSelected(
-                AttributeCode::fromString('name'),
-                SortOrderDirection::create(SortOrderDirection::ASC)
-            );
-        }
-
-        return $this->memoizedProductSearchAutosuggestionSortOrderConfig;
+        return new SortBy(AttributeCode::fromString('created_at'), SortDirection::create(SortDirection::DESC));
     }
 
     public function getProductsPerPageConfig() : ProductsPerPage
@@ -713,5 +678,15 @@ class DemoProjectFactory implements Factory, MessageQueueFactory
     public function createLocaleContextPartBuilder() : ContextPartBuilder
     {
         return new DemoProjectLocaleContextPartBuilder($this->createRequestToWebsiteMap());
+    }
+
+    public function getMaxAllowedProductsPerSearchResultsPage() : int
+    {
+        return 120;
+    }
+
+    public function getDefaultNumberOfProductsPerSearchResultsPage() : int
+    {
+        return 20;
     }
 }

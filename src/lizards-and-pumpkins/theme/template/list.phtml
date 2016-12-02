@@ -11,7 +11,8 @@ declare(strict_types=1);
     var productListingJson = {{snippet product_grid}},
         totalNumberOfResults = {{snippet total_number_of_results}},
         productsPerPage = {{snippet products_per_page}},
-        sortOrderConfig = {{snippet sort_order_config}},
+        availableSortOrders = {{snippet available_sort_orders}},
+        selectedSortOrder = {{snippet selected_sort_order}},
         translations = {{snippet translations}},
         baseUrl = '<?= $this->getBaseUrl() ?>',
         basePricePattern = '<?= sprintf($this->__('per %s%s %s &euro;'), '%s', '%s', '%s') ?>';
