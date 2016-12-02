@@ -11,6 +11,8 @@ use LizardsAndPumpkins\Import\RootTemplate\TemplateWasUpdatedDomainEvent;
 use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
+use LizardsAndPumpkins\Messaging\Queue;
+use LizardsAndPumpkins\Messaging\QueueMessageConsumer;
 use LizardsAndPumpkins\Util\BaseCliCommand;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
@@ -117,15 +119,26 @@ class TriggerTemplateUpdate extends BaseCliCommand
     private function processCommandQueue()
     {
         $this->output('Processing command queue...');
-        $commandConsumer = $this->factory->createCommandConsumer();
-        $commandConsumer->process();
+        $this->processQueueWhileMessagesPending(
+            $this->factory->getCommandQueue(),
+            $this->factory->createCommandConsumer()
+        );
     }
 
     private function processDomainEventQueue()
     {
         $this->output('Processing domain event queue...');
-        $domainEventConsumer = $this->factory->createDomainEventConsumer();
-        $domainEventConsumer->process();
+        $this->processQueueWhileMessagesPending(
+            $this->factory->getEventQueue(),
+            $this->factory->createDomainEventConsumer()
+        );
+    }
+
+    private function processQueueWhileMessagesPending(Queue $queue, QueueMessageConsumer $consumer)
+    {
+        while ($queue->count()) {
+            $consumer->process();
+        }
     }
 
     private function getTemplateIdToProject() : string
