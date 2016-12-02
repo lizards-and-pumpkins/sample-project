@@ -109,6 +109,10 @@ class DemoProjectTaxServiceLocatorTest extends \PHPUnit_Framework_TestCase
             ['en', 'Taxable Goods', 'DK', 25],
             ['fr', 'Taxable Goods', 'DK', 25],
             
+            ['de', 'Taxable Goods', 'EN', 20],
+            ['en', 'Taxable Goods', 'EN', 20],
+            ['fr', 'Taxable Goods', 'EN', 20],
+            
             ['de', 'Taxable Goods', 'AT', 20],
             ['en', 'Taxable Goods', 'AT', 20],
             ['fr', 'Taxable Goods', 'AT', 20],
