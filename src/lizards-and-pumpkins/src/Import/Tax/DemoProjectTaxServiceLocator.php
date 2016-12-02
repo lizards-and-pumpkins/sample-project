@@ -14,6 +14,7 @@ class DemoProjectTaxServiceLocator implements TaxServiceLocator
         // [websites],       [tax rates],                country, rate
         [['de', 'en', 'fr'], ['Taxable Goods', 'Shipping'], 'DE', 19],
         [['de', 'en', 'fr'], ['Taxable Goods', 'Shipping'], 'DK', 25],
+        [['de', 'en', 'fr'], ['Taxable Goods', 'Shipping'], 'EN', 20],
         [['de', 'en', 'fr'], ['Taxable Goods', 'Shipping'], 'AT', 20],
         [['de', 'en', 'fr'], ['Taxable Goods', 'Shipping'], 'FR', 20],
         [['de', 'en', 'fr'], ['Taxable Goods', 'Shipping'], 'ES', 21],
