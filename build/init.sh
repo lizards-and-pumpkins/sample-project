@@ -7,6 +7,8 @@ source "$DIR/checkReleaseDirectoryParameter.sh"
 releaseDir=$1
 shareDir=${releaseDir}/share
 
+currentDir="$(pwd)"
+
 cd ${releaseDir} && composer install --no-interaction
 
 cd ${releaseDir}/src/magento && modman init > /dev/null 2>&1
@@ -30,4 +32,7 @@ ln -fsT ${releaseDir}/src/lizards-and-pumpkins/pub/images ${releaseDir}/pub/imag
 rm -fr ${releaseDir}/src/magento/media; ln -fsT ${shareDir}/media ${releaseDir}/src/magento/media
 #rm -rf ${releaseDir}/src/var && ln -fsT ${varDir} ${releaseDir}/src/var # TODO: Resolve
 
+cd "$currentDir"
+
 echo Symlinks created
+
