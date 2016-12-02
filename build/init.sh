@@ -9,14 +9,14 @@ shareDir=${releaseDir}/share
 
 currentDir="$(pwd)"
 
-cd ${releaseDir} && composer install --no-interaction
+cd ${releaseDir} && composer install --no-interaction --no-progress
 
 cd ${releaseDir}/src/magento && modman init > /dev/null 2>&1
 ls -1d ${releaseDir}/src/magento-extensions/* | xargs -I % modman link %  > /dev/null; cd ${releaseDir}/src/magento
 ls -1d ${releaseDir}/src/magento-themes/* | xargs modman link > /dev/null
 modman repair --force > /dev/null && echo Modman links processed
 
-cd ${releaseDir}/src/magento/.modman/magento-connector/ && composer install --no-interaction
+cd ${releaseDir}/src/magento/.modman/magento-connector/ && composer install --no-interaction --no-progress
 
 ln -fsT ${shareDir}/local.xml ${releaseDir}/src/magento/app/etc/local.xml
 
