@@ -13,4 +13,3 @@ php lizards_and_pumpkins_export.php --all-categories
 php lizards_and_pumpkins_export.php --all-products
 
 php $releaseDir/src/lizards-and-pumpkins/bin/triggerTemplateUpdate.php product_listing
-php $releaseDir/src/lizards-and-pumpkins/bin/triggerTemplateUpdate.php product_search_autosuggestion
