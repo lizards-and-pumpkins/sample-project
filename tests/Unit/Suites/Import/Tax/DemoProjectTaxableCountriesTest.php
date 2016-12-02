@@ -35,6 +35,7 @@ class DemoProjectTaxableCountriesTest extends \PHPUnit_Framework_TestCase
         return [
             ['DE'],
             ['DK'],
+            ['EN'],
             ['AT'],
             ['FR'],
             ['ES'],
