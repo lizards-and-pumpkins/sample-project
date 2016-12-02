@@ -120,7 +120,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
     {
         $this->output('Processing command queue...');
         $this->processQueueWhileMessagesPending(
-            $this->factory->getCommandQueue(),
+            $this->factory->getCommandMessageQueue(),
             $this->factory->createCommandConsumer()
         );
     }
@@ -129,7 +129,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
     {
         $this->output('Processing domain event queue...');
         $this->processQueueWhileMessagesPending(
-            $this->factory->getEventQueue(),
+            $this->factory->getEventMessageQueue(),
             $this->factory->createDomainEventConsumer()
         );
     }
