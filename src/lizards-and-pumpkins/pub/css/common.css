@@ -33,7 +33,7 @@ header.hidden { top: -283px }
 #search_mini_form { display: block; width: auto; margin-top: 10px; padding-top: 13px; text-align: center }
 #search_mini_form .form-search { position: relative; display: inline-block; margin-top: 5px; width: 60% }
 #search_mini_form input { width: 100%; border: 2px solid #333333; box-sizing: border-box }
-#search_mini_form button { position: absolute; top: 0; right: 0; bottom: 0; padding: 0; width: 40px }
+#search_mini_form button { position: absolute; top: 0; right: 0; padding: 0; width: 40px; height: 40px }
 #search_mini_form button .icon { position: relative; width: 22px; top: 2px }
 
 /* Top Links */
@@ -100,6 +100,13 @@ header.pushed { top: 0 }
 .styled-select-wrapper select { position: absolute; opacity: 0; left: 0; width: 100% }
 .styled-select-wrapper span { line-height: 21px }
 .styled-select-wrapper span:after { position: absolute; content: ''; width: 0; height: 0; top: 14px; right: 6px; border-style: solid; border-width: 4px 4px 0 4px; border-color: #cccccc transparent transparent transparent }
+
+/* Search autosuggestion */
+#search-autosuggestion { position: absolute; z-index: 10; width: 100% }
+#search-autosuggestion ul { list-style: none; margin: 0; padding: 0; text-align: left; border: #87BBA2 solid 2px; background-color: #ffffff }
+#search-autosuggestion li a { display: block }
+#search-autosuggestion li img { vertical-align: middle }
+#search-autosuggestion li.no-thumbnail { padding: 10px }
 
 /* Clearer */
 .clearfix:after, header nav:after { content: ""; display: block; height: 0; clear: both; visibility: hidden }

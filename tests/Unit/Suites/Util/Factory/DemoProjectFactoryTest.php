@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins\Util\Factory;
 
 use LizardsAndPumpkins\Context\Context;
+use LizardsAndPumpkins\Context\DemoProjectContextSource;
 use LizardsAndPumpkins\Context\Website\WebsiteToCountryMap;
 use LizardsAndPumpkins\DataPool\KeyValueStore\File\FileKeyValueStore;
 use LizardsAndPumpkins\DataPool\SearchEngine\FacetFilterRequestField;
 use LizardsAndPumpkins\DataPool\SearchEngine\Filesystem\FileSearchEngine;
-use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortOrderConfig;
+use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortBy;
 use LizardsAndPumpkins\DataPool\UrlKeyStore\FileUrlKeyStore;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessingStrategySequence;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessor;
@@ -220,7 +221,7 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testArrayOfAdditionalAttributeCodesForSearchEngineIsReturned()
     {
-        $result = $this->factory->getAdditionalAttributesForSearchIndex();
+        $result = $this->factory->getSortableAttributeCodes();
 
         $this->assertInternalType('array', $result);
         $this->assertContainsOnly('string', $result);
@@ -306,28 +307,24 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_dir($fileStorageBasePath));
     }
 
-    public function testSameInstanceOfProductListingSortOrderConfigIsReturnedOnMultipleCalls()
+    public function testReturnsProductListingAvailableSortBy()
     {
-        $result = $this->factory->getProductListingSortOrderConfig();
-
-        $this->assertContainsOnly(SortOrderConfig::class, $result);
-        $this->assertSame($result, $this->factory->getProductListingSortOrderConfig());
+        $this->assertContainsOnly(SortBy::class, $this->factory->getProductListingAvailableSortBy());
     }
 
-    public function testSameInstanceOfProductSearchSortOrderConfigIsReturnedOnMultipleCalls()
+    public function testReturnProductListingDefaultSortBy()
     {
-        $result = $this->factory->getProductSearchSortOrderConfig();
-
-        $this->assertContainsOnly(SortOrderConfig::class, $result);
-        $this->assertSame($result, $this->factory->getProductSearchSortOrderConfig());
+        $this->assertInstanceOf(SortBy::class, $this->factory->getProductListingDefaultSortBy());
     }
 
-    public function testSameInstanceOfProductSearchAutosuggestionSortOrderConfigIsReturnedOnMultipleCalls()
+    public function testReturnsProductSearchAvailableSortBy()
     {
-        $result = $this->factory->getProductSearchAutosuggestionSortOrderConfig();
+        $this->assertContainsOnly(SortBy::class, $this->factory->getProductSearchAvailableSortBy());
+    }
 
-        $this->assertInstanceOf(SortOrderConfig::class, $result);
-        $this->assertSame($result, $this->factory->getProductSearchAutosuggestionSortOrderConfig());
+    public function testReturnProductSearchDefaultSortBy()
+    {
+        $this->assertInstanceOf(SortBy::class, $this->factory->getProductSearchDefaultSortBy());
     }
 
     public function testSameInstanceOfProductsPerPageIsReturned()
@@ -416,5 +413,10 @@ class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->factory->createThemeLocator();
         $this->assertInstanceOf(ThemeLocator::class, $result);
+    }
+
+    public function testReturnsDemoProjectContextSource()
+    {
+        $this->assertInstanceOf(DemoProjectContextSource::class, $this->factory->createContextSource());
     }
 }

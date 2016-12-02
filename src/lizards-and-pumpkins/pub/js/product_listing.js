@@ -45,7 +45,7 @@ require(
         function createSortingSelect() {
             var sortingSelect = document.createElement('SELECT');
 
-            if (typeof window.sortOrderConfig !== 'object' || 0 === window.sortOrderConfig.length) {
+            if (typeof window.availableSortOrders !== 'object' || typeof window.selectedSortOrder !== 'object') {
                 return sortingSelect;
             }
 
@@ -53,22 +53,27 @@ require(
                 document.location.href = this.value
             }, true);
 
-            window.sortOrderConfig.map(function (config) {
-                sortingSelect.appendChild(createSortingSelectOption(config));
+            window.availableSortOrders.map(function (sortBy) {
+                sortingSelect.appendChild(createSortingSelectOption(sortBy));
             });
 
             return sortingSelect;
         }
 
-        function createSortingSelectOption(config) {
+        function createSortingSelectOption(sortBy) {
             var sortingOption = document.createElement('OPTION'),
-                newUrl = url.updateQueryParameters({"order": config['code'], "dir": config['selectedDirection']});
+                newUrl = url.updateQueryParameters({"order": sortBy['code'], "dir": sortBy['selectedDirection']});
 
-            sortingOption.textContent = translate(config['code']);
+            sortingOption.textContent = translate(sortBy['code']);
             sortingOption.value = url.removeQueryParameterFromUrl(newUrl, pagination.getPaginationQueryParameterName());
-            sortingOption.selected = config['selected'];
+            sortingOption.selected = isSelectedSortBy(sortBy);
 
             return sortingOption;
+        }
+
+        function isSelectedSortBy(sortBy) {
+            return sortBy['code'] === window.selectedSortOrder['code'] &&
+                sortBy['selectedDirection'] === window.selectedSortOrder['selectedDirection'];
         }
 
         function createToolbar() {
