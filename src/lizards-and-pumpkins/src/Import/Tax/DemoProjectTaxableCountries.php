@@ -9,6 +9,7 @@ class DemoProjectTaxableCountries implements TaxableCountries
     private static $countries = [
         'DE',
         'AT',
+        'EN',
         'DK',
         'FR',
         'ES',
