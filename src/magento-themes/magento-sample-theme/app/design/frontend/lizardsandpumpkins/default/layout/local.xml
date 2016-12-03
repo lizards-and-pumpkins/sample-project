@@ -31,7 +31,11 @@
             </action>
             <action method="removeItem">
                 <type>skin_css</type>
-                <name>css/style.js</name>
+                <name>css/styles.css</name>
+            </action>
+            <action method="removeItem">
+                <type>skin_css</type>
+                <name>css/print.css</name>
             </action>
             <action method="addItem">
                 <type>skin_css</type>
