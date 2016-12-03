@@ -26,6 +26,52 @@ define(['lib/ajax', 'lib/translate'], function (callAjax, translate) {
 //            autosuggestionBox.innerHTML = '';
     }, true);
 
+    searchInput.addEventListener('keydown', function (event) {
+
+        var keyUp = 38,
+            keyDown = 40,
+            keyEnter = 13;
+
+
+        if (keyUp === event.which || keyDown === event.which || keyEnter === event.which) {
+            var items = Array.prototype.slice.call(autosuggestionBox.querySelectorAll('li')),
+                selectedItemIndex = getSelectedAutosuggestionItemIndex(items);
+        }
+
+        if (keyUp === event.which || keyDown === event.which) {
+
+            if (selectedItemIndex > -1 && items.length > 1) {
+                items[selectedItemIndex].className = items[selectedItemIndex].className.replace(/\bselected\b/i, '');
+            }
+
+            items[getNewSelectedItemIndex(event, selectedItemIndex, items.length)].className += ' selected';
+        }
+
+        if (keyEnter === event.which && -1 !== selectedItemIndex) {
+            document.location.href = items[selectedItemIndex].querySelector('a').href;
+            event.preventDefault();
+        }
+    });
+
+    function getSelectedAutosuggestionItemIndex(items) {
+        return items.reduce(function (carry, item, index) {
+            if (carry === -1 && item.className.match(/\bselected\b/i)) {
+                return index;
+            }
+            return carry;
+        }, -1);
+    }
+
+    function getNewSelectedItemIndex(event, selectedItemIndex, numItems) {
+        if (38 === event.which) {
+            return selectedItemIndex > 0 ? selectedItemIndex - 1 : numItems - 1;
+        }
+
+        if (40 === event.which) {
+            return selectedItemIndex + 1 < numItems ? selectedItemIndex + 1 : 0;
+        }
+    }
+
     function isJson(string) {
         try {
             JSON.parse(string);

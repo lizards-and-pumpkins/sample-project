@@ -103,10 +103,11 @@ header.pushed { top: 0 }
 
 /* Search autosuggestion */
 #search-autosuggestion { position: absolute; z-index: 10; width: 100% }
-#search-autosuggestion ul { list-style: none; margin: 0; padding: 0; text-align: left; border: #87BBA2 solid 2px; background-color: #ffffff }
+#search-autosuggestion ul { list-style: none; margin: 0; padding: 0; text-align: left; border: #000000 solid 2px; border-top: none; background-color: #ffffff }
 #search-autosuggestion li a { display: block }
+#search-autosuggestion li.selected { background-color: #dddddd }
 #search-autosuggestion li img { vertical-align: middle }
-#search-autosuggestion li.no-thumbnail { padding: 10px }
+#search-autosuggestion li.no-thumbnail { padding: 10px; text-align: center }
 
 /* Clearer */
 .clearfix:after, header nav:after { content: ""; display: block; height: 0; clear: both; visibility: hidden }
