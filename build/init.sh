@@ -39,7 +39,6 @@ ln -fsT ../src/lizards-and-pumpkins/pub/images ${releaseDir}/pub/images
 
 rm -fr ${releaseDir}/src/magento/media;
 ln -fsT ../../share/media ${releaseDir}/src/magento/media
-#rm -rf ${releaseDir}/src/var && ln -fsT ${varDir} ${releaseDir}/src/var # TODO: Resolve
 
 cd "$currentDir"
 
