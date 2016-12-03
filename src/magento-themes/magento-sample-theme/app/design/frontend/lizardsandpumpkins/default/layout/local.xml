@@ -33,6 +33,10 @@
                 <type>skin_css</type>
                 <name>css/styles.css</name>
             </action>
+            <action method="removeItem">
+                <type>skin_css</type>
+                <name>css/print.css</name>
+            </action>
             <action method="addItem">
                 <type>skin_css</type>
                 <name>css/basic.css</name>
