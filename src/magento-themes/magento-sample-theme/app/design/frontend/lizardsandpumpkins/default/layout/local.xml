@@ -2,45 +2,19 @@
 <layout>
     <default>
         <reference name="root">
-            <action method="setTemplate">
-                <template>page/1column.phtml</template>
-            </action>
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
             <block type="lizardsandpumpkins_demotheme/page_html_topmenu_menu" name="mobile.menu" template="page/html/topmenu/mobile-menu.phtml"/>
         </reference>
 
         <reference name="head">
-            <action method="removeItem">
-                <type>js</type>
-                <name>scriptaculous/builder.js</name>
-            </action>
-            <action method="removeItem">
-                <type>js</type>
-                <name>scriptaculous/effects.js</name>
-            </action>
-            <action method="removeItem">
-                <type>js</type>
-                <name>scriptaculous/dragdrop.js</name>
-            </action>
-            <action method="removeItem">
-                <type>js</type>
-                <name>scriptaculous/controls.js</name>
-            </action>
-            <action method="removeItem">
-                <type>js</type>
-                <name>scriptaculous/slider.js</name>
-            </action>
-            <action method="removeItem">
-                <type>skin_css</type>
-                <name>css/styles.css</name>
-            </action>
-            <action method="removeItem">
-                <type>skin_css</type>
-                <name>css/print.css</name>
-            </action>
-            <action method="addItem">
-                <type>skin_css</type>
-                <name>css/basic.css</name>
-            </action>
+            <action method="removeItem"><type>js</type><name>scriptaculous/builder.js</name></action>
+            <action method="removeItem"><type>js</type><name>scriptaculous/effects.js</name></action>
+            <action method="removeItem"><type>js</type><name>scriptaculous/dragdrop.js</name></action>
+            <action method="removeItem"><type>js</type><name>scriptaculous/controls.js</name></action>
+            <action method="removeItem"><type>js</type><name>scriptaculous/slider.js</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/print.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/basic.css</name></action>
         </reference>
 
         <reference name="header">
@@ -64,56 +38,39 @@
 
         <reference name="before_body_end">
             <block type="core/text" name="header-js">
-                <action method="setText">
-                    <text><![CDATA[<script src="/skin/frontend/lizardsandpumpkins/default/js/modules/header.js"></script>]]></text>
-                </action>
+                <action method="setText"><text><![CDATA[<script src="/skin/frontend/lizardsandpumpkins/default/js/modules/header.js"></script>]]></text></action>
             </block>
         </reference>
     </default>
 
     <catalog_category_default>
         <reference name="head">
-            <action method="addItem">
-                <type>skin_css</type>
-                <name>css/modules/catalog.css</name>
-            </action>
+            <action method="addItem"><type>skin_css</type><name>css/modules/catalog.css</name></action>
         </reference>
     </catalog_category_default>
 
     <catalog_category_layered>
         <reference name="root">
-            <action method="setTemplate">
-                <template>page/2columns-left.phtml</template>
-            </action>
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
 
         <reference name="head">
-            <action method="addItem">
-                <type>skin_css</type>
-                <name>css/modules/catalog.css</name>
-            </action>
+            <action method="addItem"><type>skin_css</type><name>css/modules/catalog.css</name></action>
         </reference>
     </catalog_category_layered>
 
     <catalog_product_view>
         <reference name="root">
-            <action method="setTemplate">
-                <template>page/1column.phtml</template>
-            </action>
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
 
         <reference name="head">
-            <action method="addItem">
-                <type>skin_css</type>
-                <name>css/modules/product.css</name>
-            </action>
+            <action method="addItem"><type>skin_css</type><name>css/modules/product.css</name></action>
         </reference>
 
         <reference name="before_body_end">
             <block type="core/text" name="product-js">
-                <action method="setText">
-                    <text><![CDATA[<script src="/skin/frontend/lizardsandpumpkins/default/js/modules/product.js"></script>]]></text>
-                </action>
+                <action method="setText"><text><![CDATA[<script src="/skin/frontend/lizardsandpumpkins/default/js/modules/product.js"></script>]]></text></action>
             </block>
         </reference>
     </catalog_product_view>
@@ -192,4 +149,13 @@
             </block>
         </reference>
     </PRODUCT_TYPE_configurable>
+
+    <checkout_cart_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/modules/cart.css</name></action>
+        </reference>
+        <reference name="checkout.cart">
+            <remove name="checkout.cart.shipping"/>
+        </reference>
+    </checkout_cart_index>
 </layout>

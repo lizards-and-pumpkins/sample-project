@@ -59,25 +59,18 @@ table tbody td .small-text {
   margin: 10px 0;
 }
 table tbody td .remove {
-  position: relative;
   font-size: 12px;
+  white-space: nowrap;
 }
 table tbody td .remove i {
   display: inline-block;
-  position: relative;
-  top: 5px;
   height: 18px;
   width: 18px;
-  margin-right: 5px;
   font-size: 18px;
-  line-height: 21px;
+  line-height: 15px;
   color: #ffffff;
   text-align: center;
   background: #cccccc;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
   border-radius: 50%;
 }
 table tbody td .remove:hover {
