@@ -60,10 +60,12 @@ $currentWebsiteCode = $this->getWebsiteCode();
                 <img src="<?= $this->getBaseUrl() ?>images/flags/<?= $currentWebsiteCode ?>.png" alt=""/>
             </li>
             <li>
-                <svg class="icon-shopping-bag" viewBox="0 0 1024 1024">
-                    <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#shopping-bag"></use>
-                </svg>
-                <span id="cart-meta-info"></span>
+                <a href="<?= $this->getBaseUrl() ?>checkout/cart/">
+                    <svg class="icon-shopping-bag" viewBox="0 0 1024 1024">
+                        <use xlink:href="<?= $this->getBaseUrl() ?>images/assets.svg#shopping-bag"></use>
+                    </svg>
+                    <span id="cart-meta-info"></span>
+                </a>
             </li>
         </ul>
 
