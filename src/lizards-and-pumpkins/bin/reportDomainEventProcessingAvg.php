@@ -141,7 +141,7 @@ class CalculateAverageDomainEventProcessingTime extends BaseCliCommand
         $f = fopen($filePath, 'r');
         $matches = null;
         while (! feof($f)) {
-            if (preg_match("/^.{25}\tDomainEventHandler::process (\\S+) (\\S+)/", fgets($f), $matches)) {
+            if (preg_match("/^.{25}\tDomainEventHandler::process (\\S+) (\\S+)/", (string) fgets($f), $matches)) {
                 yield array_slice($matches, 1);
             }
         }
