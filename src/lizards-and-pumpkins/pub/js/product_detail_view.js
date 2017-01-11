@@ -14,7 +14,7 @@ require(
 
         domReady(function () {
             product = new Product(window.product);
-
+            selectedProductId = product.getSku();
             renderContent();
 
             adjustToPageWidth();
