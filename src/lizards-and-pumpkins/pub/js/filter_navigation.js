@@ -127,7 +127,7 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
                     return carry;
                 }
 
-                var ranges = filterOption.value.match(/(\d+,\d+)/g),
+                var ranges = filterOption.value.match(/(\d+(,|\.)\d+)/g),
                     parameterValue = ranges.join('-').replace(/,/g, '.'),
                     option = document.createElement('LI'),
                     link = document.createElement('A'),
