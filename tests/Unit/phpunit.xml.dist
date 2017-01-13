@@ -32,4 +32,9 @@
             <directory>../../src/lizards-and-pumpkins/src</directory>
         </whitelist>
     </filter>
+    <php>
+        <server name="LP_BASE_URL_TO_WEBSITE_MAP" value="http://example.com/=xx"/>
+        <server name="LP_FILE_STORAGE_BASE_PATH" value="/tmp/test-dummy"/>
+        <server name="LP_LOG_FILE_PATH_PATH" value="/tmp/test-dummy"/>
+    </php>
 </phpunit>
