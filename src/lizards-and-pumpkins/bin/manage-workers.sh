@@ -128,7 +128,7 @@ function send_shutdown_message
     local consumer_pid=$(pgrep -P $2 php)
     
     if [ ! -z ${consumer_pid} ]; then
-        ${send_shutdown_message} ${type} ${consumer_pid}
+        ${send_shutdown_message} --quiet ${type} ${consumer_pid}
     fi
 }
 
