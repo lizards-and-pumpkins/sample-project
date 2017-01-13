@@ -46,6 +46,12 @@ class ShutdownConsumer extends BaseCliCommand
         return array_merge(
             parent::getCommandLineArgumentsArray($climate),
             [
+                'quiet' => [
+                    'prefix' => 'q',
+                    'longPrefix' => 'quiet',
+                    'description' => 'No output',
+                    'noValue' => true
+                ],
                 'type' => [
                     'description' => '"command" or "event"',
                     'required'    => true,
@@ -63,7 +69,7 @@ class ShutdownConsumer extends BaseCliCommand
     {
         $queue = $this->selectQueue();
         $queue->add($this->createShutdownDirective());
-        $this->output(sprintf('Shutdown directive for %s consumer with pid "%s" added', $this->type(), $this->pid()));
+        $this->displayMessage();
     }
 
     private function type() : string
@@ -92,6 +98,14 @@ class ShutdownConsumer extends BaseCliCommand
     private function createShutdownDirective(): ShutdownWorkerDirective
     {
         return new ShutdownWorkerDirective($this->pid() === 'any' ? '*' : $this->pid());
+    }
+
+    private function displayMessage()
+    {
+        if (!$this->getArg('quiet')) {
+            $format = 'Shutdown directive for %s consumer with pid "%s" added';
+            $this->output(sprintf($format, $this->type(), $this->pid()));
+        }
     }
 }
 
