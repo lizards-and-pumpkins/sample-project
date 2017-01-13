@@ -238,7 +238,7 @@ class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCal
     public function getEventQueue() : DomainEventQueue
     {
         if (null === $this->eventQueue) {
-            $this->eventQueue = $this->createEventQueue();
+            $this->eventQueue = $this->getMasterFactory()->createEventQueue();
         }
         return $this->eventQueue;
     }
@@ -251,7 +251,7 @@ class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCal
     public function getEventMessageQueue() : Queue
     {
         if (null === $this->eventMessageQueue) {
-            $this->eventMessageQueue = $this->createEventMessageQueue();
+            $this->eventMessageQueue = $this->getMasterFactory()->createEventMessageQueue();
         }
         return $this->eventMessageQueue;
     }
@@ -268,7 +268,7 @@ class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCal
     public function getCommandQueue() : CommandQueue
     {
         if (null === $this->commandQueue) {
-            $this->commandQueue = $this->createCommandQueue();
+            $this->commandQueue = $this->getMasterFactory()->createCommandQueue();
         }
         return $this->commandQueue;
     }
@@ -281,7 +281,7 @@ class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCal
     public function getCommandMessageQueue() : Queue
     {
         if (null === $this->commandMessageQueue) {
-            $this->commandMessageQueue = $this->createCommandMessageQueue();
+            $this->commandMessageQueue = $this->getMasterFactory()->createCommandMessageQueue();
         }
         return $this->commandMessageQueue;
     }
@@ -315,10 +315,8 @@ class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCal
     {
         /** @var ConfigReader $configReader */
         $configReader = $this->getMasterFactory()->createConfigReader();
-        $envConfigValue = $configReader->get('log_file_path');
-
-        if (null !== $envConfigValue) {
-            return $envConfigValue;
+        if ($configReader->has('log_file_path')) {
+            return $configReader->get('log_file_path');;
         }
 
         return __DIR__ . '/../log/system.log';
