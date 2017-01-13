@@ -36,6 +36,7 @@ function init_vars() {
     current_selection=0
     dir="$(dirname $0)"
     supervisor="$dir/consumerSupervisor.sh"
+    send_shutdown_message="$dir/shutdownConsumerProcess.php"
     
     update_pid_list
 }
@@ -87,13 +88,13 @@ function update_pid_list()
 
 function get_pids_for_worker()
 {
-    name=$1
+    local name=$1
     echo $(ps x|grep $name|grep "$supervisor"|grep -v 'grep '|awk '{ print $1 }')
 }
 
 function get_pid_count_for()
 {
-    index=$1
+    local index=$1
     echo ${pids[$index]} | wc -w
 }
 
@@ -105,10 +106,29 @@ function increase_current_selection()
 
 function decrease_current_selection()
 {
-    child_pid="${pids[$current_selection]##* }"
-    if [ ! -z $child_pid ]; then
-        kill -TERM $child_pid
+    local supervisor_pid="${pids[$current_selection]##* }"
+    if [ ! -z ${supervisor_pid} ]; then
+        shutdown_worker ${workers[$current_selection]} ${supervisor_pid} 
         pids[$current_selection]="${pids[$current_selection]% *}"
+    fi
+}
+
+function shutdown_worker()
+{
+    local type=$1
+    local supervisor_pid=$2
+    
+    kill -TERM ${supervisor_pid}
+    send_shutdown_message ${type} ${supervisor_pid}
+}
+
+function send_shutdown_message
+{
+    local type="${1%Consumer.php}"
+    local consumer_pid=$(pgrep -P $2 php)
+    
+    if [ ! -z ${consumer_pid} ]; then
+        ${send_shutdown_message} ${type} ${consumer_pid}
     fi
 }
 
