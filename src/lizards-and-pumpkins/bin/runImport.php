@@ -152,14 +152,14 @@ class RunImport extends BaseCliCommand
     {
         $this->output('Processing command queue...');
         $commandConsumer = $this->factory->createCommandConsumer();
-        $commandConsumer->process();
+        $commandConsumer->processAll();
     }
 
     private function processDomainEventQueue()
     {
         $this->output('Processing domain event queue...');
         $domainEventConsumer = $this->factory->createDomainEventConsumer();
-        $domainEventConsumer->process();
+        $domainEventConsumer->processAll();
     }
 }
 

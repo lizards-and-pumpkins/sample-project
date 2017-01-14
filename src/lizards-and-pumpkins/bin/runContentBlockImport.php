@@ -166,7 +166,7 @@ class RunContentBlockImport extends BaseCliCommand
     private function processQueueWhileMessagesPending(Queue $queue, QueueMessageConsumer $consumer)
     {
         while ($queue->count()) {
-            $consumer->process();
+            $consumer->processAll();
         }
     }
 }
