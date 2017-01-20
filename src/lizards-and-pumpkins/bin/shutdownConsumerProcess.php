@@ -59,7 +59,6 @@ class ShutdownConsumer extends BaseCliCommand
                 'pid'  => [
                     'description'  => 'numeric PID',
                     'required'     => true,
-                    'defaultValue' => "any",
                 ],
             ]
         );
@@ -82,9 +81,9 @@ class ShutdownConsumer extends BaseCliCommand
         return $type;
     }
 
-    private function pid() : string
+    private function pid() : int
     {
-        return $this->getArg('pid');
+        return (int) $this->getArg('pid');
     }
 
     /**
@@ -97,7 +96,7 @@ class ShutdownConsumer extends BaseCliCommand
 
     private function createShutdownDirective(): ShutdownWorkerDirective
     {
-        return new ShutdownWorkerDirective($this->pid() === 'any' ? '*' : $this->pid());
+        return new ShutdownWorkerDirective((string) $this->pid());
     }
 
     private function displayMessage()
