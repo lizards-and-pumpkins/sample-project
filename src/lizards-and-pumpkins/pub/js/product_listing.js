@@ -4,7 +4,8 @@ require(
 
         domReady(function () {
             renderContent();
-            filterNavigation.renderLayeredNavigation(filterNavigationJson, '#filter-navigation');
+            var parentNode = document.getElementById('filter-navigation');
+            filterNavigation.renderLayeredNavigation(filterNavigationJson, parentNode);
         });
 
         function renderContent() {
