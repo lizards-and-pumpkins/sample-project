@@ -28,15 +28,38 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
         return domElement.scrollHeight > domElement.offsetHeight;
     }
 
-    var FilterNavigation = {
-        renderLayeredNavigation: function (filterNavigationJson, placeholderSelector) {
-            if (typeof filterNavigationJson !== 'object') {
-                return;
+    function createFilterHeading(filterCode) {
+        var heading = document.createElement('DIV');
+        heading.className = 'filter-title';
+        heading.textContent = translate(filterCode);
+        return heading;
+    }
+
+    function isDomNode(parentNode) {
+        return null !== parentNode && parentNode.nodeType > 0;
+    }
+
+    function getNormalizedRanges(filterOption) {
+        return filterOption.value.split(' - ').reduce(function (carry, range) {
+            var trimmedValue = range.replace(/^\D*|\D*$/g, '');
+
+            if (trimmedValue.match(/^[0-9.]+,\d+$/)) {
+                var valueWithoutThousandsPoint = trimmedValue.replace(/\./g, '');
+                return carry.concat([valueWithoutThousandsPoint.replace(/,/, '.')]);
             }
 
-            var filterNavigation = document.querySelector(placeholderSelector);
+            if (trimmedValue.match(/^[0-9,]+\.\d+$/)) {
+                var valueWithoutThousandsComma = trimmedValue.replace(/,/g, '');
+                return carry.concat([valueWithoutThousandsComma]);
+            }
 
-            if (null === filterNavigation) {
+            return carry;
+        }, []);
+    }
+
+    var FilterNavigation = {
+        renderLayeredNavigation: function (filterNavigationJson, parentNode) {
+            if (typeof filterNavigationJson !== 'object' || ! isDomNode(parentNode)) {
                 return;
             }
 
@@ -50,10 +73,6 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
                     filterNavigationJson[filterCode]
                 );
 
-                var heading = document.createElement('DIV');
-                heading.className = 'filter-title';
-                heading.textContent = translate(filterCode);
-
                 var filterContainer = document.createElement('DIV');
                 filterContainer.className = 'filter-container';
 
@@ -61,9 +80,9 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
                 optionList.className = 'filter-content filter-' + filterCode;
                 options.map(function (option) { optionList.appendChild(option) });
 
-                filterNavigation.appendChild(heading);
+                parentNode.appendChild(createFilterHeading(filterCode));
                 filterContainer.appendChild(optionList);
-                filterNavigation.appendChild(filterContainer);
+                parentNode.appendChild(filterContainer);
 
                 scrollFirstSelectedFilterOptionsIntoView(filterContainer);
             });
@@ -127,8 +146,13 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
                     return carry;
                 }
 
-                var ranges = filterOption.value.match(/(\d+,\d+)/g),
-                    parameterValue = ranges.join('-').replace(/,/g, '.'),
+                var ranges = getNormalizedRanges(filterOption);
+
+                if (ranges.length === 0) {
+                    return carry;
+                }
+
+                var parameterValue = ranges.join('-'),
                     option = document.createElement('LI'),
                     link = document.createElement('A'),
                     newUrl = url.toggleQueryParameter(filterCode, parameterValue),
