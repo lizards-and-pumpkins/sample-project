@@ -11,8 +11,6 @@ use LizardsAndPumpkins\Import\RootTemplate\TemplateWasUpdatedDomainEvent;
 use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
-use LizardsAndPumpkins\Messaging\Queue;
-use LizardsAndPumpkins\Messaging\QueueMessageConsumer;
 use LizardsAndPumpkins\Util\BaseCliCommand;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
@@ -24,7 +22,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 class TriggerTemplateUpdate extends BaseCliCommand
 {
     /**
-     * @var MasterFactory
+     * @var SampleMasterFactory
      */
     private $factory;
 
@@ -119,26 +117,15 @@ class TriggerTemplateUpdate extends BaseCliCommand
     private function processCommandQueue()
     {
         $this->output('Processing command queue...');
-        $this->processQueueWhileMessagesPending(
-            $this->factory->getCommandMessageQueue(),
-            $this->factory->createCommandConsumer()
-        );
+        $commandConsumer = $this->factory->createCommandConsumer();
+        $commandConsumer->processAll();
     }
 
     private function processDomainEventQueue()
     {
         $this->output('Processing domain event queue...');
-        $this->processQueueWhileMessagesPending(
-            $this->factory->getEventMessageQueue(),
-            $this->factory->createDomainEventConsumer()
-        );
-    }
-
-    private function processQueueWhileMessagesPending(Queue $queue, QueueMessageConsumer $consumer)
-    {
-        while ($queue->count()) {
-            $consumer->processAll();
-        }
+        $domainEventConsumer = $this->factory->createDomainEventConsumer();
+        $domainEventConsumer->processAll();
     }
 
     private function getTemplateIdToProject() : string
