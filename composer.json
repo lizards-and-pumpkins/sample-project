@@ -10,16 +10,16 @@
   ],
   "require": {
     "php": "~7.0.0",
-    "lizards-and-pumpkins/catalog": "~0.14.1-alpha",
-    "lizards-and-pumpkins/lib-key-value-store-filesystem": "~0.11.0-alpha",
-    "lizards-and-pumpkins/lib-search-engine-filesystem": "~0.9.0-alpha",
-    "lizards-and-pumpkins/lib-queue-filesystem": "~0.12.0-alpha",
-    "lizards-and-pumpkins/lib-image-processing-imagick": "~0.10.0-alpha"
+    "lizards-and-pumpkins/catalog": "~0.15.0",
+    "lizards-and-pumpkins/lib-key-value-store-filesystem": "~0.12.0",
+    "lizards-and-pumpkins/lib-search-engine-filesystem": "~0.10.0",
+    "lizards-and-pumpkins/lib-queue-filesystem": "~0.13.0",
+    "lizards-and-pumpkins/lib-image-processing-imagick": "~0.11.0",
+    "league/climate": "~3.2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.6.2",
-    "lizards-and-pumpkins/coding-standards": "dev-master",
-    "league/climate": "~3.2.0"
+    "lizards-and-pumpkins/coding-standards": "dev-master"
   },
   "autoload": {
     "psr-4": {"LizardsAndPumpkins\\": "src/lizards-and-pumpkins/src"}
