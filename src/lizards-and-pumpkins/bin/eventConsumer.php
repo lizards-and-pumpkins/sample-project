@@ -5,8 +5,11 @@ declare(strict_types=1);
 
 namespace LizardsAndPumpkins;
 
+use LizardsAndPumpkins\Import\Image\UpdatingProductImageImportCommandFactory;
 use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
+use LizardsAndPumpkins\ProductDetail\Import\UpdatingProductImportCommandFactory;
+use LizardsAndPumpkins\ProductListing\Import\UpdatingProductListingImportCommandFactory;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
 use LizardsAndPumpkins\Util\Factory\DemoProjectFactory;
@@ -27,6 +30,9 @@ class EventConsumerWorker
         $implementationFactory = new DemoProjectFactory();
         $this->factory->register($commonFactory);
         $this->factory->register($implementationFactory);
+        $this->factory->register(new UpdatingProductImportCommandFactory());
+        $this->factory->register(new UpdatingProductImageImportCommandFactory());
+        $this->factory->register(new UpdatingProductListingImportCommandFactory());
         //$this->enableDebugLogging($commonFactory, $implementationFactory);
     }
 
