@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins;
 
 use League\CLImate\CLImate;
+use LizardsAndPumpkins\Context\DataVersion\DataVersion;
 use LizardsAndPumpkins\Import\CatalogImport;
 use LizardsAndPumpkins\Import\Image\NullProductImageImportCommandFactory;
 use LizardsAndPumpkins\Import\Image\UpdatingProductImageImportCommandFactory;
@@ -129,10 +130,12 @@ class RunImport extends BaseCliCommand
     private function importFile()
     {
         $this->output('Importing...');
+        
+        $dataVersionString = $this->factory->createDataPoolReader()->getCurrentDataVersion();
 
         /** @var CatalogImport $import */
         $import = $this->factory->createCatalogImport();
-        $import->importFile($this->getArg('importFile'));
+        $import->importFile($this->getArg('importFile'), DataVersion::fromVersionString($dataVersionString));
     }
 
     private function processQueuesIfRequested()

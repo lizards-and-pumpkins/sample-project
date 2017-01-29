@@ -1,11 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace LizardsAndPumpkins;
 
 use League\CLImate\CLImate;
+use LizardsAndPumpkins\Context\DataVersion\DataVersion;
 use LizardsAndPumpkins\Import\RootTemplate\Import\TemplateProjectorLocator;
 use LizardsAndPumpkins\Import\RootTemplate\TemplateWasUpdatedDomainEvent;
 use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
@@ -32,13 +33,14 @@ class TriggerTemplateUpdate extends BaseCliCommand
         $this->setCLImate($CLImate);
     }
 
-    public static function bootstrap() : TriggerTemplateUpdate
+    public static function bootstrap(): TriggerTemplateUpdate
     {
         $factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
         $implementationFactory = new DemoProjectFactory();
         $factory->register($commonFactory);
         $factory->register($implementationFactory);
+
         //self::enableDebugLogging($factory, $commonFactory, $implementationFactory);
 
         return new self($factory, new CLImate());
@@ -58,7 +60,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
      * @param CLImate $climate
      * @return array[]
      */
-    protected function getCommandLineArgumentsArray(CLImate $climate) : array
+    protected function getCommandLineArgumentsArray(CLImate $climate): array
     {
         return array_merge(
             parent::getCommandLineArgumentsArray($climate),
@@ -87,6 +89,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
     {
         if ($this->isTemplateIdListRequested()) {
             $this->outputTemplateIdList();
+
             return;
         }
         $this->addDomainEvent();
@@ -95,10 +98,8 @@ class TriggerTemplateUpdate extends BaseCliCommand
 
     private function addDomainEvent()
     {
-        $templateId = $this->getTemplateIdToProject();
-        $projectionSourceData = '';
-
-        $this->factory->getEventQueue()->add(new TemplateWasUpdatedDomainEvent($templateId, $projectionSourceData));
+        $event = $this->createTemplateWasUpdatedEvent($this->getTemplateIdToProject());
+        $this->factory->getEventQueue()->add($event);
     }
 
     private function processQueuesIfRequested()
@@ -128,17 +129,18 @@ class TriggerTemplateUpdate extends BaseCliCommand
         $domainEventConsumer->processAll();
     }
 
-    private function getTemplateIdToProject() : string
+    private function getTemplateIdToProject(): string
     {
         $templateId = $this->getArg('templateId');
-        if (! in_array($templateId, $this->getValidTemplateIds())) {
+        if (!in_array($templateId, $this->getValidTemplateIds())) {
             $message = $this->getInvalidTemplateIdMessage($templateId);
             throw new \InvalidArgumentException($message);
         }
+
         return $templateId;
     }
 
-    private function getInvalidTemplateIdMessage(string $templateId) : string
+    private function getInvalidTemplateIdMessage(string $templateId): string
     {
         return sprintf(
             'Invalid template ID "%s". Valid template IDs are: %s',
@@ -150,14 +152,15 @@ class TriggerTemplateUpdate extends BaseCliCommand
     /**
      * @return string[]
      */
-    private function getValidTemplateIds() : array
+    private function getValidTemplateIds(): array
     {
         /** @var TemplateProjectorLocator $templateProjectorLocator */
         $templateProjectorLocator = $this->factory->createTemplateProjectorLocator();
+
         return $templateProjectorLocator->getRegisteredProjectorCodes();
     }
 
-    protected function isTemplateIdListRequested() : bool
+    protected function isTemplateIdListRequested(): bool
     {
         return (bool) $this->getArg('list');
     }
@@ -166,6 +169,15 @@ class TriggerTemplateUpdate extends BaseCliCommand
     {
         $this->output('Available template IDs:');
         $this->output(implode(PHP_EOL, $this->getValidTemplateIds()));
+    }
+
+    private function createTemplateWasUpdatedEvent(string $templateId): TemplateWasUpdatedDomainEvent
+    {
+        $projectionSourceData = '';
+        $currentDataVersion = $this->factory->createDataPoolReader()->getCurrentDataVersion();
+        $dataVersion = DataVersion::fromVersionString($currentDataVersion);
+
+        return new TemplateWasUpdatedDomainEvent($templateId, $projectionSourceData, $dataVersion);
     }
 }
 
