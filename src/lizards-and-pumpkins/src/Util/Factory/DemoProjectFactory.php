@@ -331,7 +331,6 @@ class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCal
         return FileSearchEngine::create(
             $storagePath,
             $this->getMasterFactory()->getSearchableAttributeCodes(),
-            $this->getMasterFactory()->createSearchCriteriaBuilder(),
             $this->getMasterFactory()->getFacetFieldTransformationRegistry()
         );
     }
