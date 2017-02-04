@@ -62,8 +62,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 button,
-input,
+/*input,*/
 input[type=text],
+input[type=password],
 input[type=button],
 textarea {
   outline: none;
@@ -1121,8 +1122,9 @@ header #search_mini_form .form-search-suggest li .amount {
     display: none;
   }
 }
-input,
+/*input,*/
 input[type=text],
+input[type=password],
 textarea {
   padding: 10px 15px;
   font-size: 14px;
@@ -1361,14 +1363,14 @@ button:hover,
   text-decoration: none;
   color: #87BBA2;
 }
-button.normal,
-.button.normal {
+button,
+.button {
   color: #87BBA2;
   text-transform: uppercase;
   border: 2px solid #87BBA2;
 }
-button.normal:hover,
-.button.normal:hover {
+button:hover,
+.button:hover {
   color: #ffffff;
   background: #87BBA2;
 }
