@@ -62,7 +62,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 button,
-/*input,*/
 input[type=text],
 input[type=password],
 input[type=button],
@@ -1122,7 +1121,6 @@ header #search_mini_form .form-search-suggest li .amount {
     display: none;
   }
 }
-/*input,*/
 input[type=text],
 input[type=password],
 textarea {
