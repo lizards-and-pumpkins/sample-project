@@ -6,11 +6,12 @@ namespace LizardsAndPumpkins\Import\Tax;
 
 use LizardsAndPumpkins\Import\Price\Price;
 use LizardsAndPumpkins\Import\Tax\Exception\InvalidTaxRateException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Tax\DemoProjectTaxRate
  */
-class DemoProjectTaxRateTest extends \PHPUnit_Framework_TestCase
+class DemoProjectTaxRateTest extends TestCase
 {
     public function testTaxServiceInterfaceIsImplemented()
     {

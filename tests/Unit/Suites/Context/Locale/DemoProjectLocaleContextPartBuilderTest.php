@@ -10,11 +10,12 @@ use LizardsAndPumpkins\Context\Locale\Exception\UnableToDetermineContextLocaleEx
 use LizardsAndPumpkins\Context\Website\RequestToWebsiteMap;
 use LizardsAndPumpkins\Context\Website\Website;
 use LizardsAndPumpkins\Http\HttpRequest;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Context\Locale\DemoProjectLocaleContextPartBuilder
  */
-class DemoProjectLocaleContextPartBuilderTest extends \PHPUnit_Framework_TestCase
+class DemoProjectLocaleContextPartBuilderTest extends TestCase
 {
     /**
      * @var DemoProjectLocaleContextPartBuilder

@@ -31,6 +31,7 @@ use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMa
 use LizardsAndPumpkins\UnitTestFactory;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Util\Factory\DemoProjectFactory
@@ -43,7 +44,7 @@ use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
  * @uses   \LizardsAndPumpkins\Import\Tax\DemoProjectTaxableCountries
  * @uses   \LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer
  */
-class DemoProjectFactoryTest extends \PHPUnit_Framework_TestCase
+class DemoProjectFactoryTest extends TestCase
 {
     /**
      * @var DemoProjectFactory

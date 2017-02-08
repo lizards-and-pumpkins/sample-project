@@ -12,11 +12,12 @@ use LizardsAndPumpkins\Import\ImageStorage\Exception\InvalidImageVariantCodeExce
 use LizardsAndPumpkins\Import\ImageStorage\Image;
 use LizardsAndPumpkins\Import\ImageStorage\ImageStorage;
 use LizardsAndPumpkins\Import\Product\View\ProductImageFileLocator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Product\Image\DemoProjectProductImageFileLocator
  */
-class DemoProjectProductImageFileLocatorTest extends \PHPUnit_Framework_TestCase
+class DemoProjectProductImageFileLocatorTest extends TestCase
 {
     /**
      * @var DemoProjectProductImageFileLocator

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace LizardsAndPumpkins\Import\Tax;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers \LizardsAndPumpkins\Import\Tax\DemoProjectTaxableCountries
  */
-class DemoProjectTaxableCountriesTest extends \PHPUnit_Framework_TestCase
+class DemoProjectTaxableCountriesTest extends TestCase
 {
     /**
      * @var DemoProjectTaxableCountries

@@ -8,11 +8,12 @@ use LizardsAndPumpkins\Context\ContextBuilder;
 use LizardsAndPumpkins\Context\ContextPartBuilder;
 use LizardsAndPumpkins\Context\Website\Exception\UnableToDetermineContextWebsiteException;
 use LizardsAndPumpkins\Http\HttpRequest;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Context\Website\DemoProjectWebsiteContextPartBuilder
  */
-class DemoProjectWebsiteContextPartBuilderTest extends \PHPUnit_Framework_TestCase
+class DemoProjectWebsiteContextPartBuilderTest extends TestCase
 {
     /**
      * @var DemoProjectWebsiteContextPartBuilder

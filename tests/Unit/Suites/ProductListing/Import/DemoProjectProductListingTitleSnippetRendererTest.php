@@ -9,11 +9,12 @@ use LizardsAndPumpkins\Context\ContextBuilder;
 use LizardsAndPumpkins\DataPool\KeyGenerator\SnippetKeyGenerator;
 use LizardsAndPumpkins\DataPool\KeyValueStore\Snippet;
 use LizardsAndPumpkins\Import\SnippetRenderer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer
  */
-class DemoProjectProductListingTitleSnippetRendererTest extends \PHPUnit_Framework_TestCase
+class DemoProjectProductListingTitleSnippetRendererTest extends TestCase
 {
     private $testSnippetKey = ProductListingTitleSnippetRenderer::CODE . '_foo';
 

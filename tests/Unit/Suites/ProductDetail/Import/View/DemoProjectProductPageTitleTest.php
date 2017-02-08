@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins\ProductDetail\Import\View;
 
 use LizardsAndPumpkins\Import\Product\View\ProductView;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle
  */
-class DemoProjectProductPageTitleTest extends \PHPUnit_Framework_TestCase
+class DemoProjectProductPageTitleTest extends TestCase
 {
     /**
      * @var ProductView|\PHPUnit_Framework_MockObject_MockObject
