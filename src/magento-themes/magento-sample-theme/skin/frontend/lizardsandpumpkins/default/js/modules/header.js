@@ -15,8 +15,7 @@
         mobileSearchTrigger = document.getElementById('mobile-search'),
         searchForm = document.getElementById('search_mini_form'),
         searchInput = document.getElementById('search'),
-        searchAutoSuggest = document.querySelector('.form-search-suggest'),
-        suggestHighlights = document.querySelectorAll('.form-search-suggest .name span');
+        autosuggestionBox = document.getElementById('search-autosuggestion');
 
     languageSwitch.addEventListener('click', function () {
         toggleClassName(header, 'pushed');
@@ -72,23 +71,114 @@
         toggleClassName(searchForm, 'active');
     });
 
-    // fake search auto suggest
     searchInput.addEventListener('keyup', function () {
         var searchTerm = this.value;
 
-        [].forEach.call(suggestHighlights, function (i) {
-            i.innerHTML = searchTerm;
-        });
+        if (searchTerm.length < 2) {
+            destroyAutosuggestionBox();
+            return;
+        }
 
-        if (this.value.length >= 2) {
-            searchAutoSuggest.className += ' active';
+        callAjax(Mage.baseUrl + 'api/product/?q=' + searchInput.value + '&limit=5', function (responseText) {
+            if (!isJson(responseText)) {
+                console.log('Not a valid JSON:' + responseText);
+                return;
+            }
+
+            var searchResults = JSON.parse(responseText);
+            renderAutosuggestionLayer(searchResults)
+        }, 'application/vnd.lizards-and-pumpkins.product.v1+json');
+    });
+
+    body.addEventListener('click', function (e) {
+        if (e.target !== searchInput) {
+            destroyAutosuggestionBox();
         }
     });
 
-    // hide fake auto suggest
-    body.addEventListener('click', function (e) {
-        if (e.target !== searchInput) {
-            searchAutoSuggest.className = searchAutoSuggest.className.replace(/\bactive\b/ig, ' ');
+    function destroyAutosuggestionBox() {
+        autosuggestionBox.innerHTML = '';
+    }
+
+    function callAjax(url, callback, acceptHeaderValue) {
+        var xmlhttp = new XMLHttpRequest;
+        xmlhttp.onreadystatechange = function () {
+            if (4 === xmlhttp.readyState && 200 === xmlhttp.status) {
+                callback(xmlhttp.responseText);
+            }
+        };
+        xmlhttp.open('GET', url, true);
+        if (acceptHeaderValue) {
+            xmlhttp.setRequestHeader('Accept', acceptHeaderValue);
         }
-    })
+        xmlhttp.send();
+    }
+
+    function isJson(string) {
+        try {
+            JSON.parse(string);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function renderAutosuggestionLayer(searchResults) {
+        var searchResultsPageUrl = window.baseUrl + 'catalogsearch/result?q=' + searchInput.value,
+            resultsList = document.createElement('UL');
+
+        resultsList.appendChild(createNumResultsRow(searchResultsPageUrl, searchResults.total));
+
+        if (searchResults.total > 0) {
+
+            searchResults.data.map(function (productData) {
+                resultsList.appendChild(createSearchResultRow(productData));
+            });
+
+            resultsList.appendChild(createMoreResultsRow(searchResultsPageUrl));
+        }
+
+        autosuggestionBox.innerHTML = '';
+        autosuggestionBox.appendChild(resultsList);
+    }
+
+    function createNumResultsRow(searchResultsPageUrl, totalNumberOfResults) {
+        var numResults = document.createElement('LI'),
+            numResultsLink = document.createElement('A');
+
+        numResultsLink.href = searchResultsPageUrl;
+        numResultsLink.textContent = searchInput.value + ' (' + totalNumberOfResults + ' Results)';
+        numResults.className = 'no-thumbnail';
+        numResults.appendChild(numResultsLink);
+
+        return numResults;
+    }
+
+    function createSearchResultRow(productData) {
+        var searchResultRow = document.createElement('LI'),
+            searchResultRowLink = document.createElement('A'),
+            searchResultImage = document.createElement('IMG');
+
+        searchResultRowLink.href = window.baseUrl + productData.attributes.url_key;
+        searchResultImage.src = productData.images['search-autosuggestion'][0]['url'];
+
+        searchResultRowLink.appendChild(searchResultImage);
+        searchResultRowLink.appendChild(document.createTextNode(productData.attributes.name));
+
+        searchResultRow.appendChild(searchResultRowLink);
+
+        return searchResultRow;
+    }
+
+    function createMoreResultsRow(searchResultsPageUrl) {
+        var moreResults = document.createElement('LI'),
+            moreResultsLink = document.createElement('A');
+
+        moreResultsLink.href = searchResultsPageUrl;
+        moreResultsLink.textContent = 'More Results';
+        moreResults.className = 'no-thumbnail';
+        moreResults.appendChild(moreResultsLink);
+
+        return moreResults;
+    }
 })();
