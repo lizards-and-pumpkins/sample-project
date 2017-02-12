@@ -6,8 +6,9 @@
 .filter-title, .filter-content { background: #ffffff }
 .filter-title { padding: 10px 15px; text-transform: uppercase; font-weight: bold }
 .filter-content { margin: 0; padding: 5px 15px; border-top: 3px solid #fafafa; list-style: none }
-.filter-content li a { padding: 10px 0; display: block }
-.filter-content li a span { float: right; font-size: 10px; line-height: 19px }
+.filter-content li label { padding: 10px 0; display: block }
+.filter-content li label span { float: right; font-size: 10px; line-height: 19px }
+.filter-content li input { margin: 4px 5px 0 0; float: left }
 .filter-color { padding: 10px 15px }
 .filter-color li { display: inline-block; margin: 4px }
 .filter-color li a { background: none; width: 26px; height: 26px; border-radius: 2px; border: #ececec solid 1px; padding: 0; font-size: 18px; text-align: center; line-height: 25px; color: #37a3d4 }
