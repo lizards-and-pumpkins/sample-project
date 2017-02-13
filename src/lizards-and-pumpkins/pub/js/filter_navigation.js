@@ -61,15 +61,14 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
         var option = document.createElement('LI'),
             checkbox = document.createElement('INPUT'),
             label = document.createElement('LABEL'),
-            count = document.createElement('SPAN');
+            count = document.createElement('SPAN'),
+            clickUrl = url.removeQueryParameterFromUrl(newUrl, pagination.getPaginationQueryParameterName());
 
         checkbox.id = filterCode + '_' + filterOption.value.toString();
         checkbox.type = 'CHECKBOX';
-        checkbox.addEventListener('click', function () {
-            location.href = url.removeQueryParameterFromUrl(
-                newUrl,
-                pagination.getPaginationQueryParameterName()
-            );
+        checkbox.setAttribute('data-url', clickUrl);
+        checkbox.addEventListener('click', function (event) {
+            location.href = event.target.getAttribute('data-url');
         });
         checkbox.checked = isSelected;
 
