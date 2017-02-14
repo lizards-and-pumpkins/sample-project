@@ -39,8 +39,6 @@ Whoops, it looks like you have an invalid PHP version.</h3></div><p>Magento supp
  */
 define('MAGENTO_ROOT', getcwd() . '/../src/magento');
 
-require MAGENTO_ROOT . '/lib/LizardsAndPumpkins/MagentoConnector/autoload.php';
-
 $compilerConfig = MAGENTO_ROOT . '/includes/config.php';
 if (file_exists($compilerConfig)) {
     include $compilerConfig;
