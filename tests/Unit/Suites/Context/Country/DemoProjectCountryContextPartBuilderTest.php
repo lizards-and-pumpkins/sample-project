@@ -10,11 +10,12 @@ use LizardsAndPumpkins\Context\Website\RequestToWebsiteMap;
 use LizardsAndPumpkins\Context\Website\Website;
 use LizardsAndPumpkins\Context\Website\WebsiteToCountryMap;
 use LizardsAndPumpkins\Http\HttpRequest;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Context\Country\DemoProjectCountryContextPartBuilder
  */
-class DemoProjectCountryContextPartBuilderTest extends \PHPUnit_Framework_TestCase
+class DemoProjectCountryContextPartBuilderTest extends TestCase
 {
     /**
      * @var DemoProjectCountryContextPartBuilder

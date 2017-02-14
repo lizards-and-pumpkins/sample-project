@@ -57,6 +57,32 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
         }, []);
     }
 
+    function createOptionWithCheckbox(filterCode, filterOption, newUrl, isSelected) {
+        var option = document.createElement('LI'),
+            checkbox = document.createElement('INPUT'),
+            label = document.createElement('LABEL'),
+            count = document.createElement('SPAN'),
+            clickUrl = url.removeQueryParameterFromUrl(newUrl, pagination.getPaginationQueryParameterName());
+
+        checkbox.id = filterCode + '_' + filterOption.value.toString();
+        checkbox.type = 'CHECKBOX';
+        checkbox.setAttribute('data-url', clickUrl);
+        checkbox.addEventListener('click', function (event) {
+            location.href = event.target.getAttribute('data-url');
+        });
+        checkbox.checked = isSelected;
+
+        count.textContent = '(' + filterOption.count + ')';
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(filterOption.value));
+        label.appendChild(count);
+
+        option.appendChild(label);
+
+        return option;
+    }
+
     var FilterNavigation = {
         renderLayeredNavigation: function (filterNavigationJson, parentNode) {
             if (typeof filterNavigationJson !== 'object' || ! isDomNode(parentNode)) {
@@ -101,24 +127,10 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
         createDefaultFilterOptions: function (filterCode, filterOptions) {
             var selectedFilterOptions = getSelectedFilterValues(filterCode);
             return filterOptions.reduce(function (carry, filterOption) {
-                var option = document.createElement('LI'),
-                    link = document.createElement('A'),
-                    newUrl = url.toggleQueryParameter(filterCode, filterOption.value),
-                    count = document.createElement('SPAN');
+                var newUrl = url.toggleQueryParameter(filterCode, filterOption.value),
+                    isSelected = selectedFilterOptions.indexOf(filterOption.value) !== -1;
 
-                count.textContent = '(' + filterOption.count + ')';
-
-                link.appendChild(document.createTextNode(filterOption.value));
-                link.appendChild(count);
-                link.href = url.removeQueryParameterFromUrl(newUrl, pagination.getPaginationQueryParameterName());
-                option.appendChild(link);
-
-                if (selectedFilterOptions.indexOf(filterOption.value) !== -1) {
-                    option.className = 'active';
-                }
-
-                carry.push(option);
-                return carry;
+                return carry.concat([createOptionWithCheckbox(filterCode, filterOption, newUrl, isSelected)]);
             }, []);
         },
 
@@ -153,24 +165,10 @@ define(['lib/url', 'pagination', 'lib/translate'], function (url, pagination, tr
                 }
 
                 var parameterValue = ranges.join('-'),
-                    option = document.createElement('LI'),
-                    link = document.createElement('A'),
                     newUrl = url.toggleQueryParameter(filterCode, parameterValue),
-                    count = document.createElement('SPAN');
+                    isSelected = selectedFilterOptions.indexOf(parameterValue) !== -1;
 
-                count.textContent = '(' + filterOption.count + ')';
-
-                link.appendChild(document.createTextNode(filterOption.value));
-                link.appendChild(count);
-                link.href = url.removeQueryParameterFromUrl(newUrl, pagination.getPaginationQueryParameterName());
-                option.appendChild(link);
-
-                if (selectedFilterOptions.indexOf(parameterValue) !== -1) {
-                    option.className = 'active';
-                }
-
-                carry.push(option);
-                return carry;
+                return carry.concat([createOptionWithCheckbox(filterCode, filterOption, newUrl, isSelected)]);
             }, []);
         }
     };

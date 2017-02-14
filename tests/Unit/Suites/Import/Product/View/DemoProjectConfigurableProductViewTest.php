@@ -9,11 +9,12 @@ use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
 use LizardsAndPumpkins\Import\Product\ProductAttributeList;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Product\View\DemoProjectConfigurableProductView
  */
-class DemoProjectConfigurableProductViewTest extends \PHPUnit_Framework_TestCase
+class DemoProjectConfigurableProductViewTest extends TestCase
 {
     /**
      * @var ConfigurableProduct|\PHPUnit_Framework_MockObject_MockObject

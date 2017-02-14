@@ -7,13 +7,14 @@ namespace LizardsAndPumpkins\Import\Product\View;
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
 use LizardsAndPumpkins\Import\Product\Product;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Product\View\DemoProjectProductViewLocator
  * @uses   \LizardsAndPumpkins\Import\Product\View\DemoProjectSimpleProductView
  * @uses   \LizardsAndPumpkins\Import\Product\View\DemoProjectConfigurableProductView
  */
-class DemoProjectProductViewLocatorTest extends \PHPUnit_Framework_TestCase
+class DemoProjectProductViewLocatorTest extends TestCase
 {
     /**
      * @var DemoProjectProductViewLocator

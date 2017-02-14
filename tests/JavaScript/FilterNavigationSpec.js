@@ -1,4 +1,23 @@
 define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (FilterNavigation) {
+
+    function assertIsAnOptionWithCheckbox(filterOption, index, filtersJson, filterCode) {
+        expect(filterOption.tagName).toBe('LI');
+        expect(filterOption.childNodes.length).toBe(1);
+
+        var filterOptionLink = filterOption.childNodes[0],
+            expectedValue = filtersJson[filterCode][index]['value'],
+            expectedCount = filtersJson[filterCode][index]['count'];
+
+        expect(filterOptionLink.tagName).toBe('LABEL');
+
+        expect(filterOptionLink.childNodes.length).toBe(3);
+
+        expect(filterOptionLink.childNodes[0].tagName).toBe('INPUT');
+        expect(filterOptionLink.childNodes[1].textContent).toBe(expectedValue);
+        expect(filterOptionLink.childNodes[2].tagName).toBe('SPAN');
+        expect(filterOptionLink.childNodes[2].textContent).toBe('(' + expectedCount + ')');
+    }
+
     describe('Filter Navigation', function () {
 
         it('makes no modifications to parent node if passed JSON is not an object', function () {
@@ -55,21 +74,10 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
                 expect(filterOptionsList.childNodes.length).toBe(2);
 
                 Array.prototype.map.call(filterOptionsList.childNodes, function (filterOption, index) {
-                    expect(filterOption.tagName).toBe('LI');
-                    expect(filterOption.childNodes.length).toBe(1);
-
-                    var filterOptionLink = filterOption.childNodes[0],
-                        expectedValue = filtersJson[filterCode][index]['value'],
-                        expectedCount = filtersJson[filterCode][index]['count'];
-
-                    expect(filterOptionLink.tagName).toBe('A');
-                    expect(filterOptionLink.href).toBe(document.location.href + '?' + filterCode + '=' + expectedValue);
-
-                    expect(filterOptionLink.childNodes.length).toBe(2);
-
-                    expect(filterOptionLink.childNodes[0].textContent).toBe(expectedValue);
-                    expect(filterOptionLink.childNodes[1].tagName).toBe('SPAN');
-                    expect(filterOptionLink.childNodes[1].textContent).toBe('(' + expectedCount + ')');
+                    assertIsAnOptionWithCheckbox(filterOption, index, filtersJson, filterCode);
+                    expect(filterOption.childNodes[0].childNodes[0].getAttribute('data-url')).toBe(
+                        document.location.href + '?' + filterCode + '=' + filtersJson[filterCode][index]['value']
+                    );
                 });
             });
         });
@@ -160,20 +168,7 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
                 expect(filterOptionsList.childNodes.length).toBe(2);
 
                 Array.prototype.map.call(filterOptionsList.childNodes, function (filterOption, index) {
-                    expect(filterOption.tagName).toBe('LI');
-                    expect(filterOption.childNodes.length).toBe(1);
-
-                    var filterOptionLink = filterOption.childNodes[0],
-                        expectedValue = filtersJson[filterCode][index]['value'],
-                        expectedCount = filtersJson[filterCode][index]['count'];
-
-                    expect(filterOptionLink.tagName).toBe('A');
-
-                    expect(filterOptionLink.childNodes.length).toBe(2);
-
-                    expect(filterOptionLink.childNodes[0].textContent).toBe(expectedValue);
-                    expect(filterOptionLink.childNodes[1].tagName).toBe('SPAN');
-                    expect(filterOptionLink.childNodes[1].textContent).toBe('(' + expectedCount + ')');
+                    assertIsAnOptionWithCheckbox(filterOption, index, filtersJson, filterCode);
                 });
             });
 
@@ -188,9 +183,9 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
 
                 FilterNavigation.renderLayeredNavigation(filtersJson, parentNode);
 
-                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > a');
+                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > label');
                 expect(filterOptions.length).toBe(1);
-                expect(filterOptions[0].childNodes[0].textContent).toBe('0,00 € - 20,00 €');
+                expect(filterOptions[0].childNodes[1].textContent).toBe('0,00 € - 20,00 €');
             });
 
             it('accepts prices with comma decimal separator', function () {
@@ -199,9 +194,10 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
 
                 FilterNavigation.renderLayeredNavigation(filtersJson, parentNode);
 
-                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > a');
+                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > label');
                 expect(filterOptions.length).toBe(1);
-                expect(filterOptions[0].href).toBe(document.location.href + '?price=0.00-20.00');
+                expect(filterOptions[0].childNodes[0].getAttribute('data-url'))
+                    .toBe(document.location.href + '?price=0.00-20.00');
             });
 
             it('accepts prices with period decimal separator', function () {
@@ -210,9 +206,10 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
 
                 FilterNavigation.renderLayeredNavigation(filtersJson, parentNode);
 
-                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > a');
+                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > label');
                 expect(filterOptions.length).toBe(1);
-                expect(filterOptions[0].href).toBe(document.location.href + '?price=0.00-20.00');
+                expect(filterOptions[0].childNodes[0].getAttribute('data-url'))
+                    .toBe(document.location.href + '?price=0.00-20.00');
             });
 
             it('accepts prices with period thousands point comma decimal separator', function () {
@@ -221,9 +218,10 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
 
                 FilterNavigation.renderLayeredNavigation(filtersJson, parentNode);
 
-                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > a');
+                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > label');
                 expect(filterOptions.length).toBe(1);
-                expect(filterOptions[0].href).toBe(document.location.href + '?price=1000000.00-2000000.00');
+                expect(filterOptions[0].childNodes[0].getAttribute('data-url'))
+                    .toBe(document.location.href + '?price=1000000.00-2000000.00');
             });
 
             it('accepts prices with comma thousands point period decimal separator', function () {
@@ -232,9 +230,10 @@ define(['../../src/lizards-and-pumpkins/pub/js/filter_navigation'], function (Fi
 
                 FilterNavigation.renderLayeredNavigation(filtersJson, parentNode);
 
-                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > a');
+                var filterOptions = parentNode.querySelectorAll('div > ol.filter-price > li > label');
                 expect(filterOptions.length).toBe(1);
-                expect(filterOptions[0].href).toBe(document.location.href + '?price=1000000.00-2000000.00');
+                expect(filterOptions[0].childNodes[0].getAttribute('data-url'))
+                    .toBe(document.location.href + '?price=1000000.00-2000000.00');
             });
         });
 

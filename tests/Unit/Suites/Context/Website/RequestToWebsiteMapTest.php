@@ -6,11 +6,12 @@ namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Http\HttpRequest;
 use LizardsAndPumpkins\Http\HttpUrl;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Context\Website\RequestToWebsiteMap
  */
-class RequestToWebsiteMapTest extends \PHPUnit_Framework_TestCase
+class RequestToWebsiteMapTest extends TestCase
 {
     public function testWebsiteIsReturned()
     {

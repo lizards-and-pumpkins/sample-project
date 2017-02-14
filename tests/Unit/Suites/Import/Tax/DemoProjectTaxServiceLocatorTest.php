@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins\Import\Tax;
 
 use LizardsAndPumpkins\Import\Tax\Exception\UnableToLocateTaxServiceException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Tax\DemoProjectTaxServiceLocator
  * @uses   \LizardsAndPumpkins\Import\Tax\DemoProjectTaxRate
  */
-class DemoProjectTaxServiceLocatorTest extends \PHPUnit_Framework_TestCase
+class DemoProjectTaxServiceLocatorTest extends TestCase
 {
     /**
      * @var DemoProjectTaxServiceLocator

@@ -11,11 +11,12 @@ use LizardsAndPumpkins\Import\Product\Product;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
 use LizardsAndPumpkins\Import\Product\ProductAttributeList;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Import\Product\View\DemoProjectSimpleProductView
  */
-class DemoProjectSimpleProductViewTest extends \PHPUnit_Framework_TestCase
+class DemoProjectSimpleProductViewTest extends TestCase
 {
     /**
      * @var Product|\PHPUnit_Framework_MockObject_MockObject

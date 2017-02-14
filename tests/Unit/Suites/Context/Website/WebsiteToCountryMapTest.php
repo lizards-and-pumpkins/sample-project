@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins\Context\Website;
 
 use LizardsAndPumpkins\Context\Country\Country;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Context\Website\WebsiteToCountryMap
  * @uses   \LizardsAndPumpkins\Context\Website\Website
  * @uses   \LizardsAndPumpkins\Context\Country\Country
  */
-class WebsiteToCountryMapTest extends \PHPUnit_Framework_TestCase
+class WebsiteToCountryMapTest extends TestCase
 {
     /**
      * @var WebsiteToCountryMap
