@@ -16,7 +16,7 @@ use LizardsAndPumpkins\Util\BaseCliCommand;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
 use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
-use LizardsAndPumpkins\Util\Factory\DemoProjectFactory;
+use LizardsAndPumpkins\Util\Factory\ProjectFactory;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
@@ -37,7 +37,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
     {
         $factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
-        $implementationFactory = new DemoProjectFactory();
+        $implementationFactory = new ProjectFactory();
         $factory->register($commonFactory);
         $factory->register($implementationFactory);
 
@@ -49,7 +49,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
     private static function enableDebugLogging(
         MasterFactory $factory,
         CommonFactory $commonFactory,
-        DemoProjectFactory $implementationFactory
+        ProjectFactory $implementationFactory
     ) {
         $factory->register(new LoggingDomainEventHandlerFactory($commonFactory));
         $factory->register(new LoggingCommandHandlerFactory($commonFactory));

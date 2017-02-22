@@ -9,7 +9,7 @@ use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
-use LizardsAndPumpkins\Util\Factory\DemoProjectFactory;
+use LizardsAndPumpkins\Util\Factory\ProjectFactory;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
@@ -24,13 +24,13 @@ class CommandConsumerWorker
     {
         $this->factory = new SampleMasterFactory();
         $commonFactory = new CommonFactory();
-        $implementationFactory = new DemoProjectFactory();
+        $implementationFactory = new ProjectFactory();
         $this->factory->register($commonFactory);
         $this->factory->register($implementationFactory);
         //$this->enableDebugLogging($commonFactory, $implementationFactory);
     }
 
-    private function enableDebugLogging(CommonFactory $commonFactory, DemoProjectFactory $implementationFactory)
+    private function enableDebugLogging(CommonFactory $commonFactory, ProjectFactory $implementationFactory)
     {
         $this->factory->register(new LoggingCommandHandlerFactory($commonFactory));
         $this->factory->register(new LoggingQueueFactory($implementationFactory));

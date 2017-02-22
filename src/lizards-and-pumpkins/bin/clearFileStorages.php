@@ -10,7 +10,7 @@ use LizardsAndPumpkins\Util\BaseCliCommand;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
 use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
-use LizardsAndPumpkins\Util\Factory\DemoProjectFactory;
+use LizardsAndPumpkins\Util\Factory\ProjectFactory;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
@@ -31,7 +31,7 @@ class ClearFileStorage extends BaseCliCommand
     {
         $factory = new SampleMasterFactory();
         $factory->register(new CommonFactory());
-        $factory->register(new DemoProjectFactory());
+        $factory->register(new ProjectFactory());
         
         return new self($factory, new CLImate());
     }
