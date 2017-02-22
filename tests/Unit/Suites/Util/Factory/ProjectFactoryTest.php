@@ -34,7 +34,7 @@ use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \LizardsAndPumpkins\Util\Factory\DemoProjectFactory
+ * @covers \LizardsAndPumpkins\Util\Factory\ProjectFactory
  * @uses   \LizardsAndPumpkins\Context\Country\DemoProjectCountryContextPartBuilder
  * @uses   \LizardsAndPumpkins\Context\Locale\DemoProjectLocaleContextPartBuilder
  * @uses   \LizardsAndPumpkins\Context\Website\DemoProjectWebsiteContextPartBuilder
@@ -44,10 +44,10 @@ use PHPUnit\Framework\TestCase;
  * @uses   \LizardsAndPumpkins\Import\Tax\DemoProjectTaxableCountries
  * @uses   \LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer
  */
-class DemoProjectFactoryTest extends TestCase
+class ProjectFactoryTest extends TestCase
 {
     /**
-     * @var DemoProjectFactory
+     * @var ProjectFactory
      */
     private $factory;
 
@@ -87,7 +87,7 @@ class DemoProjectFactoryTest extends TestCase
         $masterFactory = new SampleMasterFactory();
         $masterFactory->register(new CommonFactory());
         $masterFactory->register(new UnitTestFactory($this));
-        $this->factory = new DemoProjectFactory();
+        $this->factory = new ProjectFactory();
         $masterFactory->register($this->factory);
     }
 

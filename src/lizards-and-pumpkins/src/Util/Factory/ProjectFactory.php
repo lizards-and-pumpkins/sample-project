@@ -73,7 +73,7 @@ use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
 use SebastianBergmann\Money\Currency;
 
-class DemoProjectFactory implements Factory, MessageQueueFactory, FactoryWithCallback
+class ProjectFactory implements Factory, MessageQueueFactory, FactoryWithCallback
 {
     use FactoryTrait;
 
