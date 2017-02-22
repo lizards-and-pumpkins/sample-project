@@ -84,7 +84,7 @@ class ProjectFactoryTest extends TestCase
 
     protected function setUp()
     {
-        $masterFactory = new SampleMasterFactory();
+        $masterFactory = new CatalogMasterFactory();
         $masterFactory->register(new CommonFactory());
         $masterFactory->register(new UnitTestFactory($this));
         $this->factory = new ProjectFactory();

@@ -6,16 +6,16 @@ declare(strict_types = 1);
 namespace LizardsAndPumpkins;
 
 use League\CLImate\CLImate;
+use LizardsAndPumpkins\ConsoleCommand\BaseCliCommand;
 use LizardsAndPumpkins\Context\DataVersion\DataVersion;
 use LizardsAndPumpkins\Import\RootTemplate\Import\TemplateProjectorLocator;
 use LizardsAndPumpkins\Import\RootTemplate\TemplateWasUpdatedDomainEvent;
 use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
-use LizardsAndPumpkins\Util\BaseCliCommand;
+use LizardsAndPumpkins\Util\Factory\CatalogMasterFactory;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
-use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
 use LizardsAndPumpkins\Util\Factory\ProjectFactory;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -23,7 +23,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 class TriggerTemplateUpdate extends BaseCliCommand
 {
     /**
-     * @var SampleMasterFactory
+     * @var CatalogMasterFactory
      */
     private $factory;
 
@@ -35,7 +35,7 @@ class TriggerTemplateUpdate extends BaseCliCommand
 
     public static function bootstrap(): TriggerTemplateUpdate
     {
-        $factory = new SampleMasterFactory();
+        $factory = new CatalogMasterFactory();
         $commonFactory = new CommonFactory();
         $implementationFactory = new ProjectFactory();
         $factory->register($commonFactory);
