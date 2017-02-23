@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins;
 
 use League\CLImate\CLImate;
+use LizardsAndPumpkins\ConsoleCommand\BaseCliCommand;
 use LizardsAndPumpkins\Context\DataVersion\DataVersion;
 use LizardsAndPumpkins\Import\CatalogImport;
 use LizardsAndPumpkins\Import\Image\NullProductImageImportCommandFactory;
@@ -15,10 +16,9 @@ use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
 use LizardsAndPumpkins\Logging\LoggingQueueFactory;
 use LizardsAndPumpkins\ProductDetail\Import\UpdatingProductImportCommandFactory;
 use LizardsAndPumpkins\ProductListing\Import\UpdatingProductListingImportCommandFactory;
-use LizardsAndPumpkins\Util\BaseCliCommand;
+use LizardsAndPumpkins\Util\Factory\CatalogMasterFactory;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
-use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
 use LizardsAndPumpkins\Util\Factory\ProjectFactory;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 class RunImport extends BaseCliCommand
 {
     /**
-     * @var SampleMasterFactory
+     * @var CatalogMasterFactory
      */
     private $factory;
 
@@ -38,7 +38,7 @@ class RunImport extends BaseCliCommand
 
     public static function bootstrap() : RunImport
     {
-        $factory = new SampleMasterFactory();
+        $factory = new CatalogMasterFactory();
         $commonFactory = new CommonFactory();
         $implementationFactory = new ProjectFactory();
         $factory->register($commonFactory);

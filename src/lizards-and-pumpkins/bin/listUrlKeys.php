@@ -6,11 +6,11 @@ declare(strict_types=1);
 namespace LizardsAndPumpkins;
 
 use League\CLImate\CLImate;
+use LizardsAndPumpkins\ConsoleCommand\BaseCliCommand;
 use LizardsAndPumpkins\DataPool\DataPoolReader;
-use LizardsAndPumpkins\Util\BaseCliCommand;
+use LizardsAndPumpkins\Util\Factory\CatalogMasterFactory;
 use LizardsAndPumpkins\Util\Factory\CommonFactory;
 use LizardsAndPumpkins\Util\Factory\MasterFactory;
-use LizardsAndPumpkins\Util\Factory\SampleMasterFactory;
 use LizardsAndPumpkins\Util\Factory\ProjectFactory;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -34,7 +34,7 @@ class ListUrlKeys extends BaseCliCommand
 
     public static function bootstrap() : ListUrlKeys
     {
-        $factory = new SampleMasterFactory();
+        $factory = new CatalogMasterFactory();
         $factory->register(new CommonFactory());
         $factory->register(new ProjectFactory());
 
