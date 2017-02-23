@@ -34,6 +34,8 @@ use LizardsAndPumpkins\DataPool\SearchEngine\SearchCriteria\SearchCriterionEqual
 use LizardsAndPumpkins\DataPool\SearchEngine\SearchCriteria\SearchCriterionGreaterThan;
 use LizardsAndPumpkins\DataPool\SearchEngine\SearchEngine;
 use LizardsAndPumpkins\DataPool\UrlKeyStore\FileUrlKeyStore;
+use LizardsAndPumpkins\Http\ContentDelivery\PageBuilder\DemoSitePageBuilderDecorator;
+use LizardsAndPumpkins\Http\ContentDelivery\PageBuilder\PageBuilder;
 use LizardsAndPumpkins\Import\FileStorage\FileStorageReader;
 use LizardsAndPumpkins\Import\FileStorage\FileStorageWriter;
 use LizardsAndPumpkins\Import\ImageStorage\FilesystemImageStorage;
@@ -102,6 +104,12 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
      */
     private $commandQueue;
 
+    public function factoryRegistrationCallback(MasterFactory $masterFactory)
+    {
+        $masterFactory->register(new RestApiFactory());
+        $masterFactory->register(new DecoratorFactory());
+    }
+
     /**
      * @return string[]
      */
@@ -117,12 +125,6 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
             'series',
             'style'
         ];
-    }
-
-    public function factoryRegistrationCallback(MasterFactory $masterFactory)
-    {
-        $masterFactory->register(new RestApiFactory());
-        $masterFactory->register(new ProductSearchFactory());
     }
 
     /**
@@ -512,8 +514,8 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
 
     private function createDirectoryIfNotExists(string $path)
     {
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+        if (!is_dir($path) && !@mkdir($path, 0777, true) && !is_dir($path)) {
+            throw new \RuntimeException(sprintf('Unable to create directory "%s"', $path));
         }
     }
 
