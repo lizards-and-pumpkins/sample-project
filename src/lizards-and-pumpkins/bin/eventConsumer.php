@@ -5,49 +5,22 @@ declare(strict_types=1);
 
 namespace LizardsAndPumpkins;
 
-use LizardsAndPumpkins\Import\Image\UpdatingProductImageImportCommandFactory;
-use LizardsAndPumpkins\Logging\LoggingDomainEventHandlerFactory;
-use LizardsAndPumpkins\Logging\LoggingQueueFactory;
-use LizardsAndPumpkins\ProductDetail\Import\UpdatingProductImportCommandFactory;
-use LizardsAndPumpkins\ProductListing\Import\UpdatingProductListingImportCommandFactory;
-use LizardsAndPumpkins\Util\Factory\CatalogMasterFactory;
-use LizardsAndPumpkins\Util\Factory\CommonFactory;
-use LizardsAndPumpkins\Util\Factory\ProjectFactory;
+const REPLACEMENT_COMMAND = 'vendor/bin/lp consume:events';
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+printf("NOTE:\nThis script is deprecated! Instead, use the command from the catalog repository:\n");
+printf("%s\n\n", REPLACEMENT_COMMAND);
 
-class EventConsumerWorker
-{
-    /**
-     * @var CatalogMasterFactory
-     */
-    private $factory;
-
-    private function __construct()
-    {
-        $this->factory = new CatalogMasterFactory();
-        $commonFactory = new CommonFactory();
-        $implementationFactory = new ProjectFactory();
-        $this->factory->register($commonFactory);
-        $this->factory->register($implementationFactory);
-        $this->factory->register(new UpdatingProductImportCommandFactory());
-        $this->factory->register(new UpdatingProductImageImportCommandFactory());
-        $this->factory->register(new UpdatingProductListingImportCommandFactory());
-        //$this->enableDebugLogging($commonFactory, $implementationFactory);
-    }
-
-    private function enableDebugLogging(CommonFactory $commonFactory, ProjectFactory $implementationFactory)
-    {
-        $this->factory->register(new LoggingDomainEventHandlerFactory($commonFactory));
-        $this->factory->register(new LoggingQueueFactory($implementationFactory));
-    }
-
-    public static function run()
-    {
-        $worker = new self();
-        $eventConsumer = $worker->factory->createDomainEventConsumer();
-        $eventConsumer->process();
-    }
+for ($i = 0; $i < 3; $i++) {
+    echo '.';
+    sleep(1);
 }
+echo "\n";
 
-EventConsumerWorker::run();
+passthru(
+    __DIR__ . '/../../../' .
+    REPLACEMENT_COMMAND . ' ' .
+    implode(' ', array_map('escapeshellarg', array_slice($argv, 1))),
+    $exitStatusCode
+);
+
+exit($exitStatusCode);

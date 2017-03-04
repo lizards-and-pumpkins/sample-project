@@ -1,47 +1,26 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace LizardsAndPumpkins;
 
-use LizardsAndPumpkins\Logging\LoggingCommandHandlerFactory;
-use LizardsAndPumpkins\Logging\LoggingQueueFactory;
-use LizardsAndPumpkins\Util\Factory\CatalogMasterFactory;
-use LizardsAndPumpkins\Util\Factory\CommonFactory;
-use LizardsAndPumpkins\Util\Factory\ProjectFactory;
+const REPLACEMENT_COMMAND = 'vendor/bin/lp consume:commands';
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+printf("NOTE:\nThis script is deprecated! Instead, use the command from the catalog repository:\n");
+printf("%s\n\n", REPLACEMENT_COMMAND);
 
-class CommandConsumerWorker
-{
-    /**
-     * @var CatalogMasterFactory
-     */
-    private $factory;
-
-    private function __construct()
-    {
-        $this->factory = new CatalogMasterFactory();
-        $commonFactory = new CommonFactory();
-        $implementationFactory = new ProjectFactory();
-        $this->factory->register($commonFactory);
-        $this->factory->register($implementationFactory);
-        //$this->enableDebugLogging($commonFactory, $implementationFactory);
-    }
-
-    private function enableDebugLogging(CommonFactory $commonFactory, ProjectFactory $implementationFactory)
-    {
-        $this->factory->register(new LoggingCommandHandlerFactory($commonFactory));
-        $this->factory->register(new LoggingQueueFactory($implementationFactory));
-    }
-
-    public static function run()
-    {
-        $worker = new self();
-        $commandConsumer = $worker->factory->createCommandConsumer();
-        $commandConsumer->process();
-    }
+for ($i = 0; $i < 3; $i++) {
+    echo '.';
+    sleep(1);
 }
+echo "\n";
 
-CommandConsumerWorker::run();
+passthru(
+    __DIR__ . '/../../../' .
+    REPLACEMENT_COMMAND . ' ' .
+    implode(' ', array_map('escapeshellarg', array_slice($argv, 1))),
+    $exitStatusCode
+);
+
+exit($exitStatusCode);
