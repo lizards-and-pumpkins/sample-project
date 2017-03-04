@@ -5,65 +5,22 @@ declare(strict_types=1);
 
 namespace LizardsAndPumpkins;
 
-use League\CLImate\CLImate;
-use LizardsAndPumpkins\ConsoleCommand\BaseCliCommand;
-use LizardsAndPumpkins\Messaging\Queue;
-use LizardsAndPumpkins\Util\Factory\CatalogMasterFactory;
-use LizardsAndPumpkins\Util\Factory\CommonFactory;
-use LizardsAndPumpkins\Util\Factory\MasterFactory;
-use LizardsAndPumpkins\Util\Factory\ProjectFactory;
+const REPLACEMENT_COMMAND = 'vendor/bin/lp report:queue-count';
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+printf("NOTE:\nThis script is deprecated! Instead, use the command from the catalog repository:\n");
+printf("%s\n\n", REPLACEMENT_COMMAND);
 
-class ReportQueueCount extends BaseCliCommand
-{
-    /**
-     * @var CatalogMasterFactory
-     */
-    private $factory;
-
-    private function __construct(MasterFactory $factory, CLImate $climate)
-    {
-        $this->factory = $factory;
-        $this->setCLImate($climate);
-    }
-
-    public static function bootstrap() : ReportQueueCount
-    {
-        $factory = new CatalogMasterFactory();
-        $factory->register(new CommonFactory());
-        $factory->register(new ProjectFactory());
-
-        return new self($factory, new CLImate());
-    }
-
-    protected function execute(CLImate $climate)
-    {
-        $tableData = $this->formatTableData(
-            $this->factory->getCommandMessageQueue(),
-            $this->factory->getEventMessageQueue()
-        );
-        $climate->table($tableData);
-    }
-
-    /**
-     * @param Queue $commandQueue
-     * @param Queue $eventQueue
-     * @return string[]
-     */
-    private function formatTableData(Queue $commandQueue, Queue $eventQueue) : array
-    {
-        return [
-            [
-                'Queue' => 'Command',
-                'Count' => sprintf('%10d', $commandQueue->count())
-            ],
-            [
-                'Queue' => 'Event',
-                'Count' => sprintf('%10d', $eventQueue->count())
-            ],
-        ];
-    }
+for ($i = 0; $i < 3; $i++) {
+    echo '.';
+    sleep(1);
 }
+echo "\n";
 
-ReportQueueCount::bootstrap()->run();
+passthru(
+    __DIR__ . '/../../../' .
+    REPLACEMENT_COMMAND . ' ' .
+    implode(' ', array_map('escapeshellarg', array_slice($argv, 1))),
+    $exitStatusCode
+);
+
+exit($exitStatusCode);

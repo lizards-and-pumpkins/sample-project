@@ -12,4 +12,4 @@ php lizards_and_pumpkins_export.php --blocks
 php lizards_and_pumpkins_export.php --all-categories
 php lizards_and_pumpkins_export.php --all-products
 
-php $releaseDir/src/lizards-and-pumpkins/bin/triggerTemplateUpdate.php product_listing
+php $releaseDir/vendor/bin/lp import:template product_listing
