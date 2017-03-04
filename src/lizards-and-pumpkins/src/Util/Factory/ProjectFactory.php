@@ -73,9 +73,9 @@ use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
 use SebastianBergmann\Money\Currency;
 
-class ProjectFactory implements Factory, MessageQueueFactory, FactoryWithCallback
+class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
 {
-    use FactoryTrait;
+    use FactoryWithCallbackTrait;
 
     /**
      * @var ProductsPerPage
