@@ -65,7 +65,6 @@ use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
 use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 use LizardsAndPumpkins\ProductListing\ContentDelivery\ProductsPerPage;
 use LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer;
-use LizardsAndPumpkins\ProductSearch\ContentDelivery\ProductSearchFactory;
 use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMap;
 use LizardsAndPumpkins\RestApi\RestApiFactory;
 use LizardsAndPumpkins\Util\Config\ConfigReader;
@@ -102,6 +101,12 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
      */
     private $commandQueue;
 
+    public function factoryRegistrationCallback(MasterFactory $masterFactory)
+    {
+        $masterFactory->register(new RestApiFactory());
+        $masterFactory->register(new DecoratorFactory());
+    }
+
     /**
      * @return string[]
      */
@@ -117,12 +122,6 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
             'series',
             'style'
         ];
-    }
-
-    public function factoryRegistrationCallback(MasterFactory $masterFactory)
-    {
-        $masterFactory->register(new RestApiFactory());
-        $masterFactory->register(new ProductSearchFactory());
     }
 
     /**
@@ -512,8 +511,8 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
 
     private function createDirectoryIfNotExists(string $path)
     {
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+        if (!is_dir($path) && !@mkdir($path, 0777, true) && !is_dir($path)) {
+            throw new \RuntimeException(sprintf('Unable to create directory "%s"', $path));
         }
     }
 

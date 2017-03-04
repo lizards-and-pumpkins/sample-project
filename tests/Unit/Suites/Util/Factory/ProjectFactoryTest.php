@@ -12,6 +12,8 @@ use LizardsAndPumpkins\DataPool\SearchEngine\FacetFilterRequestField;
 use LizardsAndPumpkins\DataPool\SearchEngine\Filesystem\FileSearchEngine;
 use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortBy;
 use LizardsAndPumpkins\DataPool\UrlKeyStore\FileUrlKeyStore;
+use LizardsAndPumpkins\Http\ContentDelivery\FrontendFactory;
+use LizardsAndPumpkins\Http\HttpRequest;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessingStrategySequence;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessor;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessorCollection;
@@ -35,6 +37,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \LizardsAndPumpkins\Util\Factory\ProjectFactory
+ * @uses   \LizardsAndPumpkins\Util\Factory\DecoratorFactory
  * @uses   \LizardsAndPumpkins\Context\Country\DemoProjectCountryContextPartBuilder
  * @uses   \LizardsAndPumpkins\Context\Locale\DemoProjectLocaleContextPartBuilder
  * @uses   \LizardsAndPumpkins\Context\Website\DemoProjectWebsiteContextPartBuilder
