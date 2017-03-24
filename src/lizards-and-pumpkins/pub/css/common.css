@@ -44,6 +44,7 @@ header.hidden { top: -283px }
 .top-links .icon-shopping-bag { width: 20px; display: inline-block }
 #cart-meta-info { display: inline-block; padding: 5px 0 0 5px; vertical-align: top }
 #account-meta { padding-top: 10px }
+#account-meta a { margin-right: 5px }
 
 /* Navigation */
 header nav { padding: 0 50px }
