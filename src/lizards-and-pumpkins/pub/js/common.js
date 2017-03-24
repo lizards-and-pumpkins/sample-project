@@ -21,7 +21,10 @@ define(
             }
 
             if (magentoData.isCustomerLoggedIn()) {
-                container.appendChild(createTextLink('customer/account', translate('Hi, %s', '%s')));
+                var welcomeMessage = magentoData.getCustomerName() ?
+                    translate('Hi, %s', magentoData.getCustomerName()) :
+                    translate('Hi!');
+                container.appendChild(createTextLink('customer/account', welcomeMessage));
                 container.appendChild(createTextLink('customer/account/logout/', translate('Logout')));
                 return;
             }
