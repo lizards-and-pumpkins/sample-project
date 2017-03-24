@@ -66,7 +66,7 @@ define(
 
         function addHeaderHidingOnPageScrolling() {
             window.addEventListener('scroll', function () {
-                var header = Array.prototype.pop.call(document.getElementsByTagName('header')),
+                var header = document.getElementsByTagName('header')[0],
                     content = document.getElementById('content'),
                     isScrolledDown = document.body.scrollTop > prevPos,
                     headerScrolledOutOfView = document.body.scrollTop > header.offsetHeight;
