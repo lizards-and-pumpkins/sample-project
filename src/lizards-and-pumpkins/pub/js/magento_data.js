@@ -22,6 +22,10 @@ define(['lib/cookie'], function (cookie) {
 
         isCustomerLoggedIn: function () {
             return cookie.getJsonValue('lizardsAndPumpkinsTransport', 'isCustomerLoggedIn') === 1;
+        },
+
+        getCustomerName: function () {
+            return cookie.getJsonValue('lizardsAndPumpkinsTransport', 'customerName') || '';
         }
     };
 });
