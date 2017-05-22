@@ -103,7 +103,6 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
 
     public function factoryRegistrationCallback(MasterFactory $masterFactory)
     {
-        $masterFactory->register(new RestApiFactory());
         $masterFactory->register(new DecoratorFactory());
     }
 
