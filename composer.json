@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": "~7.0.0",
-    "lizards-and-pumpkins/catalog": "~1.1.0",
+    "lizards-and-pumpkins/catalog": "~2.0.0",
     "lizards-and-pumpkins/lib-key-value-store-filesystem": "~1.0.0",
     "lizards-and-pumpkins/lib-search-engine-filesystem": "~1.0.0",
     "lizards-and-pumpkins/lib-queue-filesystem": "~1.0.0",
