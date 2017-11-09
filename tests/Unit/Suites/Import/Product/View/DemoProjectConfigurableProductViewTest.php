@@ -8,7 +8,6 @@ use LizardsAndPumpkins\Import\ImageStorage\Image;
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
 use LizardsAndPumpkins\Import\Product\ProductAttributeList;
-use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,11 +26,6 @@ class DemoProjectConfigurableProductViewTest extends TestCase
     private $productView;
 
     /**
-     * @var DemoProjectProductPageTitle|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $stubPageTitle;
-
-    /**
      * @var ProductViewLocator|\PHPUnit_Framework_MockObject_MockObject
      */
     private $stubProductViewLocator;
@@ -45,7 +39,6 @@ class DemoProjectConfigurableProductViewTest extends TestCase
     {
         $this->stubProductViewLocator = $this->createMock(ProductViewLocator::class);
         $this->mockProduct = $this->createMock(ConfigurableProduct::class);
-        $this->stubPageTitle = $this->createMock(DemoProjectProductPageTitle::class);
         $this->stubProductImageFileLocator = $this->createMock(ProductImageFileLocator::class);
         $this->stubProductImageFileLocator->method('getPlaceholder')->willReturn($this->createMock(Image::class));
         $this->stubProductImageFileLocator->method('getVariantCodes')->willReturn(['large']);
@@ -53,7 +46,6 @@ class DemoProjectConfigurableProductViewTest extends TestCase
         $this->productView = new DemoProjectConfigurableProductView(
             $this->stubProductViewLocator,
             $this->mockProduct,
-            $this->stubPageTitle,
             $this->stubProductImageFileLocator
         );
     }
@@ -129,13 +121,5 @@ class DemoProjectConfigurableProductViewTest extends TestCase
 
         $this->assertCount(1, $result);
         $this->assertContains($nonPriceAttribute, $result->getAllAttributes());
-    }
-
-    public function testProductPageTitleCreationIsDelegatedToPageTitle()
-    {
-        $testTitle = 'foo';
-        $this->stubPageTitle->method('forProductView')->willReturn($testTitle);
-
-        $this->assertSame($testTitle, $this->productView->getProductPageTitle());
     }
 }

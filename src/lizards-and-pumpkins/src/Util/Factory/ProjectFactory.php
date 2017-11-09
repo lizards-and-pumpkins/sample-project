@@ -46,7 +46,6 @@ use LizardsAndPumpkins\Import\Product\AttributeCode;
 use LizardsAndPumpkins\Import\Product\Image\DemoProjectProductImageFileLocator;
 use LizardsAndPumpkins\Import\Product\View\ProductImageFileLocator;
 use LizardsAndPumpkins\Import\Product\View\DemoProjectProductViewLocator;
-use LizardsAndPumpkins\Import\SnippetRenderer;
 use LizardsAndPumpkins\Import\Tax\TaxableCountries;
 use LizardsAndPumpkins\Import\Tax\DemoProjectTaxableCountries;
 use LizardsAndPumpkins\Import\Tax\DemoProjectTaxServiceLocator;
@@ -62,9 +61,7 @@ use LizardsAndPumpkins\Messaging\Event\DomainEventQueue;
 use LizardsAndPumpkins\Messaging\MessageQueueFactory;
 use LizardsAndPumpkins\Messaging\Queue;
 use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
-use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 use LizardsAndPumpkins\ProductListing\ContentDelivery\ProductsPerPage;
-use LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer;
 use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMap;
 use LizardsAndPumpkins\Util\Config\ConfigReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
@@ -313,7 +310,7 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
         /** @var ConfigReader $configReader */
         $configReader = $this->getMasterFactory()->createConfigReader();
         if ($configReader->has('log_file_path')) {
-            return $configReader->get('log_file_path');;
+            return $configReader->get('log_file_path');
         }
 
         return __DIR__ . '/../log/system.log';
@@ -581,14 +578,8 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
     public function createProductViewLocator() : DemoProjectProductViewLocator
     {
         return new DemoProjectProductViewLocator(
-            $this->getMasterFactory()->createProductImageFileLocator(),
-            $this->getMasterFactory()->createProductTitle()
+            $this->getMasterFactory()->createProductImageFileLocator()
         );
-    }
-
-    public function createProductTitle() : DemoProjectProductPageTitle
-    {
-        return new DemoProjectProductPageTitle();
     }
 
     public function createGlobalProductListingCriteria() : SearchCriteria
@@ -622,14 +613,6 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
         $facetFieldToQueryParameterMap = [$facetField => $queryParameter];
         $queryParameterToFacetFieldMap = [$queryParameter => $facetField];
         return new SearchFieldToRequestParamMap($facetFieldToQueryParameterMap, $queryParameterToFacetFieldMap);
-    }
-
-    public function createProductListingTitleSnippetRenderer() : SnippetRenderer
-    {
-        return new DemoProjectProductListingTitleSnippetRenderer(
-            $this->getMasterFactory()->createProductListingTitleSnippetKeyGenerator(),
-            $this->getMasterFactory()->createContextBuilder()
-        );
     }
 
     public function createThemeLocator() : ThemeLocator

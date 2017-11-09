@@ -7,7 +7,6 @@ namespace LizardsAndPumpkins\Import\Product\View;
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
 use LizardsAndPumpkins\Import\Product\Product;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
-use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 
 class DemoProjectConfigurableProductView extends AbstractConfigurableProductView implements CompositeProductView
 {
@@ -24,11 +23,6 @@ class DemoProjectConfigurableProductView extends AbstractConfigurableProductView
     private $product;
 
     /**
-     * @var DemoProjectProductPageTitle
-     */
-    private $pageTitle;
-
-    /**
      * @var ProductImageFileLocator
      */
     private $productImageFileLocator;
@@ -36,12 +30,10 @@ class DemoProjectConfigurableProductView extends AbstractConfigurableProductView
     public function __construct(
         ProductViewLocator $productViewLocator,
         ConfigurableProduct $product,
-        DemoProjectProductPageTitle $pageTitle,
         ProductImageFileLocator $productImageFileLocator
     ) {
         $this->productViewLocator = $productViewLocator;
         $this->product = $product;
-        $this->pageTitle = $pageTitle;
         $this->productImageFileLocator = $productImageFileLocator;
     }
 
@@ -65,10 +57,5 @@ class DemoProjectConfigurableProductView extends AbstractConfigurableProductView
     final protected function getProductViewLocator() : ProductViewLocator
     {
         return $this->productViewLocator;
-    }
-
-    final public function getProductPageTitle() : string
-    {
-        return $this->pageTitle->forProductView($this);
     }
 }

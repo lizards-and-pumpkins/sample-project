@@ -11,8 +11,7 @@ use LizardsAndPumpkins\ProductDetail\Import\ConfigurableProductJsonSnippetRender
 ?>
 <script>
 
-    var stockQty = '<?= $this->getProductStockQuantity() ?>',
-        baseUrl = '<?= $this->getBaseUrl() ?>',
+    var baseUrl = '<?= $this->getBaseUrl() ?>',
         assetsBaseUrl = '<?= $this->getAssetsBaseUrl() ?>',
         product = <?= $this->getChildOutput('product_json') ?>,
         variation_attributes = <?= $this->getChildOutput(ConfigurableProductJson::VARIATION_ATTRIBUTES_CODE) ?>,

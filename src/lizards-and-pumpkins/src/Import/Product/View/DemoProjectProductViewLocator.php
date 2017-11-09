@@ -6,7 +6,6 @@ namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
 use LizardsAndPumpkins\Import\Product\Product;
-use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 
 class DemoProjectProductViewLocator implements ProductViewLocator
 {
@@ -15,23 +14,17 @@ class DemoProjectProductViewLocator implements ProductViewLocator
      */
     private $imageFileLocator;
 
-    /**
-     * @var DemoProjectProductPageTitle
-     */
-    private $pageTitle;
-
-    public function __construct(ProductImageFileLocator $imageFileLocator, DemoProjectProductPageTitle $pageTitle)
+    public function __construct(ProductImageFileLocator $imageFileLocator)
     {
         $this->imageFileLocator = $imageFileLocator;
-        $this->pageTitle = $pageTitle;
     }
 
     public function createForProduct(Product $product) : ProductView
     {
         if ($product instanceof ConfigurableProduct) {
-            return new DemoProjectConfigurableProductView($this, $product, $this->pageTitle, $this->imageFileLocator);
+            return new DemoProjectConfigurableProductView($this, $product, $this->imageFileLocator);
         }
 
-        return new DemoProjectSimpleProductView($product, $this->pageTitle, $this->imageFileLocator);
+        return new DemoProjectSimpleProductView($product, $this->imageFileLocator);
     }
 }

@@ -6,7 +6,6 @@ namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Import\Product\Product;
 use LizardsAndPumpkins\Import\Product\ProductAttribute;
-use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 
 class DemoProjectSimpleProductView extends AbstractProductView
 {
@@ -18,22 +17,13 @@ class DemoProjectSimpleProductView extends AbstractProductView
     private $product;
 
     /**
-     * @var DemoProjectProductPageTitle
-     */
-    private $pageTitle;
-
-    /**
      * @var ProductImageFileLocator
      */
     private $productImageFileLocator;
 
-    public function __construct(
-        Product $product,
-        DemoProjectProductPageTitle $pageTitle,
-        ProductImageFileLocator $productImageFileLocator
-    ) {
+    public function __construct(Product $product, ProductImageFileLocator $productImageFileLocator)
+    {
         $this->product = $product;
-        $this->pageTitle = $pageTitle;
         $this->productImageFileLocator = $productImageFileLocator;
     }
 
@@ -60,11 +50,6 @@ class DemoProjectSimpleProductView extends AbstractProductView
             return $this->getBoundedStockQtyAttribute($attribute);
         }
         return parent::getProcessedAttribute($attribute);
-    }
-
-    final public function getProductPageTitle() : string
-    {
-        return $this->pageTitle->forProductView($this);
     }
 
     private function getBoundedStockQtyAttribute(ProductAttribute $stockQty) : ProductAttribute

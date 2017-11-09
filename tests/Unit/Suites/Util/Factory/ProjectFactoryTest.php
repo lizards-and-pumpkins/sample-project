@@ -12,8 +12,6 @@ use LizardsAndPumpkins\DataPool\SearchEngine\FacetFilterRequestField;
 use LizardsAndPumpkins\DataPool\SearchEngine\Filesystem\FileSearchEngine;
 use LizardsAndPumpkins\DataPool\SearchEngine\Query\SortBy;
 use LizardsAndPumpkins\DataPool\UrlKeyStore\FileUrlKeyStore;
-use LizardsAndPumpkins\Http\ContentDelivery\FrontendFactory;
-use LizardsAndPumpkins\Http\HttpRequest;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessingStrategySequence;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessor;
 use LizardsAndPumpkins\Import\ImageStorage\ImageProcessing\ImageProcessorCollection;
@@ -28,7 +26,6 @@ use LizardsAndPumpkins\Logging\WritingLoggerDecorator;
 use LizardsAndPumpkins\Messaging\Command\CommandQueue;
 use LizardsAndPumpkins\Messaging\Event\DomainEventQueue;
 use LizardsAndPumpkins\ProductListing\ContentDelivery\ProductsPerPage;
-use LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer;
 use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMap;
 use LizardsAndPumpkins\UnitTestFactory;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
@@ -45,7 +42,6 @@ use PHPUnit\Framework\TestCase;
  * @uses   \LizardsAndPumpkins\Import\Product\Image\DemoProjectProductImageFileLocator
  * @uses   \LizardsAndPumpkins\Import\Product\View\DemoProjectProductViewLocator
  * @uses   \LizardsAndPumpkins\Import\Tax\DemoProjectTaxableCountries
- * @uses   \LizardsAndPumpkins\ProductListing\Import\DemoProjectProductListingTitleSnippetRenderer
  */
 class ProjectFactoryTest extends TestCase
 {
@@ -405,12 +401,6 @@ class ProjectFactoryTest extends TestCase
         $this->assertSame($expectedPath, $this->factory->getLogFilePathConfig());
 
         $this->changeFileLogPathInEnvironmentConfig($oldPath);
-    }
-
-    public function testProductListingTitleSnippetRendererIsReturned()
-    {
-        $result = $this->factory->createProductListingTitleSnippetRenderer();
-        $this->assertInstanceOf(DemoProjectProductListingTitleSnippetRenderer::class, $result);
     }
 
     public function testThemeLocatorIsReturned()

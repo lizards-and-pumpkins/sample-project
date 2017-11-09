@@ -6,7 +6,6 @@ namespace LizardsAndPumpkins\Import\Product\View;
 
 use LizardsAndPumpkins\Import\Product\Composite\ConfigurableProduct;
 use LizardsAndPumpkins\Import\Product\Product;
-use LizardsAndPumpkins\ProductDetail\Import\View\DemoProjectProductPageTitle;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,11 +27,9 @@ class DemoProjectProductViewLocatorTest extends TestCase
 
     protected function setUp()
     {
-        /** @var DemoProjectProductPageTitle|\PHPUnit_Framework_MockObject_MockObject $stubPageTitle */
-        $stubPageTitle = $this->createMock(DemoProjectProductPageTitle::class);
         $this->stubProductImageLocator = $this->createMock(ProductImageFileLocator::class);
 
-        $this->locator = new DemoProjectProductViewLocator($this->stubProductImageLocator, $stubPageTitle);
+        $this->locator = new DemoProjectProductViewLocator($this->stubProductImageLocator);
     }
 
     public function testProductViewInterfaceIsImplemented()
