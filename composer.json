@@ -10,11 +10,11 @@
   ],
   "require": {
     "php": "~7.0.0",
-    "lizards-and-pumpkins/catalog": "~3.1.0",
-    "lizards-and-pumpkins/lib-key-value-store-filesystem": "~1.0.0",
-    "lizards-and-pumpkins/lib-search-engine-filesystem": "~1.0.0",
-    "lizards-and-pumpkins/lib-queue-filesystem": "~1.0.0",
-    "lizards-and-pumpkins/lib-image-processing-imagick": "~1.0.0",
+    "lizards-and-pumpkins/catalog": "^3.0.0",
+    "lizards-and-pumpkins/lib-key-value-store-filesystem": "^1.0.0",
+    "lizards-and-pumpkins/lib-search-engine-filesystem": "^1.0.0",
+    "lizards-and-pumpkins/lib-queue-filesystem": "^1.0.0",
+    "lizards-and-pumpkins/lib-image-processing-imagick": "^1.0.0",
     "league/climate": "~3.2.0"
   },
   "require-dev": {
