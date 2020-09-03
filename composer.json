@@ -10,16 +10,16 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "lizards-and-pumpkins/catalog": "^3.0.0",
+    "lizards-and-pumpkins/catalog": "dev-1116-extract-components as 3.2.2",
     "lizards-and-pumpkins/lib-key-value-store-filesystem": "^1.0.0",
     "lizards-and-pumpkins/lib-search-engine-filesystem": "^1.0.0",
-    "lizards-and-pumpkins/lib-queue-filesystem": "^1.0.0",
+    "lizards-and-pumpkins/lib-queue-filesystem": "^2.0.0",
     "lizards-and-pumpkins/lib-image-processing-imagick": "^1.0.0",
     "league/climate": "~3.2.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.0",
-    "lizards-and-pumpkins/coding-standards": "dev-master"
+    "phpunit/phpunit": "^9.2",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {"LizardsAndPumpkins\\": "src/lizards-and-pumpkins/src"}
@@ -33,8 +33,7 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit -c tests/Unit/phpunit.xml.dist",
-    "sniff": "vendor/bin/phpcs --runtime-set ignore_warnings_on_exit true --runtime-set ignore_errors_on_exit true -p --colors --encoding=utf-8 --standard=vendor/lizards-and-pumpkins/coding-standards/src/LizardsAndPumpkins/ src/ tests/"
+    "test": "vendor/bin/phpunit -c tests/Unit/phpunit.xml.dist"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

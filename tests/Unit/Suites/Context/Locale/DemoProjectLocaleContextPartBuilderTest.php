@@ -23,16 +23,16 @@ class DemoProjectLocaleContextPartBuilderTest extends TestCase
     private $contextLocale;
 
     /**
-     * @var HttpRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpRequest
      */
     private $stubRequest;
 
     /**
-     * @var RequestToWebsiteMap|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestToWebsiteMap
      */
     private $stubRequestToWebsiteMap;
 
-    private function setWebsiteWithGivenCodeOnRequest(string $websiteCode)
+    private function setWebsiteWithGivenCodeOnRequest(string $websiteCode): void
     {
         $dummyWebsite = $this->createMock(Website::class);
         $dummyWebsite->method('__toString')->willReturn($websiteCode);
@@ -40,7 +40,7 @@ class DemoProjectLocaleContextPartBuilderTest extends TestCase
             ->willReturn($dummyWebsite);
     }
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->stubRequest = $this->createMock(HttpRequest::class);
         $this->stubRequestToWebsiteMap = $this->createMock(RequestToWebsiteMap::class);
@@ -48,28 +48,28 @@ class DemoProjectLocaleContextPartBuilderTest extends TestCase
         $this->contextLocale = new DemoProjectLocaleContextPartBuilder($this->stubRequestToWebsiteMap);
     }
 
-    public function testItIsAContextPartBuilder()
+    public function testItIsAContextPartBuilder(): void
     {
         $this->assertInstanceOf(ContextPartBuilder::class, $this->contextLocale);
     }
 
-    public function testItReturnsTheCode()
+    public function testItReturnsTheCode(): void
     {
         $this->assertSame(Locale::CONTEXT_CODE, $this->contextLocale->getCode());
     }
 
-    public function testExceptionIsThrownIfNeitherLocaleNorRequestIsPresentInInputDataSet()
+    public function testExceptionIsThrownIfNeitherLocaleNorRequestIsPresentInInputDataSet(): void
     {
         $this->expectException(UnableToDetermineContextLocaleException::class);
         $this->expectExceptionMessage(
             'Unable to determine context locale as neither the locale nor the request are set in the input array.'
         );
-        
+
         $inputDataSet = [];
         $this->contextLocale->getValue($inputDataSet);
     }
 
-    public function testExceptionIsThrownIfLocaleCanNotBeDeterminedFromRequest()
+    public function testExceptionIsThrownIfLocaleCanNotBeDeterminedFromRequest(): void
     {
         $this->expectException(UnableToDetermineContextLocaleException::class);
         $this->expectExceptionMessage('Unable to determine locale from request.');
@@ -81,13 +81,13 @@ class DemoProjectLocaleContextPartBuilderTest extends TestCase
         $this->contextLocale->getValue($inputDataSet);
     }
 
-    public function testItReturnsTheLocaleFromTheInputArrayIfItIsPresent()
+    public function testItReturnsTheLocaleFromTheInputArrayIfItIsPresent(): void
     {
         $inputDataSet = [Locale::CONTEXT_CODE => 'xx_XX'];
         $this->assertSame('xx_XX', $this->contextLocale->getValue($inputDataSet));
     }
 
-    public function testItReturnsTheLocaleFromTheRequestIfNotExplicitlySpecifiedInInputArray()
+    public function testItReturnsTheLocaleFromTheRequestIfNotExplicitlySpecifiedInInputArray(): void
     {
         $this->setWebsiteWithGivenCodeOnRequest('en');
 

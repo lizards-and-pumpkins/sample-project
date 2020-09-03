@@ -17,6 +17,9 @@ use LizardsAndPumpkins\Context\Website\RequestToWebsiteMap;
 use LizardsAndPumpkins\Context\Website\DemoProjectWebsiteContextPartBuilder;
 use LizardsAndPumpkins\Context\Website\UrlToWebsiteMap;
 use LizardsAndPumpkins\Context\Website\WebsiteToCountryMap;
+use LizardsAndPumpkins\Core\Factory\FactoryWithCallback;
+use LizardsAndPumpkins\Core\Factory\FactoryWithCallbackTrait;
+use LizardsAndPumpkins\Core\Factory\MasterFactory;
 use LizardsAndPumpkins\DataPool\KeyValueStore\File\FileKeyValueStore;
 use LizardsAndPumpkins\DataPool\KeyValueStore\KeyValueStore;
 use LizardsAndPumpkins\DataPool\SearchEngine\FacetFieldTransformation\CurrencyPriceRangeTransformation;
@@ -58,9 +61,9 @@ use LizardsAndPumpkins\Logging\Writer\FileLogMessageWriter;
 use LizardsAndPumpkins\Logging\WritingLoggerDecorator;
 use LizardsAndPumpkins\Messaging\Command\CommandQueue;
 use LizardsAndPumpkins\Messaging\Event\DomainEventQueue;
-use LizardsAndPumpkins\Messaging\MessageQueueFactory;
-use LizardsAndPumpkins\Messaging\Queue;
 use LizardsAndPumpkins\Messaging\Queue\File\FileQueue;
+use LizardsAndPumpkins\Messaging\Queue\MessageQueueFactory;
+use LizardsAndPumpkins\Messaging\Queue\Queue;
 use LizardsAndPumpkins\ProductListing\ContentDelivery\ProductsPerPage;
 use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMap;
 use LizardsAndPumpkins\Util\Config\ConfigReader;
@@ -78,12 +81,12 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
     private $memoizedProductsPerPageConfig;
 
     /**
-     * @var CommandQueue
+     * @var Queue
      */
     private $eventMessageQueue;
 
     /**
-     * @var CommandQueue
+     * @var Queue
      */
     private $commandMessageQueue;
 
@@ -97,7 +100,7 @@ class ProjectFactory implements FactoryWithCallback, MessageQueueFactory
      */
     private $commandQueue;
 
-    public function factoryRegistrationCallback(MasterFactory $masterFactory)
+    public function factoryRegistrationCallback(MasterFactory $masterFactory): void
     {
         $masterFactory->register(new DecoratorFactory());
     }

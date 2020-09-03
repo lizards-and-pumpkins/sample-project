@@ -30,6 +30,7 @@ use LizardsAndPumpkins\ProductSearch\ContentDelivery\SearchFieldToRequestParamMa
 use LizardsAndPumpkins\UnitTestFactory;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageReader;
 use LizardsAndPumpkins\Util\FileSystem\LocalFilesystemStorageWriter;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -54,7 +55,7 @@ class ProjectFactoryTest extends TestCase
      * @param FacetFilterRequestField[] $facetFilterFields
      * @return string[]
      */
-    private function getFacetCodes(FacetFilterRequestField ...$facetFilterFields) : array
+    private function getFacetCodes(FacetFilterRequestField ...$facetFilterFields): array
     {
         return array_map(function (FacetFilterRequestField $field) {
             return (string) $field->getAttributeCode();
@@ -81,7 +82,7 @@ class ProjectFactoryTest extends TestCase
         return $oldState;
     }
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $masterFactory = new CatalogMasterFactory();
         $masterFactory->register(new CommonFactory());
@@ -90,7 +91,7 @@ class ProjectFactoryTest extends TestCase
         $masterFactory->register($this->factory);
     }
 
-    protected function tearDown()
+    final protected function tearDown(): void
     {
         $keyValueStoragePath = sys_get_temp_dir() . '/lizards-and-pumpkins/key-value-store';
         if (file_exists($keyValueStoragePath)) {
@@ -99,65 +100,66 @@ class ProjectFactoryTest extends TestCase
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
             foreach ($iterator as $path) {
-                $path->isDir() && !$path->isLink() ? rmdir($path->getPathname()) : unlink($path->getPathname());
+                $path->isDir() && ! $path->isLink() ? rmdir($path->getPathname()) : unlink($path->getPathname());
             }
             rmdir($keyValueStoragePath);
         }
     }
 
-    public function testCRedisKeyValueStoreIsReturned()
+    public function testCRedisKeyValueStoreIsReturned(): void
     {
         $this->assertInstanceOf(FileKeyValueStore::class, $this->factory->createKeyValueStore());
     }
 
-    public function testSolrSearchEngineIsReturned()
+    public function testSolrSearchEngineIsReturned(): void
     {
         $this->assertInstanceOf(FileSearchEngine::class, $this->factory->createSearchEngine());
     }
 
-    public function testInDomainEventQueueIsReturned()
+    public function testInDomainEventQueueIsReturned(): void
     {
         $this->assertInstanceOf(DomainEventQueue::class, $this->factory->getEventQueue());
     }
 
-    public function testCommandQueueIsReturned()
+    public function testCommandQueueIsReturned(): void
     {
         $this->assertInstanceOf(CommandQueue::class, $this->factory->getCommandQueue());
     }
 
-    public function testWritingLoggerIsReturned()
+    public function testWritingLoggerIsReturned(): void
     {
         $this->assertInstanceOf(WritingLoggerDecorator::class, $this->factory->createLogger());
     }
 
-    public function testLogMessageWriterIsReturned()
+    public function testLogMessageWriterIsReturned(): void
     {
         $this->assertInstanceOf(CompositeLogMessageWriter::class, $this->factory->createLogMessageWriter());
     }
 
-    public function testArrayOfSearchableAttributeCodesIsReturned()
+    public function testArrayOfSearchableAttributeCodesIsReturned(): void
     {
         $result = $this->factory->getSearchableAttributeCodes();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertContainsOnly('string', $result);
     }
 
     /**
      * @dataProvider facetFieldsToIncludeInResultProvider
+     * @param string $fieldName
      */
-    public function testItReturnsAListOfFacetFilterRequestFieldsForTheProductListings(string $fieldName)
+    public function testItReturnsAListOfFacetFilterRequestFieldsForTheProductListings(string $fieldName): void
     {
-        /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
+        /** @var Context|MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductListingFacetFilterRequestFields($stubContext));
         $this->assertContains($fieldName, $fieldCodes);
     }
 
-    public function testItInjectsThePriceAfterTheBrandFacetForProductListings()
+    public function testItInjectsThePriceAfterTheBrandFacetForProductListings(): void
     {
-        /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
+        /** @var Context|MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductListingFacetFilterRequestFields($stubContext));
@@ -167,19 +169,20 @@ class ProjectFactoryTest extends TestCase
 
     /**
      * @dataProvider facetFieldsToIncludeInResultProvider
+     * @param string $fieldName
      */
-    public function testItReturnsAListOfFacetFilterRequestFieldsForTheSearchResults(string $fieldName)
+    public function testItReturnsAListOfFacetFilterRequestFieldsForTheSearchResults(string $fieldName): void
     {
-        /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
+        /** @var Context|MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductSearchFacetFilterRequestFields($stubContext));
         $this->assertContains($fieldName, $fieldCodes);
     }
 
-    public function testItInjectsThePriceAfterTheBrandFacetForSearchListings()
+    public function testItInjectsThePriceAfterTheBrandFacetForSearchListings(): void
     {
-        /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
+        /** @var Context|MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $fieldCodes = $this->getFacetCodes(...$this->factory->getProductSearchFacetFilterRequestFields($stubContext));
@@ -189,8 +192,9 @@ class ProjectFactoryTest extends TestCase
 
     /**
      * @dataProvider facetFieldsToIndexProvider
+     * @param string $fieldName
      */
-    public function testItReturnsAListOfFacetFilterCodesForSearchDocuments(string $fieldName)
+    public function testItReturnsAListOfFacetFilterCodesForSearchDocuments(string $fieldName): void
     {
         $this->assertContains($fieldName, $this->factory->getFacetFilterRequestFieldCodesForSearchDocuments());
     }
@@ -198,7 +202,7 @@ class ProjectFactoryTest extends TestCase
     /**
      * @return array[]
      */
-    public function facetFieldsToIncludeInResultProvider() : array
+    public function facetFieldsToIncludeInResultProvider(): array
     {
         return array_merge($this->facetFieldsToIndexProvider(), [['price_incl_tax_de']]);
     }
@@ -206,7 +210,7 @@ class ProjectFactoryTest extends TestCase
     /**
      * @return array[]
      */
-    public function facetFieldsToIndexProvider() : array
+    public function facetFieldsToIndexProvider(): array
     {
         return [
             ['gender'],
@@ -219,35 +223,35 @@ class ProjectFactoryTest extends TestCase
         ];
     }
 
-    public function testArrayOfAdditionalAttributeCodesForSearchEngineIsReturned()
+    public function testArrayOfAdditionalAttributeCodesForSearchEngineIsReturned(): void
     {
         $result = $this->factory->getSortableAttributeCodes();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertContainsOnly('string', $result);
     }
 
-    public function testImageProcessorCollectionIsReturned()
+    public function testImageProcessorCollectionIsReturned(): void
     {
         $this->assertInstanceOf(ImageProcessorCollection::class, $this->factory->createImageProcessorCollection());
     }
 
-    public function testEnlargedImageProcessorIsReturned()
+    public function testEnlargedImageProcessorIsReturned(): void
     {
         $this->assertInstanceOf(ImageProcessor::class, $this->factory->createOriginalImageProcessor());
     }
 
-    public function testFileStorageReaderIsReturned()
+    public function testFileStorageReaderIsReturned(): void
     {
         $this->assertInstanceOf(LocalFilesystemStorageReader::class, $this->factory->createFileStorageReader());
     }
 
-    public function testFileStorageWriterIsReturned()
+    public function testFileStorageWriterIsReturned(): void
     {
         $this->assertInstanceOf(LocalFilesystemStorageWriter::class, $this->factory->createFileStorageWriter());
     }
 
-    public function testEnlargedImageProcessingStrategySequenceIsReturned()
+    public function testEnlargedImageProcessingStrategySequenceIsReturned(): void
     {
         $this->assertInstanceOf(
             ImageProcessingStrategySequence::class,
@@ -255,12 +259,12 @@ class ProjectFactoryTest extends TestCase
         );
     }
 
-    public function testProductDetailsPageImageProcessorIsReturned()
+    public function testProductDetailsPageImageProcessorIsReturned(): void
     {
         $this->assertInstanceOf(ImageProcessor::class, $this->factory->createProductDetailsPageImageProcessor());
     }
 
-    public function testProductDetailsPageImageProcessingStrategySequenceIsReturned()
+    public function testProductDetailsPageImageProcessingStrategySequenceIsReturned(): void
     {
         $this->assertInstanceOf(
             ImageProcessingStrategySequence::class,
@@ -268,12 +272,12 @@ class ProjectFactoryTest extends TestCase
         );
     }
 
-    public function testProductListingImageProcessorIsReturned()
+    public function testProductListingImageProcessorIsReturned(): void
     {
         $this->assertInstanceOf(ImageProcessor::class, $this->factory->createProductListingImageProcessor());
     }
 
-    public function testProductListingImageProcessingStrategySequenceIsReturned()
+    public function testProductListingImageProcessingStrategySequenceIsReturned(): void
     {
         $this->assertInstanceOf(
             ImageProcessingStrategySequence::class,
@@ -281,12 +285,12 @@ class ProjectFactoryTest extends TestCase
         );
     }
 
-    public function testGalleyThumbnailImageProcessorIsReturned()
+    public function testGalleyThumbnailImageProcessorIsReturned(): void
     {
         $this->assertInstanceOf(ImageProcessor::class, $this->factory->createGalleyThumbnailImageProcessor());
     }
 
-    public function testGalleyThumbnailImageProcessingStrategySequenceIsReturned()
+    public function testGalleyThumbnailImageProcessingStrategySequenceIsReturned(): void
     {
         $this->assertInstanceOf(
             ImageProcessingStrategySequence::class,
@@ -294,40 +298,40 @@ class ProjectFactoryTest extends TestCase
         );
     }
 
-    public function testFileUrlKeyStoreIsReturned()
+    public function testFileUrlKeyStoreIsReturned(): void
     {
         $this->assertInstanceOf(FileUrlKeyStore::class, $this->factory->createUrlKeyStore());
     }
 
-    public function testItReturnsAnExistingDirectoryAsTheFileStorageBasePathConfig()
+    public function testItReturnsAnExistingDirectoryAsTheFileStorageBasePathConfig(): void
     {
         $fileStorageBasePath = $this->factory->getFileStorageBasePathConfig();
-        $this->assertInternalType('string', $fileStorageBasePath);
+        $this->assertIsString($fileStorageBasePath);
         $this->assertFileExists($fileStorageBasePath);
         $this->assertTrue(is_dir($fileStorageBasePath));
     }
 
-    public function testReturnsProductListingAvailableSortBy()
+    public function testReturnsProductListingAvailableSortBy(): void
     {
         $this->assertContainsOnly(SortBy::class, $this->factory->getProductListingAvailableSortBy());
     }
 
-    public function testReturnProductListingDefaultSortBy()
+    public function testReturnProductListingDefaultSortBy(): void
     {
         $this->assertInstanceOf(SortBy::class, $this->factory->getProductListingDefaultSortBy());
     }
 
-    public function testReturnsProductSearchAvailableSortBy()
+    public function testReturnsProductSearchAvailableSortBy(): void
     {
         $this->assertContainsOnly(SortBy::class, $this->factory->getProductSearchAvailableSortBy());
     }
 
-    public function testReturnProductSearchDefaultSortBy()
+    public function testReturnProductSearchDefaultSortBy(): void
     {
         $this->assertInstanceOf(SortBy::class, $this->factory->getProductSearchDefaultSortBy());
     }
 
-    public function testSameInstanceOfProductsPerPageIsReturned()
+    public function testSameInstanceOfProductsPerPageIsReturned(): void
     {
         $result1 = $this->factory->getProductsPerPageConfig();
         $result2 = $this->factory->getProductsPerPageConfig();
@@ -336,54 +340,54 @@ class ProjectFactoryTest extends TestCase
         $this->assertSame($result1, $result2);
     }
 
-    public function testItReturnsAWebsiteToCountryMapInstance()
+    public function testItReturnsAWebsiteToCountryMapInstance(): void
     {
         $this->assertInstanceOf(WebsiteToCountryMap::class, $this->factory->createWebsiteToCountryMap());
     }
 
-    public function testItReturnsATaxableCountryInstance()
+    public function testItReturnsATaxableCountryInstance(): void
     {
         $this->assertInstanceOf(TaxableCountries::class, $this->factory->createTaxableCountries());
     }
 
-    public function testItReturnsATaxServiceLocator()
+    public function testItReturnsATaxServiceLocator(): void
     {
         $this->assertInstanceOf(TaxServiceLocator::class, $this->factory->createTaxServiceLocator());
     }
 
-    public function testProductViewLocatorIsReturned()
+    public function testProductViewLocatorIsReturned(): void
     {
         $this->assertInstanceOf(ProductViewLocator::class, $this->factory->createProductViewLocator());
     }
 
-    public function testItReturnsAProductImageFileLocatorInstance()
+    public function testItReturnsAProductImageFileLocatorInstance(): void
     {
         $result = $this->factory->createProductImageFileLocator();
         $this->assertInstanceOf(DemoProjectProductImageFileLocator::class, $result);
     }
 
-    public function testItReturnsAnImageStorage()
+    public function testItReturnsAnImageStorage(): void
     {
         $this->assertInstanceOf(ImageStorage::class, $this->factory->createImageStorage());
     }
 
-    public function testItReturnsASearchFieldToRequestParamMap()
+    public function testItReturnsASearchFieldToRequestParamMap(): void
     {
-        /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
+        /** @var Context $stubContext */
         $stubContext = $this->createMock(Context::class);
         $result = $this->factory->createSearchFieldToRequestParamMap($stubContext);
         $this->assertInstanceOf(SearchFieldToRequestParamMap::class, $result);
     }
 
-    public function testItReturnsThePriceFacetFieldName()
+    public function testItReturnsThePriceFacetFieldName(): void
     {
-        /** @var Context|\PHPUnit_Framework_MockObject_MockObject $stubContext */
+        /** @var Context|MockObject $stubContext */
         $stubContext = $this->createMock(Context::class);
         $stubContext->method('getValue')->willReturn('DE');
         $this->assertSame('price_incl_tax_de', $this->factory->getPriceFacetFieldNameForContext($stubContext));
     }
 
-    public function testDefaultFileLogPathIsReturned()
+    public function testDefaultFileLogPathIsReturned(): void
     {
         $expectedPath = preg_replace(
             '/tests\/Unit\/Suites/',
@@ -393,7 +397,7 @@ class ProjectFactoryTest extends TestCase
         $this->assertSame($expectedPath, $this->factory->getLogFilePathConfig());
     }
 
-    public function testFileLogPathStoredInEnvironmentIsReturned()
+    public function testFileLogPathStoredInEnvironmentIsReturned(): void
     {
         $expectedPath = 'foo';
         $oldPath = $this->changeFileLogPathInEnvironmentConfig($expectedPath);
@@ -403,13 +407,13 @@ class ProjectFactoryTest extends TestCase
         $this->changeFileLogPathInEnvironmentConfig($oldPath);
     }
 
-    public function testThemeLocatorIsReturned()
+    public function testThemeLocatorIsReturned(): void
     {
         $result = $this->factory->createThemeLocator();
         $this->assertInstanceOf(ThemeLocator::class, $result);
     }
 
-    public function testReturnsDemoProjectContextSource()
+    public function testReturnsDemoProjectContextSource(): void
     {
         $this->assertInstanceOf(DemoProjectContextSource::class, $this->factory->createContextSource());
     }

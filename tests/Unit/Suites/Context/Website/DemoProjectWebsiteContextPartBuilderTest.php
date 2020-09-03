@@ -21,15 +21,15 @@ class DemoProjectWebsiteContextPartBuilderTest extends TestCase
     private $contextPartBuilder;
 
     /**
-     * @var RequestToWebsiteMap|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestToWebsiteMap
      */
     private $stubRequestToWebsiteMap;
 
     /**
      * @param string $testWebsiteCode
-     * @return HttpRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @return HttpRequest
      */
-    private function createStubRequestAndMapItToWebsiteWithGivenCode(string $testWebsiteCode) : HttpRequest
+    private function createStubRequestAndMapItToWebsiteWithGivenCode(string $testWebsiteCode): HttpRequest
     {
         $dummyRequest = $this->createMock(HttpRequest::class);
 
@@ -41,23 +41,23 @@ class DemoProjectWebsiteContextPartBuilderTest extends TestCase
         return $dummyRequest;
     }
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->stubRequestToWebsiteMap = $this->createMock(RequestToWebsiteMap::class);
         $this->contextPartBuilder = new DemoProjectWebsiteContextPartBuilder($this->stubRequestToWebsiteMap);
     }
 
-    public function testContextPartBuilderInterfaceIsImplemented()
+    public function testContextPartBuilderInterfaceIsImplemented(): void
     {
         $this->assertInstanceOf(ContextPartBuilder::class, $this->contextPartBuilder);
     }
 
-    public function testContextWebsiteCodeIsReturned()
+    public function testContextWebsiteCodeIsReturned(): void
     {
         $this->assertSame(Website::CONTEXT_CODE, $this->contextPartBuilder->getCode());
     }
 
-    public function testExceptionIsThrownIfNeitherWebsiteNorRequestIsPresentInInputDataSet()
+    public function testExceptionIsThrownIfNeitherWebsiteNorRequestIsPresentInInputDataSet(): void
     {
         $this->expectException(UnableToDetermineContextWebsiteException::class);
         $inputDataSet = [];
@@ -66,8 +66,9 @@ class DemoProjectWebsiteContextPartBuilderTest extends TestCase
 
     /**
      * @dataProvider websiteCodeProvider
+     * @param string $testWebsiteCode
      */
-    public function testWebsiteCodeProvidedInInputDataSetIsReturned(string $testWebsiteCode)
+    public function testWebsiteCodeProvidedInInputDataSetIsReturned(string $testWebsiteCode): void
     {
         $inputDataSet = [Website::CONTEXT_CODE => $testWebsiteCode];
         $this->assertSame($testWebsiteCode, $this->contextPartBuilder->getValue($inputDataSet));
@@ -75,8 +76,9 @@ class DemoProjectWebsiteContextPartBuilderTest extends TestCase
 
     /**
      * @dataProvider websiteCodeProvider
+     * @param string $testWebsiteCode
      */
-    public function testDeterminationOfWebsiteIsDelegatedToRequestToWebsiteMap(string $testWebsiteCode)
+    public function testDeterminationOfWebsiteIsDelegatedToRequestToWebsiteMap(string $testWebsiteCode): void
     {
         $dummyRequest = $this->createStubRequestAndMapItToWebsiteWithGivenCode($testWebsiteCode);
         $inputDataSet = [ContextBuilder::REQUEST => $dummyRequest];
@@ -84,7 +86,7 @@ class DemoProjectWebsiteContextPartBuilderTest extends TestCase
         $this->assertSame($testWebsiteCode, $this->contextPartBuilder->getValue($inputDataSet));
     }
 
-    public function testExplicitWebsiteValueIsPreferredOverMappedOne()
+    public function testExplicitWebsiteValueIsPreferredOverMappedOne(): void
     {
         $testExplicitWebsiteCode = 'foo';
         $testWebsiteCodeFromRequest = 'bar';
@@ -98,7 +100,7 @@ class DemoProjectWebsiteContextPartBuilderTest extends TestCase
     /**
      * @return array[]
      */
-    public function websiteCodeProvider() : array
+    public function websiteCodeProvider(): array
     {
         return [['foo'], ['bar']];
     }

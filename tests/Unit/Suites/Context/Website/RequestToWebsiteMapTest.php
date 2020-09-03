@@ -13,14 +13,14 @@ use PHPUnit\Framework\TestCase;
  */
 class RequestToWebsiteMapTest extends TestCase
 {
-    public function testWebsiteIsReturned()
+    public function testWebsiteIsReturned(): void
     {
         $testUrlString = 'http://example.com/';
         $dummyWebsite = $this->createMock(Website::class);
-        
+
         $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->method('__toString')->willReturn($testUrlString);
-        
+
         /** @var HttpRequest|\PHPUnit_Framework_MockObject_MockObject $stubHttpRequest */
         $stubHttpRequest = $this->createMock(HttpRequest::class);
         $stubHttpRequest->method('getUrl')->willReturn($stubHttpUrl);
@@ -32,7 +32,7 @@ class RequestToWebsiteMapTest extends TestCase
         $requestToWebsiteMap = new RequestToWebsiteMap($stubUrlToWebsiteMap);
 
         $result = $requestToWebsiteMap->getWebsiteFromRequest($stubHttpRequest);
-        
+
         $this->assertSame($dummyWebsite, $result);
     }
 }

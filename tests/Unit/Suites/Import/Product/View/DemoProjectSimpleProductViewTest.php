@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 class DemoProjectSimpleProductViewTest extends TestCase
 {
     /**
-     * @var Product|\PHPUnit_Framework_MockObject_MockObject
+     * @var Product
      */
     private $mockProduct;
 
@@ -28,11 +28,11 @@ class DemoProjectSimpleProductViewTest extends TestCase
     private $productView;
 
     /**
-     * @var ProductImageFileLocator|\PHPUnit_Framework_MockObject_MockObject
+     * @var ProductImageFileLocator
      */
     private $mockProductImageFileLocator;
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->mockProduct = $this->createMock(Product::class);
         $this->mockProductImageFileLocator = $this->createMock(ProductImageFileLocator::class);
@@ -42,17 +42,17 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->productView = new DemoProjectSimpleProductView($this->mockProduct, $this->mockProductImageFileLocator);
     }
 
-    public function testOriginalProductIsReturned()
+    public function testOriginalProductIsReturned(): void
     {
         $this->assertSame($this->mockProduct, $this->productView->getOriginalProduct());
     }
 
-    public function testProductViewInterfaceIsImplemented()
+    public function testProductViewInterfaceIsImplemented(): void
     {
         $this->assertInstanceOf(ProductView::class, $this->productView);
     }
 
-    public function testGettingFirstValueOfBackordersAttributeReturnsEmptyString()
+    public function testGettingFirstValueOfBackordersAttributeReturnsEmptyString(): void
     {
         $testAttributeCode = 'backorders';
         $testAttributeValue = true;
@@ -64,7 +64,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertSame('', $this->productView->getFirstValueOfAttribute($testAttributeCode));
     }
 
-    public function testGettingAllValuesOfBackordersAttributeReturnsEmptyArray()
+    public function testGettingAllValuesOfBackordersAttributeReturnsEmptyArray(): void
     {
         $testAttributeCode = 'backorders';
         $testAttributeValue = true;
@@ -76,7 +76,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertSame([], $this->productView->getAllValuesOfAttribute($testAttributeCode));
     }
 
-    public function testProductViewAttributeListDoesNotHaveBackorders()
+    public function testProductViewAttributeListDoesNotHaveBackorders(): void
     {
         $testAttributeCode = 'backorders';
         $testAttributeValue = true;
@@ -88,7 +88,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertFalse($this->productView->hasAttribute($testAttributeCode));
     }
 
-    public function testProductJsonDoesNotHaveBackorders()
+    public function testProductJsonDoesNotHaveBackorders(): void
     {
 
         $testAttributeCode = 'backorders';
@@ -104,7 +104,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertArrayNotHasKey('backorders', $productData['attributes']);
     }
 
-    public function testFilteredProductAttributeListIsReturned()
+    public function testFilteredProductAttributeListIsReturned(): void
     {
         $nonPriceAttribute = new ProductAttribute('foo', 'bar', []);
         $priceAttribute = new ProductAttribute('price', 1000, []);
@@ -126,7 +126,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertContains($nonPriceAttribute, $result->getAllAttributes());
     }
 
-    public function testMaximumPurchasableQuantityIsReturnedIfProductIsAvailableForBackorders()
+    public function testMaximumPurchasableQuantityIsReturnedIfProductIsAvailableForBackorders(): void
     {
         $stockAttributeCode = 'stock_qty';
         $testAttributeValue = 1;
@@ -142,7 +142,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertSame((string) DemoProjectSimpleProductView::MAX_PURCHASABLE_QTY, $result);
     }
 
-    public function testMaximumPurchasableQuantityIsReturnedIfProductQuantityIsGreaterThanMaximumPurchasableQuantity()
+    public function testMaximumPurchasableQuantityIsReturnedIfProductQuantityIsGreaterThanMaximumPurchasableQuantity(): void
     {
         $stockAttributeCode = 'stock_qty';
         $testAttributeValue = 6;
@@ -156,7 +156,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertSame((string) DemoProjectSimpleProductView::MAX_PURCHASABLE_QTY, $result);
     }
 
-    public function testItReturnsTheOriginalStockQtyIfBackordersIsFalseAndQtyIsSmallerThanMaximumPurchasableQuantity()
+    public function testItReturnsTheOriginalStockQtyIfBackordersIsFalseAndQtyIsSmallerThanMaximumPurchasableQuantity(): void
     {
         $stockAttributeCode = 'stock_qty';
         $testAttributeValue = 4;
@@ -171,7 +171,7 @@ class DemoProjectSimpleProductViewTest extends TestCase
         $this->assertSame((string) $testAttributeValue, $result);
     }
 
-    public function testItUsesTheInjectedProductImageFileLocatorToGetPlaceholderImages()
+    public function testItUsesTheInjectedProductImageFileLocatorToGetPlaceholderImages(): void
     {
         $stubAttributeList = $this->createMock(ProductAttributeList::class);
         $stubAttributeList->method('getAllAttributes')->willReturn([]);

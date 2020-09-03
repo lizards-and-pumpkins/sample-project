@@ -24,7 +24,7 @@ class DemoProjectTaxServiceLocatorTest extends TestCase
      * @param string $country
      * @return string[]
      */
-    private function createTaxServiceLocatorOptions(string $website, string $taxClass, string $country) : array
+    private function createTaxServiceLocatorOptions(string $website, string $taxClass, string $country): array
     {
         return [
             TaxServiceLocator::OPTION_PRODUCT_TAX_CLASS => $taxClass,
@@ -38,7 +38,7 @@ class DemoProjectTaxServiceLocatorTest extends TestCase
         string $productTaxClass,
         string $country,
         int $expectedRate
-    ) {
+    ): void {
         $taxService = $this->getTaxServiceFor($website, $productTaxClass, $country);
         $this->assertInstanceOf(DemoProjectTaxRate::class, $taxService);
         $message = sprintf(
@@ -52,23 +52,24 @@ class DemoProjectTaxServiceLocatorTest extends TestCase
         $this->assertSame($expectedRate, $taxService->getRate(), $message);
     }
 
-    private function getTaxServiceFor(string $website, string $productTaxClass, string $country) : DemoProjectTaxRate
+    private function getTaxServiceFor(string $website, string $productTaxClass, string $country): TaxService
     {
         $options = $this->createTaxServiceLocatorOptions($website, $productTaxClass, $country);
+
         return $this->taxServiceLocator->get($options);
     }
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->taxServiceLocator = new DemoProjectTaxServiceLocator();
     }
 
-    public function testItImplementsTheTaxServiceLocatorInterface()
+    public function testItImplementsTheTaxServiceLocatorInterface(): void
     {
         $this->assertInstanceOf(TaxServiceLocator::class, $this->taxServiceLocator);
     }
 
-    public function testItThrowsAnExceptionIfTheTaxServiceCanNotBeDetermined()
+    public function testItThrowsAnExceptionIfTheTaxServiceCanNotBeDetermined(): void
     {
         $this->expectException(UnableToLocateTaxServiceException::class);
         $this->expectExceptionMessage(
@@ -83,69 +84,73 @@ class DemoProjectTaxServiceLocatorTest extends TestCase
 
     /**
      * @dataProvider taxServiceLocatorOptionsProvider
+     * @param string $website
+     * @param string $productTaxClass
+     * @param string $country
+     * @param int $rate
      */
     public function testTaxServiceLocatorReturnsTheCorrectInstances(
         string $website,
         string $productTaxClass,
         string $country,
         int $rate
-    ) {
+    ): void {
         $this->assertTaxServiceLocatorReturns($website, $productTaxClass, $country, $rate);
     }
 
     /**
      * @return array[]
      */
-    public function taxServiceLocatorOptionsProvider() : array
+    public function taxServiceLocatorOptionsProvider(): array
     {
         return [
 
             // ------ "Taxable Goods" tax class -------
-            
+
             ['de', 'Taxable Goods', 'DE', 19],
             ['en', 'Taxable Goods', 'DE', 19],
             ['fr', 'Taxable Goods', 'DE', 19],
-            
+
             ['de', 'Taxable Goods', 'DK', 25],
             ['en', 'Taxable Goods', 'DK', 25],
             ['fr', 'Taxable Goods', 'DK', 25],
-            
+
             ['de', 'Taxable Goods', 'EN', 20],
             ['en', 'Taxable Goods', 'EN', 20],
             ['fr', 'Taxable Goods', 'EN', 20],
-            
+
             ['de', 'Taxable Goods', 'AT', 20],
             ['en', 'Taxable Goods', 'AT', 20],
             ['fr', 'Taxable Goods', 'AT', 20],
-            
+
             ['de', 'Taxable Goods', 'FR', 20],
             ['en', 'Taxable Goods', 'FR', 20],
             ['fr', 'Taxable Goods', 'FR', 20],
-            
+
             ['de', 'Taxable Goods', 'ES', 21],
             ['en', 'Taxable Goods', 'ES', 21],
             ['fr', 'Taxable Goods', 'ES', 21],
-            
+
             ['de', 'Taxable Goods', 'FI', 24],
             ['en', 'Taxable Goods', 'FI', 24],
             ['fr', 'Taxable Goods', 'FI', 24],
-            
+
             ['de', 'Taxable Goods', 'NL', 21],
             ['en', 'Taxable Goods', 'NL', 21],
             ['fr', 'Taxable Goods', 'NL', 21],
-            
+
             ['de', 'Taxable Goods', 'SE', 25],
             ['en', 'Taxable Goods', 'SE', 25],
             ['fr', 'Taxable Goods', 'SE', 25],
-            
+
             ['de', 'Taxable Goods', 'LU', 17],
             ['en', 'Taxable Goods', 'LU', 17],
             ['fr', 'Taxable Goods', 'LU', 17],
-            
+
             ['de', 'Taxable Goods', 'IT', 21],
             ['en', 'Taxable Goods', 'IT', 21],
             ['fr', 'Taxable Goods', 'IT', 21],
-            
+
             ['de', 'Taxable Goods', 'BE', 21],
             ['en', 'Taxable Goods', 'BE', 21],
             ['fr', 'Taxable Goods', 'BE', 21],

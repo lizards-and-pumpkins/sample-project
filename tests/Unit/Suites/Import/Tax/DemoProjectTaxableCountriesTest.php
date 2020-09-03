@@ -16,15 +16,16 @@ class DemoProjectTaxableCountriesTest extends TestCase
      */
     private $countries;
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->countries = new DemoProjectTaxableCountries();
     }
 
     /**
      * @dataProvider availableCountriesDataProvider
+     * @param string $availableCountry
      */
-    public function testItReturnsTheAvailableCountries(string $availableCountry)
+    public function testItReturnsTheAvailableCountries(string $availableCountry): void
     {
         $this->assertContains($availableCountry, $this->countries->getCountries());
     }
@@ -32,7 +33,7 @@ class DemoProjectTaxableCountriesTest extends TestCase
     /**
      * @return array[]
      */
-    public function availableCountriesDataProvider() : array
+    public function availableCountriesDataProvider(): array
     {
         return [
             ['DE'],
@@ -50,13 +51,13 @@ class DemoProjectTaxableCountriesTest extends TestCase
         ];
     }
 
-    public function testItCanBeIteratedOver()
+    public function testItCanBeIteratedOver(): void
     {
         $this->assertInstanceOf(\IteratorAggregate::class, $this->countries);
         $this->assertInstanceOf(\ArrayIterator::class, $this->countries->getIterator());
     }
 
-    public function testItImplementsTheTaxableCountriesInterface()
+    public function testItImplementsTheTaxableCountriesInterface(): void
     {
         $this->assertInstanceOf(TaxableCountries::class, $this->countries);
     }

@@ -10,5 +10,5 @@ require_once '../vendor/autoload.php';
 $request = HttpRequest::fromGlobalState(file_get_contents('php://input'));
 $implementationSpecificFactory = new ProjectFactory();
 
-$website = new DefaultWebFront($request, $implementationSpecificFactory);
+$website = new CatalogWebFront($request, $implementationSpecificFactory);
 $website->run();

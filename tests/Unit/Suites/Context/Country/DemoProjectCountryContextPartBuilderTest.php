@@ -23,21 +23,21 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
     private $contextPartBuilder;
 
     /**
-     * @var HttpRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpRequest
      */
     private $stubRequest;
 
     /**
-     * @var RequestToWebsiteMap|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestToWebsiteMap
      */
     private $stubRequestToWebsiteMap;
 
     /**
-     * @var WebsiteToCountryMap|\PHPUnit_Framework_MockObject_MockObject
+     * @var WebsiteToCountryMap
      */
     private $stubWebsiteToCountryMap;
 
-    private function setCountryCookieOnRequest(string $countryCode)
+    private function setCountryCookieOnRequest(string $countryCode): void
     {
         $json = json_encode(['country' => $countryCode]);
         $this->stubRequest->method('getCookieValue')->with(DemoProjectCountryContextPartBuilder::COOKIE_NAME)
@@ -46,7 +46,7 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
             ->willReturn(true);
     }
 
-    private function mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest(string $testCountryCode)
+    private function mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest(string $testCountryCode): void
     {
         $dummyCountry = $this->createMock(Country::class);
         $dummyCountry->method('__toString')->willReturn($testCountryCode);
@@ -59,7 +59,7 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
         $this->stubWebsiteToCountryMap->method('getCountry')->with($dummyWebsite)->willReturn($dummyCountry);
     }
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->stubRequest = $this->createMock(HttpRequest::class);
         $this->stubRequestToWebsiteMap = $this->createMock(RequestToWebsiteMap::class);
@@ -70,18 +70,18 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
             $this->stubWebsiteToCountryMap
         );
     }
-    
-    public function testContextPartBuilderInterfaceIsImplemented()
+
+    public function testContextPartBuilderInterfaceIsImplemented(): void
     {
         $this->assertInstanceOf(ContextPartBuilder::class, $this->contextPartBuilder);
     }
 
-    public function testContextCountryCodeIsReturned()
+    public function testContextCountryCodeIsReturned(): void
     {
         $this->assertSame(Country::CONTEXT_CODE, $this->contextPartBuilder->getCode());
     }
 
-    public function testNullIsReturnedIfNeitherCountryNorRequestIsPresentInInputDataSet()
+    public function testNullIsReturnedIfNeitherCountryNorRequestIsPresentInInputDataSet(): void
     {
         $inputDataSet = [];
         $this->assertNull($this->contextPartBuilder->getValue($inputDataSet));
@@ -89,8 +89,9 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
 
     /**
      * @dataProvider countryCodeProvider
+     * @param string $testCountryCode
      */
-    public function testCountryCodeProvidedInInputDataSetIsReturned(string $testCountryCode)
+    public function testCountryCodeProvidedInInputDataSetIsReturned(string $testCountryCode): void
     {
         $inputDataSet = [Country::CONTEXT_CODE => $testCountryCode];
         $this->assertSame($testCountryCode, $this->contextPartBuilder->getValue($inputDataSet));
@@ -98,8 +99,9 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
 
     /**
      * @dataProvider countryCodeProvider
+     * @param string $testCountryCode
      */
-    public function testCountryCodeFromCookieIsReturned(string $testCountryCode)
+    public function testCountryCodeFromCookieIsReturned(string $testCountryCode): void
     {
         $this->setCountryCookieOnRequest($testCountryCode);
         $inputDataSet = [ContextBuilder::REQUEST => $this->stubRequest];
@@ -109,8 +111,9 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
 
     /**
      * @dataProvider countryCodeProvider
+     * @param string $testCountryCode
      */
-    public function testDeterminationOfCountryIsDelegatedToWebsiteToCountryMap(string $testCountryCode)
+    public function testDeterminationOfCountryIsDelegatedToWebsiteToCountryMap(string $testCountryCode): void
     {
         $this->mapCountryWithGivenCodeToWebsiteAndWebsiteToRequest($testCountryCode);
         $inputDataSet = [ContextBuilder::REQUEST => $this->stubRequest];
@@ -118,7 +121,7 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
         $this->assertSame($testCountryCode, $this->contextPartBuilder->getValue($inputDataSet));
     }
 
-    public function testExplicitCountryValueIsPreferredOverCookieOrMappedOne()
+    public function testExplicitCountryValueIsPreferredOverCookieOrMappedOne(): void
     {
         $testExplicitCountryCode = 'foo';
         $testCountryCodeFromCookie = 'bar';
@@ -135,7 +138,7 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
         $this->assertSame($testExplicitCountryCode, $this->contextPartBuilder->getValue($inputDataSet));
     }
 
-    public function testCookieCountryValueIsPreferredOverMappedOne()
+    public function testCookieCountryValueIsPreferredOverMappedOne(): void
     {
         $testCountryCodeFromCookie = 'foo';
         $testCountryCodeFromWebsite = 'bar';
@@ -151,7 +154,7 @@ class DemoProjectCountryContextPartBuilderTest extends TestCase
     /**
      * @return array[]
      */
-    public function countryCodeProvider() : array
+    public function countryCodeProvider(): array
     {
         return [['foo'], ['bar']];
     }

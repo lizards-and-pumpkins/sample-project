@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class DemoProjectConfigurableProductViewTest extends TestCase
 {
     /**
-     * @var ConfigurableProduct|\PHPUnit_Framework_MockObject_MockObject
+     * @var ConfigurableProduct
      */
     private $mockProduct;
 
@@ -25,47 +25,37 @@ class DemoProjectConfigurableProductViewTest extends TestCase
      */
     private $productView;
 
-    /**
-     * @var ProductViewLocator|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $stubProductViewLocator;
-
-    /**
-     * @var ProductImageFileLocator|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $stubProductImageFileLocator;
-    
-    protected function setUp()
+    final protected function setUp(): void
     {
-        $this->stubProductViewLocator = $this->createMock(ProductViewLocator::class);
+        $stubProductViewLocator = $this->createMock(ProductViewLocator::class);
         $this->mockProduct = $this->createMock(ConfigurableProduct::class);
-        $this->stubProductImageFileLocator = $this->createMock(ProductImageFileLocator::class);
-        $this->stubProductImageFileLocator->method('getPlaceholder')->willReturn($this->createMock(Image::class));
-        $this->stubProductImageFileLocator->method('getVariantCodes')->willReturn(['large']);
+        $stubProductImageFileLocator = $this->createMock(ProductImageFileLocator::class);
+        $stubProductImageFileLocator->method('getPlaceholder')->willReturn($this->createMock(Image::class));
+        $stubProductImageFileLocator->method('getVariantCodes')->willReturn(['large']);
 
         $this->productView = new DemoProjectConfigurableProductView(
-            $this->stubProductViewLocator,
+            $stubProductViewLocator,
             $this->mockProduct,
-            $this->stubProductImageFileLocator
+            $stubProductImageFileLocator
         );
     }
 
-    public function testProductViewInterfaceIsImplemented()
+    public function testProductViewInterfaceIsImplemented(): void
     {
         $this->assertInstanceOf(ProductView::class, $this->productView);
     }
 
-    public function testItExtendsTheAbstractConfigurableProductView()
+    public function testItExtendsTheAbstractConfigurableProductView(): void
     {
         $this->assertInstanceOf(AbstractConfigurableProductView::class, $this->productView);
     }
 
-    public function testOriginalProductIsReturned()
+    public function testOriginalProductIsReturned(): void
     {
         $this->assertSame($this->mockProduct, $this->productView->getOriginalProduct());
     }
 
-    public function testGettingFirstValueOfBackordersAttributeReturnsEmptyString()
+    public function testGettingFirstValueOfBackordersAttributeReturnsEmptyString(): void
     {
         $testAttributeCode = 'backorders';
         $testAttributeValue = 'true';
@@ -77,7 +67,7 @@ class DemoProjectConfigurableProductViewTest extends TestCase
         $this->assertSame('', $this->productView->getFirstValueOfAttribute($testAttributeCode));
     }
 
-    public function testGettingAllValuesOfBackordersAttributeReturnsEmptyArray()
+    public function testGettingAllValuesOfBackordersAttributeReturnsEmptyArray(): void
     {
         $testAttributeCode = 'backorders';
         $testAttributeValue = true;
@@ -89,7 +79,7 @@ class DemoProjectConfigurableProductViewTest extends TestCase
         $this->assertSame([], $this->productView->getAllValuesOfAttribute($testAttributeCode));
     }
 
-    public function testProductViewAttributeListDoesNotHaveBackorders()
+    public function testProductViewAttributeListDoesNotHaveBackorders(): void
     {
         $testAttributeCode = 'backorders';
         $testAttributeValue = true;
@@ -101,7 +91,7 @@ class DemoProjectConfigurableProductViewTest extends TestCase
         $this->assertFalse($this->productView->hasAttribute($testAttributeCode));
     }
 
-    public function testFilteredProductAttributeListIsReturned()
+    public function testFilteredProductAttributeListIsReturned(): void
     {
         $nonPriceAttribute = new ProductAttribute('foo', 'bar', []);
         $priceAttribute = new ProductAttribute('price', 1000, []);

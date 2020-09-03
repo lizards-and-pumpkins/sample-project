@@ -25,20 +25,16 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
     private $productImageFileLocator;
 
     /**
-     * @var ImageStorage|\PHPUnit_Framework_MockObject_MockObject
+     * @var ImageStorage
      */
     private $stubImageStorage;
 
     /**
-     * @var Context|\PHPUnit_Framework_MockObject_MockObject
+     * @var Context
      */
     private $stubContext;
 
-    /**
-     * @param string $imageVariantCode
-     * @return Image|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createStubPlaceholderImage(string $imageVariantCode) : Image
+    private function createStubPlaceholderImage(string $imageVariantCode): Image
     {
         $placeholderIdentifier = $this->stringStartsWith('product/placeholder/' . $imageVariantCode . '/');
         $stubPlaceholderImage = $this->createMock(Image::class);
@@ -46,10 +42,11 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
             ->method('getFileReference')
             ->with($placeholderIdentifier)
             ->willReturn($stubPlaceholderImage);
+
         return $stubPlaceholderImage;
     }
 
-    protected function setUp()
+    final protected function setUp(): void
     {
         $this->stubContext = $this->createMock(Context::class);
         $this->stubContext->method('getValue')->willReturnMap([
@@ -61,13 +58,13 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
         $this->productImageFileLocator = new DemoProjectProductImageFileLocator($this->stubImageStorage);
     }
 
-    public function testItImplementsTheProductImageInterface()
+    public function testItImplementsTheProductImageInterface(): void
     {
         $this->assertInstanceOf(ProductImageFileLocator::class, $this->productImageFileLocator);
         $this->assertInstanceOf(DemoProjectProductImageFileLocator::class, $this->productImageFileLocator);
     }
 
-    public function testItThrowsAnExceptionIfImageVariantCodeIsNotAString()
+    public function testItThrowsAnExceptionIfImageVariantCodeIsNotAString(): void
     {
         $this->expectException(\TypeError::class);
 
@@ -77,7 +74,7 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
         $this->productImageFileLocator->get($imageFileName, $invalidImageVariantCode, $this->stubContext);
     }
 
-    public function testItThrowsAnExceptionIfImageVariantCodeNotValid()
+    public function testItThrowsAnExceptionIfImageVariantCodeNotValid(): void
     {
         $imageFileName = 'test.jpg';
         $invalidImageVariantCode = 'invalid';
@@ -89,7 +86,7 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
         $this->productImageFileLocator->get($imageFileName, $invalidImageVariantCode, $this->stubContext);
     }
 
-    public function testItThrowsAnExceptionIfTheFileNameIsNotAString()
+    public function testItThrowsAnExceptionIfTheFileNameIsNotAString(): void
     {
         $this->expectException(\TypeError::class);
 
@@ -99,21 +96,22 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
         $this->productImageFileLocator->get($invalidImageFileName, $variantCode, $this->stubContext);
     }
 
-    public function testItReturnsAPlaceholderIfTheImageFileNameIsEmpty()
+    public function testItReturnsAPlaceholderIfTheImageFileNameIsEmpty(): void
     {
         $emptyImageFileName = ' ';
         $variantCode = DemoProjectProductImageFileLocator::SMALL;
         $this->stubImageStorage->method('contains')->willReturn(true);
         $stubPlaceholderImage = $this->createStubPlaceholderImage($variantCode);
-        
+
         $result = $this->productImageFileLocator->get($emptyImageFileName, $variantCode, $this->stubContext);
         $this->assertSame($stubPlaceholderImage, $result);
     }
 
     /**
      * @dataProvider validImageVariantCodeProvider
+     * @param string $imageVariantCode
      */
-    public function testItReturnsAProductImageFileInstanceForValidVariantCodes(string $imageVariantCode)
+    public function testItReturnsAProductImageFileInstanceForValidVariantCodes(string $imageVariantCode): void
     {
         $imageIdentifier = sprintf('product/%s/test.jpg', $imageVariantCode);
         $stubImage = $this->createMock(Image::class);
@@ -130,7 +128,7 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
     /**
      * @return array[]
      */
-    public function validImageVariantCodeProvider() : array
+    public function validImageVariantCodeProvider(): array
     {
         return [
             [DemoProjectProductImageFileLocator::SMALL],
@@ -141,7 +139,7 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
         ];
     }
 
-    public function testItReturnsAllValidImageVariantCodes()
+    public function testItReturnsAllValidImageVariantCodes(): void
     {
         $validImageVariantCodes = [
             DemoProjectProductImageFileLocator::SMALL,
@@ -152,10 +150,10 @@ class DemoProjectProductImageFileLocatorTest extends TestCase
         ];
 
         $result = $this->productImageFileLocator->getVariantCodes();
-        
+
         sort($result);
         sort($validImageVariantCodes);
-        
+
         $this->assertSame($validImageVariantCodes, $result);
     }
 }

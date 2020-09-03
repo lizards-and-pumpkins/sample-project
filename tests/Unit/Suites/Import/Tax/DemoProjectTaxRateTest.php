@@ -13,40 +13,43 @@ use PHPUnit\Framework\TestCase;
  */
 class DemoProjectTaxRateTest extends TestCase
 {
-    public function testTaxServiceInterfaceIsImplemented()
+    public function testTaxServiceInterfaceIsImplemented(): void
     {
         $this->assertInstanceOf(TaxService::class, DemoProjectTaxRate::fromInt(19));
     }
 
-    public function testItReturnsATaxServiceInstanceMatchingTheGivenRate()
+    public function testItReturnsATaxServiceInstanceMatchingTheGivenRate(): void
     {
         $this->assertInstanceOf(DemoProjectTaxRate::class, DemoProjectTaxRate::fromInt(20));
         $this->assertInstanceOf(DemoProjectTaxRate::class, DemoProjectTaxRate::fromInt(19));
         $this->assertInstanceOf(DemoProjectTaxRate::class, DemoProjectTaxRate::fromInt(18));
     }
 
-    public function testItThrowsAnExceptionIfTheTaxRateIsNotAnInteger()
+    public function testItThrowsAnExceptionIfTheTaxRateIsNotAnInteger(): void
     {
         $this->expectException(\TypeError::class);
         DemoProjectTaxRate::fromInt('10');
     }
 
-    public function testItThrowsAnExceptionIfTheTaxRateIsZero()
+    public function testItThrowsAnExceptionIfTheTaxRateIsZero(): void
     {
         $this->expectException(InvalidTaxRateException::class);
         $this->expectExceptionMessage('The tax rate must not be zero');
         DemoProjectTaxRate::fromInt(0);
     }
 
-    public function testItReturnsTheInjectedFactor()
+    public function testItReturnsTheInjectedFactor(): void
     {
         $this->assertSame(19, DemoProjectTaxRate::fromInt(19)->getRate());
     }
 
     /**
      * @dataProvider taxRateExampleProvider
+     * @param int $rate
+     * @param int $price
+     * @param int $expected
      */
-    public function testItAppliesTheTaxRate(int $rate, int $price, int $expected)
+    public function testItAppliesTheTaxRate(int $rate, int $price, int $expected): void
     {
         $result = DemoProjectTaxRate::fromInt($rate)->applyTo(Price::fromFractions($price));
         $message = sprintf('Expected tax rate %s applied to %d to be %s, got %s', $rate, $price, $expected, $result);
@@ -56,7 +59,7 @@ class DemoProjectTaxRateTest extends TestCase
     /**
      * @return array[]
      */
-    public function taxRateExampleProvider() : array
+    public function taxRateExampleProvider(): array
     {
         // rate, price, expected
         return [

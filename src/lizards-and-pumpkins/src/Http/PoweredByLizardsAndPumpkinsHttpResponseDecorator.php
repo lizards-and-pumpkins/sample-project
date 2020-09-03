@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace LizardsAndPumpkins\Http;
 
-use LizardsAndPumpkins\Http\ContentDelivery\GenericHttpResponse;
-
 class PoweredByLizardsAndPumpkinsHttpResponseDecorator implements HttpResponse
 {
     /**
@@ -33,7 +31,7 @@ class PoweredByLizardsAndPumpkinsHttpResponseDecorator implements HttpResponse
         return $this->delegate->getStatusCode();
     }
 
-    public function send()
+    public function send(): void
     {
         GenericHttpResponse::create(
             $this->getBody(),
